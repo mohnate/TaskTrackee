@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "Grobold";
+  src: url("../../public/font/Grobold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoetsenOne";
+  src: url("../../public/font/PoetsenOne.ttf") format("truetype");
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  // Colors
+  --primary-color: #1b1e27;
+  --pri-sec-color: #464a54;
+  --seconadry-color: #6e7485;
+  --tertiary-color: #e4f0ff;
+  --quaternary-color: #d6a319;
+  --caution-color: #ad1111;
+  --okay-color: #16c928;
+  --btn-color: #10952d;
+  --btn-hover-color: #0c7222;
+  --hightlight-color: #67e2f2;
+  --hightlight-hover-color: #47dff3;
+  // Fonts
+  --heading: Merriweather, Verdana, Geneva, Tahoma, sans-serif;
+  --body: Radio Canada, Verdana, Geneva, Tahoma, sans-serif;
+  --body2: "PoetsenOne, Radio Canada, Verdana, Geneva, Tahoma, sans-serif";
+  --brand: GROBOLD;
+}

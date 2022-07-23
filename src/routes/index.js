@@ -1,19 +1,14 @@
 import styles from "../styles/homepage/homepage.module.scss";
-import stylesInput from "../styles/input.module.scss";
 import logo from "../../public/logo/logo.png";
 
-import { useRef } from "react";
+import { lazy, Suspense, useState } from "react";
 import ImageRender from "../lib/ImageRender";
 
-import EmailInput from "../components/input/EmailInput";
-import PasswordInput from "../components/input/PasswordInput";
+const SignUpPage = lazy(() => import("../components/homepage/SignUp"));
+import LoginPage from "../components/homepage/Login";
 
 export default function Homepage() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  };
+  const [loginComp, setLoginComp] = useState(true);
 
   return (
     <div className={styles.container}>
@@ -28,21 +23,20 @@ export default function Homepage() {
             <ImageRender src={logo} width="512" height="512" />
           </div>
           <h1 className={styles.brandName}>TaskTrackee</h1>
-          <form
-            autoComplete="on"
-            onSubmit={handleSubmit}
-            className={styles.formControl}
-          >
-            <EmailInput id="loginEmail" emailRef={emailRef} />
-            <PasswordInput id="loginPassword" passwordRef={passwordRef} />
-            <button type="submit" className={stylesInput.submitBtn}>
-              Log In
-            </button>
-          </form>
+          <Suspense fallback={<p>wait..</p>}>
+            {loginComp ? <LoginPage /> : <SignUpPage />}
+          </Suspense>
           <section className={styles.infoBox}>
             <p className={styles.infoPara}>
-              Don't have an account?{" "}
-              <span className={styles.infoCondition}>Sign Up</span>
+              {loginComp
+                ? "Don't have an account?"
+                : "Already have an account?"}{" "}
+              <span
+                className={styles.infoCondition}
+                onClick={() => setLoginComp((prev) => !prev)}
+              >
+                {loginComp ? "Sign Up" : "Log In"}
+              </span>
             </p>
           </section>
         </main>

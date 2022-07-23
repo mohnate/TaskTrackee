@@ -1,8 +1,25 @@
 //General
-.inputLabel {
+%inputLabel {
   font-family: var(--body);
-  font-weight: bold;
   font-size: 1rem;
+}
+.inputLabel {
+  @extend %inputLabel;
+  font-weight: bold;
+}
+.inputFooter {
+  @extend %inputLabel;
+  display: block;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+.tallyIcon {
+  position: absolute;
+  top: 19px;
+  right: 10px;
+  background-color: #fff;
 }
 
 .submitBtn {
@@ -44,6 +61,11 @@
   }
 }
 
+// Username Input
+.usernameInput {
+  @include inputStyle();
+}
+
 // Email Input
 .emailInput {
   @include inputStyle();
@@ -52,4 +74,12 @@
 // Password Input
 .passwordInput {
   @include inputStyle();
+}
+
+// Input when Warn
+.inputWarn {
+  outline: 3px solid rgb(197, 16, 16);
+}
+.inputWarnFooter {
+  color: rgb(255, 0, 0);
 }

@@ -5,10 +5,12 @@ import { lazy, Suspense, useState } from "react";
 import ImageRender from "../lib/ImageRender";
 
 const SignUpPage = lazy(() => import("../components/homepage/SignUp"));
+const Verified = lazy(() => import("../components/homepage/Verified"));
 import LoginPage from "../components/homepage/Login";
 
 export default function Homepage() {
   const [loginComp, setLoginComp] = useState(true);
+  const [signUpComp, setSignUpComp] = useState(true);
 
   return (
     <div className={styles.container}>
@@ -24,7 +26,13 @@ export default function Homepage() {
           </div>
           <h1 className={styles.brandName}>TaskTrackee</h1>
           <Suspense fallback={<p>wait..</p>}>
-            {loginComp ? <LoginPage /> : <SignUpPage />}
+            {loginComp ? (
+              <LoginPage />
+            ) : signUpComp ? (
+              <SignUpPage setSignUpComp={setSignUpComp} />
+            ) : (
+              <Verified />
+            )}
           </Suspense>
           <section className={styles.infoBox}>
             <p className={styles.infoPara}>

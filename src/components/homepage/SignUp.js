@@ -7,7 +7,7 @@ import UsernameInput from "../input/UsernameInput";
 import EmailInput from "../input/EmailInput";
 import PasswordInput from "../input/PasswordInput";
 
-export default function SignUp() {
+export default function SignUp({ setSignUpComp }) {
   const reducer = (state, action) => {
     return { ...state, [action.type]: action.txt };
   };
@@ -61,6 +61,8 @@ export default function SignUp() {
         txt: "Your password does not match",
       });
     } else dispatch({ type: "confPassword", txt: null });
+
+    setSignUpComp(false);
   };
 
   return (

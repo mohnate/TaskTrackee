@@ -86,3 +86,24 @@
     color: var(--hightlight-hover-color);
   }
 }
+
+.verifiedHeader {
+  font-family: var(--heading);
+  text-align: center;
+  font-size: 1.7rem;
+  margin: 15px 0 8px 0;
+}
+.verifiedDesc {
+  font-family: var(--body);
+  text-align: center;
+  width: 300px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.codeContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

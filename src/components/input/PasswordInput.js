@@ -36,8 +36,6 @@ export default function PasswordInput({
     }
   };
 
-  console.log(state);
-
   return (
     <>
       <label htmlFor={id} className={styles.inputLabel}>

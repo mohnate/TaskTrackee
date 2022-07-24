@@ -32,7 +32,9 @@ export default function UsernameInput({
         <input
           id={id}
           ref={usernameRef}
-          className={`${styles.emailInput} ${state ? styles.inputWarn : null}`}
+          className={`${styles.usernameInput} ${
+            state ? styles.inputWarn : null
+          }`}
           type="text"
           placeholder="Enter username"
           aria-required="true"

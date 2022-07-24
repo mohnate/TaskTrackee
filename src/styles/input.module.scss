@@ -76,6 +76,19 @@
   @include inputStyle();
 }
 
+// Password Input
+.codeInput {
+  @include inputStyle();
+  padding: 15px;
+  width: 40px;
+  margin: 6px;
+
+  &:focus {
+    outline: 3px solid rgb(25, 213, 219);
+    box-shadow: rgb(49, 130, 206) 0px 0px 0px 1px;
+  }
+}
+
 // Input when Warn
 .inputWarn {
   outline: 3px solid rgb(197, 16, 16);

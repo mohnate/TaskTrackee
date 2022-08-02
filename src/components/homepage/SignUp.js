@@ -2,6 +2,8 @@ import styles from "../../styles/homepage/homepage.module.scss";
 import stylesInput from "../../styles/input.module.scss";
 
 import { useReducer, useRef } from "react";
+import { CognitoUserAttribute } from "amazon-cognito-identity-js";
+import { UserPool } from "../../lib/awsCognito";
 
 import UsernameInput from "../input/UsernameInput";
 import EmailInput from "../input/EmailInput";
@@ -37,10 +39,12 @@ export default function SignUp({ setSignUpComp }) {
         type: "username",
         txt: "Username have to contain at least 3 character",
       });
+      return;
     } else dispatch({ type: "username", txt: null });
 
     if (!email.match(emailPattern)) {
       dispatch({ type: "email", txt: "This is not a valid email!" });
+      return;
     } else dispatch({ type: "email", txt: null });
 
     if (password.length < 8) {
@@ -48,11 +52,13 @@ export default function SignUp({ setSignUpComp }) {
         type: "password",
         txt: "Your password needs to contain at least 8 character",
       });
+      return;
     } else if (password.length >= 30) {
       dispatch({
         type: "password",
         txt: "Your password is too long!",
       });
+      return;
     } else dispatch({ type: "password", txt: null });
 
     if (confirmPassword != password) {
@@ -60,9 +66,23 @@ export default function SignUp({ setSignUpComp }) {
         type: "confPassword",
         txt: "Your password does not match",
       });
+      return;
     } else dispatch({ type: "confPassword", txt: null });
 
-    setSignUpComp(false);
+    // aws cognito authentication
+    const attributeList = [
+      // First letter of Name and Value must be Capital letter, CASE SENSITIVE!!!!
+      new CognitoUserAttribute({ Name: "email", Value: email }),
+      new CognitoUserAttribute({ Name: "name", Value: username }),
+    ];
+
+    UserPool.signUp(username, password, attributeList, null, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        setSignUpComp(false);
+      }
+    });
   };
 
   return (

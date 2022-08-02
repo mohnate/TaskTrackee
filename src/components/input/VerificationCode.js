@@ -1,7 +1,5 @@
 import styles from "../../styles/input.module.scss";
 
-import { useState } from "react";
-
 export default function VerificationCode({
   id,
   codeRef,

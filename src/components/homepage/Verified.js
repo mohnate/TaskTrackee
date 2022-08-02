@@ -1,7 +1,9 @@
 import styles from "../../styles/homepage/homepage.module.scss";
 import stylesInput from "../../styles/input.module.scss";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { UserPool } from "../../lib/awsCognito";
 
 import VerificationCode from "../input/VerificationCode";
 
@@ -16,7 +18,23 @@ export default function Verified() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const username = window.localStorage.getItem("username");
+    const code1 = codeRef1.current.value;
+    const code2 = codeRef2.current.value;
+    const code3 = codeRef3.current.value;
+    const code4 = codeRef4.current.value;
+    const code5 = codeRef5.current.value;
+    const code6 = codeRef6.current.value;
+    const code = `${code1}${code2}${code3}${code4}${code5}${code6}`;
+
+    const cognitoUser = new CognitoUser({ Username: username, Pool: UserPool });
+    cognitoUser.confirmRegistration(code, true, (err, result) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(result);
+      }
+    });
   };
 
   const inputOnChange = (e) => {

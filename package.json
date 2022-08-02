@@ -38,6 +38,8 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^5.2.10",
+    "aws-sdk": "^2.1182.0",
     "framer-motion": "^6.3.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

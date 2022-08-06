@@ -38,7 +38,9 @@ module.exports = merge(main, {
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: "[name]__[local]___[hash:base64:5]",
+                auto: true,
+                localIdentName: "[path][name]__[local]",
+                localIdentHashDigest: "base64",
               },
             },
           }, //then this (3)

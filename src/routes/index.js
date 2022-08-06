@@ -1,11 +1,8 @@
 import styles from "../styles/homepage/homepage.module.scss";
 import logo from "../../public/logo/logo.png";
 
-import { lazy, Suspense, useEffect, useState } from "react";
-import { CognitoUser } from "amazon-cognito-identity-js";
-import { CognitoIdentityCredentials, config as AWSconfig } from "aws-sdk";
+import { lazy, Suspense, useState } from "react";
 import ImageRender from "../lib/ImageRender";
-import { cookieStorage, UserPool } from "../lib/awsCognito";
 
 const SignUpPage = lazy(() => import("../components/homepage/SignUp"));
 const Verified = lazy(() => import("../components/homepage/Verified"));
@@ -14,23 +11,6 @@ import LoginPage from "../components/homepage/Login";
 export default function Homepage() {
   const [loginComp, setLoginComp] = useState(true);
   const [signUpComp, setSignUpComp] = useState(true);
-
-  useEffect(() => {
-    if (UserPool.getCurrentUser()) {
-      // create a cognito userto hold user details and the pools
-      // that user is located at
-      const cognitoUser = new CognitoUser({
-        Username: UserPool.getCurrentUser().getUsername(),
-        Pool: UserPool,
-        Storage: cookieStorage,
-      });
-      console.log(cognitoUser);
-
-      UserPool.getCurrentUser().getSession((err, data) => {
-        console.log(data);
-      });
-    }
-  }, []);
 
   return (
     <div className={styles.container}>

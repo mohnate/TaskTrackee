@@ -2,8 +2,6 @@ import styles from "../../styles/homepage/homepage.module.scss";
 import stylesInput from "../../styles/input.module.scss";
 
 import { useReducer, useRef } from "react";
-import { CognitoUserAttribute } from "amazon-cognito-identity-js";
-import { UserPool } from "../../lib/awsCognito";
 
 import UsernameInput from "../input/UsernameInput";
 import EmailInput from "../input/EmailInput";
@@ -69,20 +67,7 @@ export default function SignUp({ setSignUpComp }) {
       return;
     } else dispatch({ type: "confPassword", txt: null });
 
-    // aws cognito authentication
-    const attributeList = [
-      // First letter of Name and Value must be Capital letter, CASE SENSITIVE!!!!
-      new CognitoUserAttribute({ Name: "email", Value: email }),
-      new CognitoUserAttribute({ Name: "name", Value: username }),
-    ];
-
-    UserPool.signUp(username, password, attributeList, null, (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        setSignUpComp(false);
-      }
-    });
+    setSignUpComp(false);
   };
 
   return (

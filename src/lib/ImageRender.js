@@ -30,7 +30,7 @@ export default function ImageRender({
           opacity: "1",
           border: "0px none",
           margin: " 0px",
-          padding: `${(height / width) * 100}% 0px 0px`,
+          padding: `${(height / width) * 100}% 0px 0px 0px`,
         }}
       ></span>
       {isInView && (

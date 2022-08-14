@@ -1,5 +1,5 @@
 import styles from "../../styles/input.module.scss";
-import DoubleCheck from "../icons/DoubleCheck";
+import DoubleCheckSvg from "../icons/DoubleCheckSvg";
 
 import { useState } from "react";
 
@@ -56,7 +56,7 @@ export default function PasswordInput({
           onChange={inputOnChange}
         />
         {tally ? (
-          <DoubleCheck color="#19a663" className={styles.tallyIcon} />
+          <DoubleCheckSvg color="#19a663" className={styles.tallyIcon} />
         ) : null}
       </div>
 

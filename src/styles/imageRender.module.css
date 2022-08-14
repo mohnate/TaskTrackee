@@ -2,8 +2,8 @@
   box-sizing: border-box;
   display: block;
   overflow: hidden;
-  width: initial;
-  height: initial;
+  width: auto;
+  height: auto;
   background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
   opacity: 1;
   border: 0px none;
@@ -20,11 +20,13 @@
   inset: 0px;
   box-sizing: border-box;
   padding: 0px;
-  border: medium none;
+  border: none;
   margin: auto;
   display: inline-block;
   min-width: 100%;
   max-width: 100%;
   min-height: 100%;
   max-height: 100%;
+  width: 0;
+  height: 0;
 }

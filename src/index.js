@@ -1,3 +1,4 @@
+import "core-js/stable";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 

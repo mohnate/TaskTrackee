@@ -1,13 +1,20 @@
 {
   "presets": [
-    "@babel/preset-env",
     [
-      "@babel/preset-react",
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "corejs": "3.24",
+        "targets": "> 0.25%, not dead"
+      }
+    ],
+    [
+      "@babel/react",
       {
         "runtime": "automatic"
       }
     ]
   ],
-  "plugins": ["@babel/transform-runtime"]
-  // "plugins": ["@babel/transform-runtime", "react-refresh/babel"]
+  // "plugins": ["@babel/transform-runtime"]
+  "plugins": ["@babel/plugin-transform-runtime", "react-refresh/babel"]
 }

@@ -1,4 +1,4 @@
-export default function DoubleCheck({ color, className }) {
+export default function DoubleCheckSvg({ color, className }) {
   return (
     <svg
       width={24}

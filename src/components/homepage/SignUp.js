@@ -2,12 +2,13 @@ import styles from "../../styles/homepage/homepage.module.scss";
 import stylesInput from "../../styles/input.module.scss";
 
 import { useReducer, useRef } from "react";
+import { supabase } from "../../lib/supabase";
 
 import UsernameInput from "../input/UsernameInput";
 import EmailInput from "../input/EmailInput";
 import PasswordInput from "../input/PasswordInput";
 
-export default function SignUp({ setSignUpComp }) {
+export default function SignUp({ setLoginComp }) {
   const reducer = (state, action) => {
     return { ...state, [action.type]: action.txt };
   };
@@ -23,7 +24,7 @@ export default function SignUp({ setSignUpComp }) {
   const passwordRef = useRef();
   const confPasswordRef = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const username = usernameRef.current.value;
     const email = emailRef.current.value;
@@ -67,7 +68,21 @@ export default function SignUp({ setSignUpComp }) {
       return;
     } else dispatch({ type: "confPassword", txt: null });
 
-    setSignUpComp(false);
+    const { user, session, error } = await supabase.auth.signUp(
+      {
+        email,
+        password,
+      },
+      {
+        data: { username },
+      }
+    );
+
+    if (error) {
+      console.error(error);
+    } else if (user) {
+      setLoginComp(true);
+    }
   };
 
   return (

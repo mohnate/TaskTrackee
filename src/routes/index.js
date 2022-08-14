@@ -1,16 +1,24 @@
 import styles from "../styles/homepage/homepage.module.scss";
 import logo from "../../public/logo/logo.png";
 
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
 import ImageRender from "../lib/ImageRender";
 
 const SignUpPage = lazy(() => import("../components/homepage/SignUp"));
-const Verified = lazy(() => import("../components/homepage/Verified"));
-import LoginPage from "../components/homepage/Login";
+const LoginPage = lazy(() => import("../components/homepage/Login"));
+import Spinner from "../components/PageLoader";
 
 export default function Homepage() {
   const [loginComp, setLoginComp] = useState(true);
-  const [signUpComp, setSignUpComp] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (supabase.auth.session()) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -25,13 +33,11 @@ export default function Homepage() {
             <ImageRender src={logo} width="512" height="512" />
           </div>
           <h1 className={styles.brandName}>TaskTrackee</h1>
-          <Suspense fallback={<p>wait..</p>}>
+          <Suspense fallback={<Spinner sz="medium" pad="50px 0" />}>
             {loginComp ? (
               <LoginPage />
-            ) : signUpComp ? (
-              <SignUpPage setSignUpComp={setSignUpComp} />
             ) : (
-              <Verified />
+              <SignUpPage setLoginComp={setLoginComp} />
             )}
           </Suspense>
           <section className={styles.infoBox}>
@@ -41,28 +47,9 @@ export default function Homepage() {
                 : "Already have an account?"}{" "}
               <span
                 className={styles.infoCondition}
-                onClick={() => {
-                  if (!signUpComp) {
-                    setSignUpComp(true);
-                  }
-                  setLoginComp((prev) => !prev);
-                }}
+                onClick={() => setLoginComp((prev) => !prev)}
               >
                 {loginComp ? "Sign Up" : "Log In"}
-              </span>
-            </p>
-            <p className={styles.infoPara}>
-              {loginComp
-                ? ""
-                : !signUpComp
-                ? ""
-                : "Haven't verify your account?"}
-              <span
-                className={styles.infoCondition}
-                onClick={() => setSignUpComp((prev) => !prev)}
-              >
-                {" "}
-                {loginComp ? "" : !signUpComp ? "" : "Verify"}
               </span>
             </p>
           </section>

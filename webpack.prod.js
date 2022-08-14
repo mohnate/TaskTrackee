@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = merge(main, {
   mode: "production",
@@ -17,7 +19,9 @@ module.exports = merge(main, {
     clean: true,
   },
   optimization: {
+    emitOnErrors: true,
     minimize: true,
+    removeAvailableModules: true,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
@@ -42,9 +46,9 @@ module.exports = merge(main, {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(s[ac]ss|css)$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader, // fifth
           {
             loader: "css-loader",
             options: {
@@ -53,7 +57,7 @@ module.exports = merge(main, {
                 localIdentName: "[name]__[local]___[hash:base64:5]",
               },
             },
-          },
+          }, // fourth
           {
             loader: "postcss-loader",
             options: {
@@ -61,15 +65,16 @@ module.exports = merge(main, {
                 plugins: ["autoprefixer", "postcss-preset-env"],
               },
             },
-          },
+          }, // third
+          "sass-loader", // first
         ],
-        include: /\.module\.css$/,
+        include: /\.module\.(s[ac]ss|css)$/,
       },
       {
-        test: /\.css$/,
+        test: /\.(s[ac]ss|css)$/i,
         use: [
-          MiniCssExtractPlugin.loader, // go last (3)
-          "css-loader", //then this (2)
+          MiniCssExtractPlugin.loader, // fifth
+          "css-loader", // fourth
           {
             loader: "postcss-loader",
             options: {
@@ -77,9 +82,10 @@ module.exports = merge(main, {
                 plugins: ["autoprefixer", "postcss-preset-env"],
               },
             },
-          }, // first this (1)
+          }, // third
+          "sass-loader", // first
         ],
-        exclude: /\.module\.css$/,
+        exclude: /\.module\.(s[ac]ss|css)$/,
       },
     ],
   },
@@ -102,6 +108,7 @@ module.exports = merge(main, {
         minifyURLs: true,
       },
     }),
+    new BundleAnalyzerPlugin(),
   ],
   performance: {
     hints: "warning",

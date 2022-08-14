@@ -41,6 +41,13 @@ module.exports = merge(main, {
     runtimeChunk: "single",
     splitChunks: {
       chunks: "all",
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all",
+        },
+      },
     },
   },
   module: {
@@ -48,16 +55,17 @@ module.exports = merge(main, {
       {
         test: /\.(s[ac]ss|css)$/i,
         use: [
-          MiniCssExtractPlugin.loader, // fifth
+          MiniCssExtractPlugin.loader, // fourth
           {
             loader: "css-loader",
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: "[name]__[local]___[hash:base64:5]",
+                localIdentName: "[name]_[local]_[hash:base64:5]",
+                localIdentHashDigest: "base64",
               },
             },
-          }, // fourth
+          }, // third
           {
             loader: "postcss-loader",
             options: {
@@ -65,7 +73,7 @@ module.exports = merge(main, {
                 plugins: ["autoprefixer", "postcss-preset-env"],
               },
             },
-          }, // third
+          }, // second
           "sass-loader", // first
         ],
         include: /\.module\.(s[ac]ss|css)$/,
@@ -73,8 +81,8 @@ module.exports = merge(main, {
       {
         test: /\.(s[ac]ss|css)$/i,
         use: [
-          MiniCssExtractPlugin.loader, // fifth
-          "css-loader", // fourth
+          MiniCssExtractPlugin.loader, // fourth
+          "css-loader", // third
           {
             loader: "postcss-loader",
             options: {
@@ -82,7 +90,7 @@ module.exports = merge(main, {
                 plugins: ["autoprefixer", "postcss-preset-env"],
               },
             },
-          }, // third
+          }, // second
           "sass-loader", // first
         ],
         exclude: /\.module\.(s[ac]ss|css)$/,

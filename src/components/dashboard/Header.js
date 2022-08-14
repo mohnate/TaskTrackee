@@ -6,7 +6,6 @@ import defaultAvatar from "../../../public/icon/default-avatar.png";
 
 import ImageRender from "../../lib/ImageRender";
 import { supabase } from "../../lib/supabase";
-import { useEffect } from "react";
 
 export default function Header() {
   return (

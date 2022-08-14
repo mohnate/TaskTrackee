@@ -82,17 +82,7 @@ module.exports = merge(main, {
         test: /\.(s[ac]ss|css)$/i,
         use: [
           { loader: "style-loader", options: { injectType: "styleTag" } }, // fifth
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 1,
-              modules: {
-                auto: true,
-                localIdentName: "[path][name]__[local]",
-                localIdentHashDigest: "base64",
-              },
-            },
-          }, // fourth
+          "css-loader", // fourth
           {
             loader: "postcss-loader",
             options: {
@@ -123,7 +113,7 @@ module.exports = merge(main, {
     new HtmlWebpackPlugin({ inject: true, template: "./public/index.html" }),
     new ReactRefreshWebpackPlugin({
       include: /\.(js|jsx)$/,
-      forceEnable: true,
+      // forceEnable: true,
     }),
     new BundleAnalyzerPlugin({ logLevel: "silent", openAnalyzer: false }),
   ].filter(Boolean),

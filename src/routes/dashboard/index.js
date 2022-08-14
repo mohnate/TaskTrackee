@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 
-import Header from "../../components/dashboard/header";
+import Header from "../../components/dashboard/Header";
 
 export default function Dashboard() {
   const navigate = useNavigate();

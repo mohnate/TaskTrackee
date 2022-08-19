@@ -22,6 +22,7 @@ body {
 :root {
   // Colors
   --primary-color: #1b1e27;
+  --primary-hover-color: #2c313f;
   --pri-sec-color: #464a54;
   --seconadry-color: #6e7485;
   --tertiary-color: #e4f0ff;
@@ -32,9 +33,10 @@ body {
   --btn-hover-color: #0c7222;
   --hightlight-color: #67e2f2;
   --hightlight-hover-color: #47dff3;
+  --outline-focus-color: #0fa0e4;
   // Fonts
   --heading: Merriweather, Verdana, Geneva, Tahoma, sans-serif;
-  --body: Radio Canada, Verdana, Geneva, Tahoma, sans-serif;
-  --body2: "PoetsenOne, Radio Canada, Verdana, Geneva, Tahoma, sans-serif";
+  --body: "Radio Canada", Verdana, Geneva, Tahoma, sans-serif;
+  --body2: PoetsenOne, "Radio Canada", Verdana, Geneva, Tahoma, sans-serif;
   --brand: GROBOLD;
 }

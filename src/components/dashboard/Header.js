@@ -7,12 +7,24 @@ import defaultAvatar from "../../../public/icon/default-avatar.png";
 import ImageRender from "../../lib/ImageRender";
 import { supabase } from "../../lib/supabase";
 
-export default function Header() {
+export default function Header({ toggleSideBar, setToggleSideBar }) {
+  const toggleSideBarFunc = () => {
+    setToggleSideBar((prev) => !prev);
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.leftComp}>
-        <ImageRender src={menu} width={40} height={30} />
-        <ImageRender src={home} width={40} height={30} />
+        <div className={styles.iconContainer} onClick={toggleSideBarFunc}>
+          {toggleSideBar ? (
+            <ImageRender src={menuScale} width={40} height={30} alt="menu" />
+          ) : (
+            <ImageRender src={menu} width={40} height={30} alt="menu" />
+          )}
+        </div>
+        <div className={styles.iconContainer}>
+          <ImageRender src={home} width={40} height={30} alt="home" />
+        </div>
       </nav>
       <div className={styles.rightComp}>
         <div className={styles.userComp}>

@@ -1,6 +1,7 @@
 import "core-js/stable";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import AppRoutes from "./routes/_routes";
 
@@ -10,7 +11,9 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AppRoutes />
+      <HelmetProvider>
+        <AppRoutes />
+      </HelmetProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

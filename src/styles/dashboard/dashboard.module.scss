@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  height: calc(100vh - 50px);
+}
+
+.content {
+  background-color: var(--seconadry-color);
+  height: 100%;
+  width: 100%;
+}
+
+.contentHeadContainer {
+  display: flex;
+  font-family: var(--body2);
+  margin: 20px calc(5% + 40px);
+  color: #fff;
+}
+.contentHeader {
+  margin: 0;
+  font-family: inherit;
+  font-size: 2.2rem;
+}
+.addTaskBtn {
+  font-family: inherit;
+  appearance: none;
+  border: none;
+  margin: 0 0 0 auto;
+  padding: 4px 20px;
+  color: inherit;
+  font-size: 1rem;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: background-color 200ms ease-in-out;
+  &:hover {
+    background-color: var(--primary-hover-color);
+  }
+  &:active {
+    outline-color: var(--outline-focus-color);
+    outline-offset: 3px;
+    outline-width: 2px;
+    outline-style: solid;
+  }
+}

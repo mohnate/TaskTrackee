@@ -1,0 +1,53 @@
+.sidebar {
+  width: 280px;
+  min-width: 260px;
+  height: 100%;
+
+  background-color: var(--pri-sec-color);
+}
+
+.container {
+  margin: 20px 0 0 33px;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin sidebar {
+  appearance: none;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: var(--body);
+  text-align: left;
+  font-size: 1.2rem;
+  height: 2.5rem;
+  margin: 1px 0;
+  padding: 0;
+
+  cursor: pointer;
+  transition: color 150ms ease-in-out;
+  &:hover {
+    color: var(--hightlight-hover-color);
+  }
+}
+
+.selectBtn {
+  @include sidebar;
+}
+.btnIcon {
+  vertical-align: middle;
+  width: 30px;
+  margin: 0 10px 0 10px;
+
+  transition: transform 150ms ease-in-out;
+  &:hover {
+    transform: translate(3px, 0);
+  }
+}
+
+.btnSelcted {
+  @include sidebar;
+  background-color: var(--seconadry-color);
+  border-radius: 6px 0 0 6px;
+  position: relative;
+}

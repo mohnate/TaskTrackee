@@ -50,6 +50,7 @@ module.exports = merge(main, {
   },
   module: {
     rules: [
+      // Capture scss module and css module file
       {
         test: /\.(s[ac]ss|css)$/i,
         use: [
@@ -78,6 +79,7 @@ module.exports = merge(main, {
         ],
         include: /\.module\.(s[ac]ss|css)$/,
       },
+      // Capture scss and css file
       {
         test: /\.(s[ac]ss|css)$/i,
         use: [

@@ -1,6 +1,6 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
-import { Outlet, useHref, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Header from "../../components/dashboard/Header";

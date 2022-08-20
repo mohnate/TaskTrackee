@@ -55,7 +55,7 @@ export default function Login() {
     if (error) {
       console.error(error);
     } else if (user) {
-      navigate("/dashboard");
+      navigate("/dashboard/alltask");
     }
   };
 

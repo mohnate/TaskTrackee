@@ -1,4 +1,8 @@
+import styles from "../../styles/dashboard/dashboard.module.scss";
+
 import { Helmet } from "react-helmet-async";
+
+import Divider from "../../components/Divider";
 
 export default function UpcoimngTask() {
   return (
@@ -6,7 +10,14 @@ export default function UpcoimngTask() {
       <Helmet>
         <title>TaskTrackee | Upcoming Task</title>
       </Helmet>
-      <main>Upcoming task page</main>
+      <main className={styles.mainTask}>
+        <section className={styles.taskSection}>
+          <h2 className={styles.sectionHead}>
+            This Week ({new Date().toLocaleDateString("en-GB")})
+          </h2>
+          <Divider />
+        </section>
+      </main>
     </>
   );
 }

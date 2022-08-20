@@ -7,12 +7,17 @@
   background-color: var(--seconadry-color);
   height: 100%;
   width: 100%;
+  padding: 20px calc(5% + 40px);
 }
 
+@mixin contentWidth {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .contentHeadContainer {
+  @include contentWidth;
   display: flex;
   font-family: var(--body2);
-  margin: 20px calc(5% + 40px);
   color: #fff;
 }
 .contentHeader {
@@ -26,6 +31,7 @@
   border: none;
   margin: 0 0 0 auto;
   padding: 4px 20px;
+  height: 42px;
   color: inherit;
   font-size: 1rem;
   background-color: var(--primary-color);
@@ -42,4 +48,14 @@
     outline-width: 2px;
     outline-style: solid;
   }
+}
+
+.mainTask {
+  @include contentWidth;
+  padding-top: 40px;
+}
+.sectionHead {
+  font-family: var(--heading);
+  color: #fff;
+  margin: 0;
 }

@@ -1,4 +1,8 @@
+import styles from "../../styles/dashboard/dashboard.module.scss";
+
 import { Helmet } from "react-helmet-async";
+
+import Divider from "../../components/Divider";
 
 export default function FinishedTask() {
   return (
@@ -6,7 +10,9 @@ export default function FinishedTask() {
       <Helmet>
         <title>TaskTrackee | Finished Task</title>
       </Helmet>
-      <main>Finished task page</main>
+      <main className={styles.mainTask}>
+        <section className={styles.taskSection}>Finished Task</section>
+      </main>
     </>
   );
 }

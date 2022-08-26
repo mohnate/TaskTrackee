@@ -18,7 +18,7 @@ export default function NoAuthenticateuser({ children }) {
 
   useEffect(() => {
     if (supabase.auth.session()) {
-      navigate("/dashboard");
+      navigate("/dashboard/alltask");
     }
   }, [currentUser]);
 

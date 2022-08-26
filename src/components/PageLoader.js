@@ -26,7 +26,7 @@ export default function Spinner({ pad, sz }) {
               : {}
           }
         >
-          <ImageRender src={spinner} />
+          <ImageRender src={spinner} alt="spinner loading" />
         </div>
       </div>
     </div>

@@ -10,9 +10,9 @@ export default function FinishedTask() {
       <Helmet>
         <title>TaskTrackee | Finished Task</title>
       </Helmet>
-      <main className={styles.mainTask}>
+      <article className={styles.mainTask}>
         <section className={styles.taskSection}>Finished Task</section>
-      </main>
+      </article>
     </>
   );
 }

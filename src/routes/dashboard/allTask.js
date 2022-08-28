@@ -10,14 +10,14 @@ export default function AllTask() {
       <Helmet>
         <title>TaskTrackee | All Task</title>
       </Helmet>
-      <main className={styles.mainTask}>
+      <article className={styles.mainTask}>
         <section className={styles.taskSection}>
           <h2 className={styles.sectionHead}>
             Today ({new Date().toLocaleDateString("en-GB")})
           </h2>
           <Divider />
         </section>
-      </main>
+      </article>
     </>
   );
 }

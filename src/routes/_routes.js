@@ -5,7 +5,7 @@ import { lazy } from "react";
 
 import Homepage from "./index";
 import ProtectedRoute from "../lib/protectedRoute";
-import NoAuthenticateuser from "../lib/NoAuthenticateUser";
+import NoAuthenticateUser from "../lib/NoAuthenticateUser";
 const Dashboard = lazy(() => import("../routes/dashboard/index"));
 const AllTask = lazy(() => import("../routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("../routes/dashboard/todayTask"));
@@ -20,9 +20,9 @@ export default function App() {
         <Route
           path="/"
           element={
-            <NoAuthenticateuser>
+            <NoAuthenticateUser>
               <Homepage />
-            </NoAuthenticateuser>
+            </NoAuthenticateUser>
           }
         />
         <Route

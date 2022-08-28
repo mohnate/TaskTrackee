@@ -89,6 +89,23 @@
   }
 }
 
+// TaskDescInput
+.taskInput {
+  @include inputStyle();
+  background: none;
+
+  &::placeholder {
+    opacity: 0.65;
+    color: rgb(202, 202, 202);
+  }
+  margin: 0;
+  height: 30px;
+  padding: 1px 3px;
+  color: #fff;
+  border-radius: 0;
+  font-size: 1rem;
+}
+
 // Input when Warn
 .inputWarn {
   outline: 3px solid rgb(197, 16, 16);

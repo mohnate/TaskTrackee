@@ -1,10 +1,11 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 
 import Header from "../../components/dashboard/Header";
 import SideBar from "../../components/dashboard/SideBar";
+import AddTaskModal from "../../components/dashboard/AddTaskModal";
 
 // Data below must be synchronized with components/dashboard/SideBar.js
 const pages = [
@@ -20,6 +21,7 @@ export default function Dashboard() {
   const [activePage, setActivePage] = useState(
     window.location.pathname.replace("/dashboard/", "")
   );
+  const [toggleModal, setToggleModal] = useState(false);
 
   useEffect(() => {
     pages.forEach((page) => {
@@ -45,13 +47,18 @@ export default function Dashboard() {
                 return page.route === activePage ? page.label : "";
               })}
             </h1>
-            <button className={styles.addTaskBtn} tabIndex="0">
+            <button
+              className={styles.addTaskBtn}
+              tabIndex="0"
+              onClick={() => setToggleModal(true)}
+            >
               Add Task
             </button>
           </header>
           <Outlet />
         </main>
       </div>
+      {toggleModal ? <AddTaskModal setToggleModal={setToggleModal} /> : null}
     </>
   );
 }

@@ -1,7 +1,10 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Outlet, useNavigate } from "react-router-dom";
-import { lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { supabase } from "../../lib/supabase";
+import { setData, updData } from "../../lib/ReduxSlice/SupabaseTaskSlice";
 
 import Header from "../../components/dashboard/Header";
 import SideBar from "../../components/dashboard/SideBar";
@@ -22,6 +25,7 @@ export default function Dashboard() {
     window.location.pathname.replace("/dashboard/", "")
   );
   const [toggleModal, setToggleModal] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     pages.forEach((page) => {
@@ -30,6 +34,29 @@ export default function Dashboard() {
       }
     });
   }, [activePage]);
+
+  useEffect(() => {
+    supabase
+      .from("Task")
+      .select()
+      .eq("user_uid", supabase.auth.user().id)
+      .then((payload) => {
+        if (payload.error) {
+          console.error(error);
+        } else {
+          dispatch(setData(payload.data));
+        }
+      });
+
+    const mySubscription = supabase
+      .from("Task")
+      .on("*", (payload) => {
+        console.log(payload);
+        const newTodo = payload.new;
+        dispatch(updData(newTodo));
+      })
+      .subscribe();
+  }, []);
 
   return (
     <>
@@ -47,13 +74,15 @@ export default function Dashboard() {
                 return page.route === activePage ? page.label : "";
               })}
             </h1>
-            <button
-              className={styles.addTaskBtn}
-              tabIndex="0"
-              onClick={() => setToggleModal(true)}
-            >
-              Add Task
-            </button>
+            {activePage === "finishedtask" ? null : (
+              <button
+                className={styles.addTaskBtn}
+                tabIndex="0"
+                onClick={() => setToggleModal(true)}
+              >
+                Add Task
+              </button>
+            )}
           </header>
           <Outlet />
         </main>

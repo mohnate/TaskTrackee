@@ -1,22 +1,110 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
+import {
+  dataIsLate,
+  dataIsNextWeek,
+  dataIsThisWeek,
+  taskNotCompleted,
+} from "../../lib/ReduxSlice/SupabaseTaskSlice";
+import { useSelector } from "react-redux";
 
 import Divider from "../../components/Divider";
+import TaskBar from "../../components/dashboard/TaskBar";
 
 export default function UpcoimngTask() {
+  const taskDataThisWeek = useSelector((state) =>
+    state.taskData.value?.filter((task) => {
+      if (dataIsThisWeek(task) && taskNotCompleted(task) && !dataIsLate(task))
+        return task;
+    })
+  );
+  const taskDataNextWeek = useSelector((state) =>
+    state.taskData.value?.filter((task) => {
+      if (
+        !dataIsThisWeek(task) &&
+        dataIsNextWeek(task) &&
+        taskNotCompleted(task) &&
+        !dataIsLate(task)
+      )
+        return task;
+    })
+  );
+
+  const lastDayOfThisWeek = () => {
+    const weekdayList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const taskWeekday = new Date().toLocaleString("en-UK", {
+      weekday: "short",
+    });
+    let results;
+
+    weekdayList.forEach((day, index) => {
+      if (day === taskWeekday) {
+        const daysToShow = 6 - index;
+        results = new Date(
+          new Date().setDate(new Date().getDate() + daysToShow)
+        ).toLocaleDateString("en-GB");
+      }
+    });
+
+    return results;
+  };
+
+  const lastDayOfNextWeek = () => {
+    const weekdayList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const taskWeekday = new Date().toLocaleString("en-UK", {
+      weekday: "short",
+    });
+    let results;
+
+    weekdayList.forEach((day, index) => {
+      if (day === taskWeekday) {
+        const daysToShow = 13 - index;
+        results = new Date(
+          new Date().setDate(new Date().getDate() + daysToShow)
+        ).toLocaleDateString("en-GB");
+      }
+    });
+
+    return results;
+  };
+
   return (
     <>
       <Helmet>
         <title>TaskTrackee | Upcoming Task</title>
       </Helmet>
       <article className={styles.mainTask}>
-        <section className={styles.taskSection}>
-          <h2 className={styles.sectionHead}>
-            This Week ({new Date().toLocaleDateString("en-GB")})
-          </h2>
-          <Divider />
-        </section>
+        {/* This Week Section */}
+        {taskDataThisWeek?.length > 0 ? (
+          <section className={styles.taskSection}>
+            <h2 className={styles.sectionHead}>
+              This Week ({lastDayOfThisWeek()})
+            </h2>
+            <Divider />
+            {taskDataThisWeek.map((task) => (
+              <TaskBar data={task} key={task.id} />
+            ))}
+          </section>
+        ) : null}
+
+        {/* This Week Section */}
+        {taskDataNextWeek?.length > 0 ? (
+          <section className={styles.taskSection}>
+            <h2 className={styles.sectionHead}>
+              Next Week ({lastDayOfNextWeek()})
+            </h2>
+            <Divider />
+            {taskDataNextWeek.map((task) => (
+              <TaskBar data={task} key={task.id} />
+            ))}
+          </section>
+        ) : null}
+
+        {/* No Task Matched  */}
+        {taskDataThisWeek?.length === 0 ? (
+          <h2 className={styles.sectionHead}>No Task</h2>
+        ) : null}
       </article>
     </>
   );

@@ -1,11 +1,12 @@
 import "../styles/global.scss";
 
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { lazy } from "react";
 
 import Homepage from "./index";
 import ProtectedRoute from "../lib/protectedRoute";
 import NoAuthenticateUser from "../lib/NoAuthenticateUser";
+
 const Dashboard = lazy(() => import("../routes/dashboard/index"));
 const AllTask = lazy(() => import("../routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("../routes/dashboard/todayTask"));
@@ -13,7 +14,6 @@ const UpcoimngTask = lazy(() => import("../routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("../routes/dashboard/finishedTask"));
 
 export default function App() {
-  const navigate = useNavigate();
   return (
     <>
       <Routes>

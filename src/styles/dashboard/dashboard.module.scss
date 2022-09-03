@@ -59,3 +59,43 @@
   color: #fff;
   margin: 0;
 }
+.taskSection {
+  margin-bottom: 40px;
+}
+
+// TaskBar File Styling
+.taskBarContainer {
+  display: flex;
+  margin: 8px 0;
+}
+
+@mixin taskbastyle {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-family: var(--heading);
+  border-radius: 7px;
+  padding: 9px 17px;
+  font-size: 1.3rem;
+}
+.taskDate {
+  @include taskbastyle;
+  margin-right: 15px;
+  white-space: nowrap;
+}
+.taskBarContent {
+  @include taskbastyle;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.taskBarTickBox {
+  background-color: var(--tertiary-color);
+  border-radius: 9999px;
+  height: fit-content;
+  width: fit-content;
+  padding: 2px;
+  width: 28px;
+  height: 28px;
+  margin-right: 15px;
+}

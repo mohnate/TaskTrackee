@@ -42,34 +42,38 @@ export const dataIsToday = (task) => {
 };
 
 export const dataIsTommorow = (task) => {
-  const isSameDay =
+  const isNextDay =
     new Date(task.due_date).getDate() ==
     new Date(new Date().setDate(new Date().getDate() + 1)).getDate();
   const isSameMonth =
-    new Date(task.due_date).getMonth() >=
+    new Date(task.due_date).getMonth() ==
     new Date(new Date().setDate(new Date().getDate() + 1)).getMonth();
   const isSameYear =
-    new Date(task.due_date).getFullYear() >=
+    new Date(task.due_date).getFullYear() ==
     new Date(new Date().setDate(new Date().getDate() + 1)).getFullYear();
 
-  if (isSameDay && isSameMonth && isSameYear) {
+  if (isNextDay && isSameMonth && isSameYear) {
     return true;
   } else return false;
 };
 export const dataIsFuture = (task) => {
   if (task.due_date == null) return true;
 
-  const isLaterDay =
-    new Date(task.due_date).getDate() >
-    new Date(new Date().setDate(new Date().getDate() + 2)).getDate();
-  const isLaterMonth =
-    new Date(task.due_date).getMonth() >=
-    new Date(new Date().setDate(new Date().getDate() + 2)).getMonth();
-  const isLaterYear =
-    new Date(task.due_date).getFullYear() >=
-    new Date(new Date().setDate(new Date().getDate() + 2)).getFullYear();
+  const minimumDate = new Date();
+  minimumDate.setHours(0);
+  minimumDate.setMinutes(0);
+  minimumDate.setSeconds(0);
+  minimumDate.setMilliseconds(0);
 
-  if (isLaterDay && isLaterMonth && isLaterYear) {
+  const isLaterDate = new Date(task.due_date);
+  isLaterDate.setHours(0);
+  isLaterDate.setMinutes(0);
+  isLaterDate.setSeconds(0);
+  isLaterDate.setMilliseconds(0);
+
+  const results = isLaterDate.valueOf() - minimumDate.valueOf() >= 172800000; // 2 days
+
+  if (results) {
     return true;
   } else return false;
 };
@@ -78,6 +82,24 @@ export const dataIsLate = (task) => {
   if (new Date(task.due_date).getTime() < new Date().getTime()) {
     return true;
   } else return false;
+};
+
+const isWithinWeek = (task, days, index) => {
+  const daysToShow = days - index;
+  const endOfTheWeek = new Date(
+    new Date().setDate(new Date().getDate() + daysToShow)
+  );
+  endOfTheWeek.setHours(0);
+  endOfTheWeek.setMinutes(0);
+  endOfTheWeek.setSeconds(0);
+  endOfTheWeek.setMilliseconds(0);
+
+  const currentTask = new Date(task.due_date);
+  currentTask.setHours(0);
+  currentTask.setMinutes(0);
+  currentTask.setSeconds(0);
+  currentTask.setMilliseconds(0);
+  return currentTask <= endOfTheWeek;
 };
 export const dataIsThisWeek = (task) => {
   if (task.due_date == null) return false;
@@ -88,19 +110,7 @@ export const dataIsThisWeek = (task) => {
 
   weekdayList.forEach((day, index) => {
     if (day === taskWeekday) {
-      const daysToShow = 6 - index;
-
-      const isWithinDay =
-        new Date(task.due_date).getDate() <=
-        new Date(
-          new Date().setDate(new Date().getDate() + daysToShow)
-        ).getDate();
-      const isSameMonth =
-        new Date(task.due_date).getMonth() >= new Date().getMonth();
-      const isSameYear =
-        new Date(task.due_date).getFullYear() >= new Date().getFullYear();
-
-      if (isWithinDay && isSameMonth && isSameYear) {
+      if (isWithinWeek(task, 6, index)) {
         results = true;
       } else results = false;
     }
@@ -117,19 +127,7 @@ export const dataIsNextWeek = (task) => {
 
   weekdayList.forEach((day, index) => {
     if (day === taskWeekday) {
-      const daysToShow = 13 - index;
-
-      const isWithinDay =
-        new Date(task.due_date).getDate() <=
-        new Date(
-          new Date().setDate(new Date().getDate() + daysToShow)
-        ).getDate();
-      const isSameMonth =
-        new Date(task.due_date).getMonth() >= new Date().getMonth();
-      const isSameYear =
-        new Date(task.due_date).getFullYear() >= new Date().getFullYear();
-
-      if (isWithinDay && isSameMonth && isSameYear) {
+      if (isWithinWeek(task, 13, index)) {
         results = true;
       } else results = false;
     }

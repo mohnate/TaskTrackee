@@ -30,6 +30,17 @@ export default function UpcoimngTask() {
         return task;
     })
   );
+  const taskDataLaterWeek = useSelector((state) =>
+    state.taskData.value?.filter((task) => {
+      if (
+        !dataIsThisWeek(task) &&
+        !dataIsNextWeek(task) &&
+        taskNotCompleted(task) &&
+        !dataIsLate(task)
+      )
+        return task;
+    })
+  );
 
   const lastDayOfThisWeek = () => {
     const weekdayList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -88,7 +99,7 @@ export default function UpcoimngTask() {
           </section>
         ) : null}
 
-        {/* This Week Section */}
+        {/* Next Week Section */}
         {taskDataNextWeek?.length > 0 ? (
           <section className={styles.taskSection}>
             <h2 className={styles.sectionHead}>
@@ -101,8 +112,19 @@ export default function UpcoimngTask() {
           </section>
         ) : null}
 
+        {/* Later Section */}
+        {taskDataLaterWeek?.length > 0 ? (
+          <section className={styles.taskSection}>
+            <h2 className={styles.sectionHead}>Later</h2>
+            <Divider />
+            {taskDataLaterWeek.map((task) => (
+              <TaskBar data={task} key={task.id} />
+            ))}
+          </section>
+        ) : null}
+
         {/* No Task Matched  */}
-        {taskDataThisWeek?.length === 0 ? (
+        {taskDataThisWeek?.length === 0 && taskDataNextWeek?.length === 0 ? (
           <h2 className={styles.sectionHead}>No Task</h2>
         ) : null}
       </article>

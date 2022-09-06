@@ -124,7 +124,9 @@ export default function UpcoimngTask() {
         ) : null}
 
         {/* No Task Matched  */}
-        {taskDataThisWeek?.length === 0 && taskDataNextWeek?.length === 0 ? (
+        {taskDataThisWeek?.length === 0 &&
+        taskDataNextWeek?.length === 0 &&
+        taskDataLaterWeek?.length === 0 ? (
           <h2 className={styles.sectionHead}>No Task</h2>
         ) : null}
       </article>

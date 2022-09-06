@@ -2,11 +2,12 @@ import dashboardStyles from "../../styles/dashboard/dashboard.module.scss";
 import styles from "../../styles/dashboard/AddTaskModal.module.scss";
 
 import { useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { supabase } from "../../lib/supabase";
 
 import TaskInput from "../input/TaskInput";
 
-export default function AddTaskModal({ setToggleModal }) {
+export default function AddTaskModal({ setToggleModal, toggleModal }) {
   const headRef = useRef();
   const taskDescRef = useRef();
 
@@ -27,33 +28,54 @@ export default function AddTaskModal({ setToggleModal }) {
     }
   };
 
+  const modalVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
+  };
+
   return (
     <>
-      <div className={styles.pos} onClick={closeModal}>
-        <main className={styles.content}>
-          <form onSubmit={handleSubmit}>
-            <TaskInput
-              taskRef={headRef}
-              id="taskHead"
-              placeholder="Headings here"
-              c={styles.head}
-              val="Task Header"
-            />
-            <TaskInput
-              taskRef={taskDescRef}
-              id="taskDesc"
-              placeholder="Description here"
-            />
-            <button
-              type="submit"
-              className={`${dashboardStyles.addTaskBtn} ${styles.addTaskBtn}`}
+      <AnimatePresence mode="wait">
+        {toggleModal ? (
+          <>
+            <motion.div
+              className={styles.pos}
+              onClick={closeModal}
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
-              Add Task
-            </button>
-          </form>
-        </main>
-      </div>
-      <div className={styles.bgClose} onClick={closeModal}></div>
+              <main className={styles.content}>
+                <form onSubmit={handleSubmit}>
+                  <TaskInput
+                    taskRef={headRef}
+                    id="taskHead"
+                    placeholder="Headings here"
+                    c={styles.head}
+                    val="Task Header"
+                  />
+                  <TaskInput
+                    taskRef={taskDescRef}
+                    id="taskDesc"
+                    placeholder="Description here"
+                  />
+                  <button
+                    type="submit"
+                    className={`${dashboardStyles.addTaskBtn} ${styles.addTaskBtn}`}
+                  >
+                    Add Task
+                  </button>
+                </form>
+              </main>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>
+      {toggleModal ? (
+        <div className={styles.bgClose} onClick={closeModal}></div>
+      ) : null}
     </>
   );
 }

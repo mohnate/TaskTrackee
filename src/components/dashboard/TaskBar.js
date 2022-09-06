@@ -1,7 +1,19 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 import CheckSvg from "../icons/CheckSvg";
 
+import { useState } from "react";
+
 export default function TaskBar({ data, date = "macro" }) {
+  const [toggleCheck, setToggleCheck] = useState();
+
+  const handleMouseOver = (condition) => {
+    if (data.status === "completed") return;
+    if (condition) {
+      setToggleCheck(true);
+    } else {
+      setToggleCheck(false);
+    }
+  };
   return (
     <div className={styles.taskBarContainer}>
       <span className={styles.taskDate}>
@@ -17,6 +29,8 @@ export default function TaskBar({ data, date = "macro" }) {
           })}
           style={
             data.due_date == null
+              ? null
+              : data.status === "completed"
               ? null
               : Date.now() > new Date(data.due_date).valueOf()
               ? { color: "#ad1111" }
@@ -39,10 +53,27 @@ export default function TaskBar({ data, date = "macro" }) {
         </time>
       </span>
       <div className={styles.taskBarContent}>
-        <div className={styles.taskBarTickBox}>
-          {data.status === "completed" ? <CheckSvg /> : null}
+        <div
+          className={styles.taskBarTickBox}
+          onMouseEnter={() => handleMouseOver(true)}
+          onMouseLeave={() => handleMouseOver(false)}
+        >
+          {data.status === "completed" ? (
+            <CheckSvg color={"#10952d"} />
+          ) : toggleCheck ? (
+            <CheckSvg />
+          ) : null}
         </div>
-        <span className={styles.taskBarHeader}>{data.header}</span>
+        <span
+          className={styles.taskBarHeader}
+          style={
+            data.status === "completed"
+              ? { textDecorationLine: "line-through" }
+              : null
+          }
+        >
+          {data.header}
+        </span>
       </div>
     </div>
   );

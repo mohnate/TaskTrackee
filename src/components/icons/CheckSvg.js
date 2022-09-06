@@ -7,7 +7,7 @@ export default function CheckSvg({ color, className }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className || null}
-      style={{verticalAlign:"center"}}
+      style={{ verticalAlign: "center" }}
     >
       <path
         d="m5 13 4 4L19 7"

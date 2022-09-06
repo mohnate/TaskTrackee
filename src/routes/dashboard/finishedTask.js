@@ -1,17 +1,36 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
+import { useSelector } from "react-redux";
+import { taskNotCompleted } from "../../lib/ReduxSlice/SupabaseTaskSlice";
 
-import Divider from "../../components/Divider";
+import TaskBar from "../../components/dashboard/TaskBar";
 
 export default function FinishedTask() {
+  const taskDataCompleted = useSelector((state) =>
+    state.taskData.value?.filter((task) => {
+      if (!taskNotCompleted(task)) return task;
+    })
+  );
   return (
     <>
       <Helmet>
         <title>TaskTrackee | Finished Task</title>
       </Helmet>
       <article className={styles.mainTask}>
-        <section className={styles.taskSection}>Finished Task</section>
+        {/* Completed Section */}
+        {taskDataCompleted?.length > 0 ? (
+          <div className={styles.taskSection}>
+            {taskDataCompleted.map((task) => (
+              <TaskBar data={task} key={task.id} />
+            ))}
+          </div>
+        ) : null}
+
+        {/* No Task Matched  */}
+        {taskDataCompleted?.length === 0 ? (
+          <h2 className={styles.sectionHead}>Nothing to show here</h2>
+        ) : null}
       </article>
     </>
   );

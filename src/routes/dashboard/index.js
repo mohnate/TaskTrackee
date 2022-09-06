@@ -3,6 +3,7 @@ import styles from "../../styles/dashboard/dashboard.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { motion, useAnimation } from "framer-motion";
 import { supabase } from "../../lib/supabase";
 import { setData, updData } from "../../lib/ReduxSlice/SupabaseTaskSlice";
 
@@ -26,6 +27,7 @@ export default function Dashboard() {
   );
   const [toggleModal, setToggleModal] = useState(false);
   const dispatch = useDispatch();
+  const controls = useAnimation();
 
   useEffect(() => {
     pages.forEach((page) => {
@@ -58,6 +60,20 @@ export default function Dashboard() {
       .subscribe();
   }, []);
 
+  useEffect(() => {
+    if (toggleSideBar) {
+      controls.start({
+        marginLeft: 260,
+        transition: { type: "tween" },
+      });
+    } else {
+      controls.start({
+        marginLeft: 0,
+        transition: { type: "tween" },
+      });
+    }
+  }, [toggleSideBar]);
+
   return (
     <>
       <Header
@@ -66,8 +82,12 @@ export default function Dashboard() {
         setActivePage={setActivePage}
       />
       <div className={styles.container}>
-        {toggleSideBar ? <SideBar setActivePage={setActivePage} /> : null}
-        <main className={styles.content}>
+        <SideBar setActivePage={setActivePage} toggleSideBar={toggleSideBar} />
+        <motion.main
+          className={styles.content}
+          animate={controls}
+          initial={{ marginLeft: 260 }}
+        >
           <header className={styles.contentHeadContainer}>
             <h1 className={styles.contentHeader}>
               {pages.map((page) => {
@@ -85,9 +105,9 @@ export default function Dashboard() {
             )}
           </header>
           <Outlet />
-        </main>
+        </motion.main>
       </div>
-      {toggleModal ? <AddTaskModal setToggleModal={setToggleModal} /> : null}
+      <AddTaskModal setToggleModal={setToggleModal} toggleModal={toggleModal} />
     </>
   );
 }

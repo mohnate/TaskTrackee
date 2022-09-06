@@ -5,6 +5,8 @@ import upcoming from "../../../public/icon/upcoming.svg";
 import doubleCheck from "../../../public/icon/doubleCheck.svg";
 
 import { useLocation } from "react-router-dom";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
 
 // Data below must be synchronized with routes/dashboard/index.js
 const selectionBtn = [
@@ -14,10 +16,30 @@ const selectionBtn = [
   { label: "Finished Task", img: doubleCheck, pathname: "finishedtask" },
 ];
 
-export default function SideBar({ setActivePage }) {
+export default function SideBar({ setActivePage, toggleSideBar }) {
   const location = useLocation();
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (toggleSideBar) {
+      controls.start({
+        x: 0,
+        transition: { type: "tween" },
+      });
+    } else {
+      controls.start({
+        x: -260,
+        transition: { type: "tween" },
+      });
+    }
+  }, [toggleSideBar]);
+
   return (
-    <section className={styles.sidebar}>
+    <motion.section
+      className={styles.sidebar}
+      initial={{ x: -260 }}
+      animate={controls}
+    >
       <div className={styles.container}>
         {selectionBtn.map((section, index) => {
           return (
@@ -37,6 +59,6 @@ export default function SideBar({ setActivePage }) {
           );
         })}
       </div>
-    </section>
+    </motion.section>
   );
 }

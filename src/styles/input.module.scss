@@ -113,3 +113,21 @@
 .inputWarnFooter {
   color: rgb(255, 0, 0);
 }
+
+// TaskdateTimeInput
+.optionContainer {
+  @include inputStyle();
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+}
+
+.dateTimeLabel {
+  font-family: var(--body);
+  white-space: nowrap;
+}
+.dateTimeInput {
+  @include inputStyle();
+  margin: 0;
+}

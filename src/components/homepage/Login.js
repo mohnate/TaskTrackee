@@ -66,10 +66,10 @@ export default function Login() {
         onSubmit={handleSubmit}
         className={styles.formControl}
       >
-        <EmailInput id="loginEmail" emailRef={emailRef} state={state.email} />
+        <EmailInput id="loginEmail" ref={emailRef} state={state.email} />
         <PasswordInput
           id="loginPassword"
-          passwordRef={passwordRef}
+          ref={passwordRef}
           state={state.password}
         />
         <button type="submit" className={stylesInput.submitBtn}>

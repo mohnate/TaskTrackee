@@ -94,20 +94,20 @@ export default function SignUp({ setLoginComp }) {
       >
         <UsernameInput
           id="signUpUsername"
-          usernameRef={usernameRef}
+          ref={usernameRef}
           footer="Username have to contain at least 3 character"
           state={state.username}
         />
-        <EmailInput id="signUpEmail" emailRef={emailRef} state={state.email} />
+        <EmailInput id="signUpEmail" ref={emailRef} state={state.email} />
         <PasswordInput
           id="signUpPassword"
-          passwordRef={passwordRef}
+          ref={passwordRef}
           footer="Your password needs to contain at least 8 character"
           state={state.password}
         />
         <PasswordInput
           id="signUpConfPassword"
-          passwordRef={confPasswordRef}
+          ref={confPasswordRef}
           label="Confirm Password"
           placeholder="Re-enter password"
           confirmPass={passwordRef}

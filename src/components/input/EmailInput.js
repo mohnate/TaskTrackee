@@ -1,14 +1,14 @@
 import styles from "../../styles/input.module.scss";
 import DoubleCheckSvg from "../icons/DoubleCheckSvg";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function EmailInput({ id, emailRef, label, footer, state }) {
+const EmailInput = React.forwardRef(({ id, label, footer, state }, ref) => {
   const [tally, setTally] = useState(false);
   const inputOnChange = () => {
     const emailPattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRef.current.value.match(emailPattern)) {
+    if (ref.current.value.match(emailPattern)) {
       if (!tally) {
         setTally(true);
       }
@@ -27,7 +27,7 @@ export default function EmailInput({ id, emailRef, label, footer, state }) {
       <div style={{ position: "relative", width: "100%" }}>
         <input
           id={id}
-          ref={emailRef}
+          ref={ref}
           className={`${styles.emailInput} ${state ? styles.inputWarn : null}`}
           type="email"
           placeholder="Enter email address"
@@ -37,12 +37,13 @@ export default function EmailInput({ id, emailRef, label, footer, state }) {
           autoComplete="on"
           style={footer || state ? { marginBottom: "2px" } : {}}
           onChange={inputOnChange}
+          data-testid="emailInput"
         />
         {tally ? (
           <DoubleCheckSvg color="#19a663" className={styles.tallyIcon} />
         ) : null}
       </div>
-      {footer ? (
+      {footer || state ? (
         <label
           htmlFor={id}
           className={`${styles.inputFooter} ${
@@ -54,4 +55,6 @@ export default function EmailInput({ id, emailRef, label, footer, state }) {
       ) : null}
     </>
   );
-}
+});
+
+export default EmailInput;

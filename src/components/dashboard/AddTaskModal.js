@@ -82,14 +82,14 @@ export default function AddTaskModal({ setToggleModal, toggleModal }) {
             <main className={styles.content}>
               <form onSubmit={handleSubmit}>
                 <TaskInput
-                  taskRef={headRef}
+                  ref={headRef}
                   id="taskHead"
                   placeholder="Headings here"
                   c={styles.head}
                   val="Task Header"
                 />
                 <TaskInput
-                  taskRef={taskDescRef}
+                  ref={taskDescRef}
                   id="taskDesc"
                   placeholder="Description here"
                 />

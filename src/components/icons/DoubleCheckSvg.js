@@ -7,6 +7,7 @@ export default function DoubleCheckSvg({ color, className }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      data-testid="DoubleCheckSvg"
     >
       <path
         d="m1.5 12.5 4.076 4.076a.6.6 0 0 0 .848 0L9 14M16 7l-4 4"

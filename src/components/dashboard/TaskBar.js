@@ -2,6 +2,7 @@ import styles from "../../styles/dashboard/dashboard.module.scss";
 import CheckSvg from "../icons/CheckSvg";
 
 import { useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 export default function TaskBar({ data, date = "macro" }) {
   const [toggleCheck, setToggleCheck] = useState();
@@ -14,6 +15,25 @@ export default function TaskBar({ data, date = "macro" }) {
       setToggleCheck(false);
     }
   };
+
+  const checkTask = async () => {
+    if (data.status === "completed") {
+      const { error } = await supabase
+        .from("Task")
+        .update({ status: "pending" })
+        .eq("user_uid", supabase.auth.user().id)
+        .eq("id", String(data.id));
+      if (error) return console.error(error);
+    } else {
+      const { error } = await supabase
+        .from("Task")
+        .update({ status: "completed" })
+        .eq("user_uid", supabase.auth.user().id)
+        .eq("id", String(data.id));
+      if (error) return console.error(error);
+    }
+  };
+
   return (
     <div className={styles.taskBarContainer}>
       <span className={styles.taskDate}>
@@ -57,6 +77,7 @@ export default function TaskBar({ data, date = "macro" }) {
           className={styles.taskBarTickBox}
           onMouseEnter={() => handleMouseOver(true)}
           onMouseLeave={() => handleMouseOver(false)}
+          onClick={checkTask}
         >
           {data.status === "completed" ? (
             <CheckSvg color={"#10952d"} />

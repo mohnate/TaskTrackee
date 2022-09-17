@@ -1,9 +1,14 @@
 module.exports = function (api) {
   const plugins = ["@babel/plugin-transform-runtime"];
 
-  if (api.env("production") === "development") {
+  if (api.env("development")) {
     plugins.push("react-refresh/babel");
   }
+
+  if (api.env("production")) {
+    plugins.push(["react-remove-properties", { properties: ["data-test-id"] }]);
+  }
+
   api.cache(true);
   return {
     presets: [

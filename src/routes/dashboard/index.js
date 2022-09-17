@@ -9,7 +9,7 @@ import { setData, updData } from "../../lib/ReduxSlice/SupabaseTaskSlice";
 
 import Header from "../../components/dashboard/Header";
 import SideBar from "../../components/dashboard/SideBar";
-import AddTaskModal from "../../components/dashboard/AddTaskModal";
+import TaskModal from "../../components/dashboard/Modal/TaskModal";
 
 // Data below must be synchronized with components/dashboard/SideBar.js
 const pages = [
@@ -50,10 +50,9 @@ export default function Dashboard() {
         }
       });
 
-    const mySubscription = supabase
+    supabase
       .from("Task")
       .on("*", (payload) => {
-        console.log(payload);
         const newTodo = payload.new;
         dispatch(updData(newTodo));
       })
@@ -98,7 +97,7 @@ export default function Dashboard() {
               <button
                 className={styles.addTaskBtn}
                 tabIndex="0"
-                onClick={() => setToggleModal(true)}
+                onClick={() => setToggleModal("addTask")}
               >
                 Add Task
               </button>
@@ -107,7 +106,7 @@ export default function Dashboard() {
           <Outlet />
         </motion.main>
       </div>
-      <AddTaskModal setToggleModal={setToggleModal} toggleModal={toggleModal} />
+      <TaskModal setToggleModal={setToggleModal} toggleModal={toggleModal} />
     </>
   );
 }

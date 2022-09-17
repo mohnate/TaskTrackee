@@ -69,8 +69,8 @@ test("Username Input with input error with default label and no footer", () => {
   fireEvent.change(inputElement, { target: { value: "12" } });
   expect(inputElement.value).toBe("12");
 
-  const usernameFooter = screen.getByText(
-    /Username have to contain at least 3 character/i
+  const usernameFooter = screen.getByTestId(/usernameLabel/i);
+  expect(usernameFooter.textContent).toBe(
+    "Username have to contain at least 3 character"
   );
-  expect(usernameFooter).toBeInTheDocument();
 });

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import addTaskModalstyles from "../../styles/dashboard/AddTaskModal.module.scss";
-import dashboardStyles from "../../styles/dashboard/dashboard.module.scss";
+import modalStyles from "../../../styles/dashboard/modal.module.scss";
+import dashboardStyles from "../../../styles/dashboard/dashboard.module.scss";
 
 export default function WarnModal({ msg, setToggleModal, setWarn }) {
   const closeModal = (e, btnClose) => {
@@ -11,7 +11,6 @@ export default function WarnModal({ msg, setToggleModal, setWarn }) {
     }
     if (e.currentTarget == e.target) {
       setWarn(false);
-      setToggleModal(false);
       return;
     }
   };
@@ -26,7 +25,7 @@ export default function WarnModal({ msg, setToggleModal, setWarn }) {
     <>
       <AnimatePresence mode="wait">
         <motion.div
-          className={addTaskModalstyles.pos}
+          className={modalStyles.pos}
           onClick={closeModal}
           variants={modalVariants}
           initial="hidden"
@@ -34,23 +33,23 @@ export default function WarnModal({ msg, setToggleModal, setWarn }) {
           exit="exit"
         >
           <section
-            className={addTaskModalstyles.content}
+            className={modalStyles.content}
             style={{ backgroundColor: "#2c313f", width: "400px" }}
           >
-            <h1 className={addTaskModalstyles.warnModalHeader}>{msg}</h1>
+            <h1 className={modalStyles.warnModalHeader}>{msg}</h1>
 
-            <div className={addTaskModalstyles.btnGroup}>
+            <div className={modalStyles.btnGroup}>
               <button
                 type="button"
                 onClick={() => setWarn(false)}
-                className={`${dashboardStyles.addTaskBtn} ${addTaskModalstyles.backTaskBtn}`}
+                className={`${dashboardStyles.addTaskBtn} ${modalStyles.backTaskBtn}`}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={() => closeModal(null, true)}
-                className={`${dashboardStyles.addTaskBtn} ${addTaskModalstyles.cancelTaskBtn}`}
+                className={`${dashboardStyles.addTaskBtn} ${modalStyles.cancelTaskBtn}`}
               >
                 Discard
               </button>
@@ -58,7 +57,7 @@ export default function WarnModal({ msg, setToggleModal, setWarn }) {
           </section>
         </motion.div>
       </AnimatePresence>
-      <div className={addTaskModalstyles.bgClose} onClick={closeModal}></div>
+      <div className={modalStyles.bgClose} onClick={closeModal}></div>
     </>
   );
 }

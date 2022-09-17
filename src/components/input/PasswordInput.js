@@ -61,6 +61,7 @@ const PasswordInput = React.forwardRef(
             className={`${styles.inputFooter} ${
               state ? styles.inputWarnFooter : null
             }`}
+            data-testid="passwordLabel"
           >
             {state || footer}
           </label>

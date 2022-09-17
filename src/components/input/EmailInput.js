@@ -49,6 +49,7 @@ const EmailInput = React.forwardRef(({ id, label, footer, state }, ref) => {
           className={`${styles.inputFooter} ${
             state ? styles.inputWarnFooter : null
           }`}
+          data-testid="emailLabel"
         >
           {footer || state}
         </label>

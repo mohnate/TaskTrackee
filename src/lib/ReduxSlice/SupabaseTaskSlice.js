@@ -6,14 +6,15 @@ export const supabaseTaskSlice = createSlice({
   reducers: {
     setData: (state, action) => {
       state.value = action.payload;
+      state.value.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
 
       console.info(`%c setData `, "background: #fff; color: #663399");
       console.log(state.value);
     },
     updData: (state, action) => {
-      state.value.filter((task) => task.id != action.payload.id);
-      const newTodos = [...state.value, action.payload];
-      newTodos.sort((a, b) => b.id - a.id);
+      const todos = state.value.filter((task) => task.id != action.payload.id);
+      const newTodos = [...todos, action.payload];
+      newTodos.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
       state.value = newTodos;
 
       console.info(`%c updData `, "background: #ffef00; color: #00b7eb");

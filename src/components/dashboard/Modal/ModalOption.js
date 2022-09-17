@@ -1,0 +1,67 @@
+import dashboardStyles from "../../../styles/dashboard/dashboard.module.scss";
+import inputStyles from "../../../styles/input.module.scss";
+import styles from "../../../styles/dashboard/modal.module.scss";
+import CalenderSvg from "../../icons/CalenderSvg";
+import LabelOutlineSvg from "../../icons/LabelOutlineSvg";
+
+import { useState } from "react";
+
+export default function ModalOption({ dateRef }) {
+  const [activeOption, setActiveOption] = useState(null);
+
+  const toggleBtn = (type) => {
+    if (type === "calender") {
+      if (activeOption === "calender") return setActiveOption(null);
+      setActiveOption("calender");
+    } else if (type === "label") {
+      if (activeOption === "label") return setActiveOption(null);
+      setActiveOption("label");
+    }
+  };
+
+  const style = {
+    backgroundColor: "#fff",
+    height: "32px",
+    borderRadius: " 8px 8px 0 0",
+  };
+  const calenderBtnActive = activeOption === "calender" ? style : null;
+  const labelBtnActive = activeOption === "label" ? style : null;
+
+  return (
+    <>
+      <div className={styles.btnOptionGroup}>
+        <button
+          type="button"
+          onClick={() => toggleBtn("calender")}
+          className={`${dashboardStyles.addTaskBtn} ${styles.optionBtn}`}
+          style={calenderBtnActive}
+        >
+          <CalenderSvg color={activeOption === "calender" ? "#000" : "#fff"} />
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleBtn("label")}
+          className={`${dashboardStyles.addTaskBtn} ${styles.optionBtn}`}
+          style={labelBtnActive}
+        >
+          <LabelOutlineSvg color={activeOption === "label" ? "#000" : "#fff"} />
+        </button>
+      </div>
+      {activeOption === "calender" ? (
+        <div className={inputStyles.optionContainer}>
+          <label className={inputStyles.dateTimeLabel} htmlFor="due-time">
+            Due Date:
+          </label>
+          <input
+            className={inputStyles.dateTimeInput}
+            type="datetime-local"
+            id="due-time"
+            ref={dateRef}
+          />
+        </div>
+      ) : activeOption === "label" ? (
+        <div className={inputStyles.optionContainer}>Label</div>
+      ) : null}
+    </>
+  );
+}

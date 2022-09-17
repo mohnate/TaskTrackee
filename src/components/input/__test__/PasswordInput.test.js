@@ -69,8 +69,8 @@ test("Password Input with input error with default label and no footer", () => {
   fireEvent.change(inputElement, { target: { value: "12345" } });
   expect(inputElement.value).toBe("12345");
 
-  const usernameFooter = screen.getByText(
-    /Your password needs to contain at least 8 character/i
+  const usernameFooter = screen.getByTestId(/passwordLabel/i);
+  expect(usernameFooter.textContent).toBe(
+    "Your password needs to contain at least 8 character"
   );
-  expect(usernameFooter).toBeInTheDocument();
 });

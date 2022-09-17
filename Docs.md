@@ -29,3 +29,15 @@ supabase
 ```
 
 **Fix :** Remove the **`<React.StrictMode></React.StrictMode>`** tag. The Supabase subscribe has invoked twice under react strict mode which cause problem for supabase.
+
+## 3. \$RefreshSig\$ is not defined
+
+**Behaviour :** After running `npm run build`, serve the **dist** output will the page will not be responsive and a console error of \$RefreshSig\$ is not defined will be shown.
+
+**Fix :**
+
+1. exclude `node_modules` from the plugin
+
+2. set **`NODE_ENV=development`** when using the plugin and exclude the plugin during build by setting **`NODE_ENV=production`**.
+
+**GitHub Issue :** <https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/92>

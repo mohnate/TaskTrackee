@@ -30,7 +30,8 @@ module.exports = (env) => {
           terserOptions: {
             warnings: false,
             compress: {
-              comparisons: false,
+              drop_console: true,
+              pure_funcs: ["console.info", "console.error", "console.warn"],
             },
             parse: {},
             mangle: true,
@@ -49,6 +50,11 @@ module.exports = (env) => {
             test: /[\\/]node_modules[\\/]/,
             name: "vendor",
             chunks: "all",
+            enforce: true,
+          },
+          styles: {
+            test: /\.(css|scss)$/,
+            enforce: true, // force css in new chunks (ignores all other options)
           },
         },
       },
@@ -57,13 +63,14 @@ module.exports = (env) => {
       rules: [
         // Capture scss module and css module file
         {
-          test: /\.(s[ac]ss|css)$/i,
+          test: /\.module\.(scss|css)$/i,
           use: [
             MiniCssExtractPlugin.loader, // fourth
             {
               loader: "css-loader",
               options: {
                 importLoaders: 1,
+                sourceMap: true,
                 modules: {
                   localIdentName: "[name]_[local]_[hash:base64:5]",
                   localIdentHashDigest: "base64",
@@ -80,11 +87,11 @@ module.exports = (env) => {
             }, // second
             "sass-loader", // first
           ],
-          include: /\.module\.(s[ac]ss|css)$/,
         },
         // Capture scss and css file
         {
-          test: /\.(s[ac]ss|css)$/i,
+          test: /\.(scss|css)$/i,
+          exclude: /\.module\.(scss|css)$/i,
           use: [
             MiniCssExtractPlugin.loader, // fourth
             "css-loader", // third
@@ -98,7 +105,6 @@ module.exports = (env) => {
             }, // second
             "sass-loader", // first
           ],
-          exclude: /\.module\.(s[ac]ss|css)$/,
         },
       ],
     },

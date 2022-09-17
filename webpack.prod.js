@@ -118,7 +118,7 @@ module.exports = merge(main, {
         minifyURLs: true,
       },
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   performance: {
     hints: "warning",

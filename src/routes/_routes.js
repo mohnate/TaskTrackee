@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { lazy } from "react";
 
 import Homepage from "./index";
-import ProtectedRoute from "../lib/protectedRoute";
+import ProtectedRoute from "../lib/ProtectedRoute";
 import NoAuthenticateUser from "../lib/NoAuthenticateUser";
 
 const Dashboard = lazy(() => import("../routes/dashboard/index"));

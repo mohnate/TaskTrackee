@@ -1,0 +1,11 @@
+[dev]
+  command = "npm run dev" # Command to start your dev server
+  targetPort = 3000 # The port for your application server, framework or site generator
+  port = 8880 # The port that the netlify dev will be accessible on
+  publish = "dist" # The path to your static content folder
+  autoLaunch = true # a Boolean value that determines if Netlify Dev launches the local server address in your browser
+  envFiles = [".env"] # The env files to use, ordered by priority (left - highest, right - lowest)
+  # to start an https server instead of an http one, configure a certificate and key files
+  # [dev.https]
+  #  certFile = "cert.pem" # path to the certificate file
+  #  keyFile = "key.pem" # path to the private key file

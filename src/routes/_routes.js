@@ -1,7 +1,7 @@
 import "../styles/global.scss";
 
 import { Routes, Route } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 
 import Homepage from "./index";
 import ProtectedRoute from "../lib/ProtectedRoute";
@@ -12,6 +12,7 @@ const AllTask = lazy(() => import("../routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("../routes/dashboard/todayTask"));
 const UpcoimngTask = lazy(() => import("../routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("../routes/dashboard/finishedTask"));
+import Spinner from "../components/PageLoader";
 
 export default function App() {
   return (
@@ -34,10 +35,38 @@ export default function App() {
           }
         >
           <Route index element={<div>not found :(</div>} />
-          <Route path="alltask" element={<AllTask />} />
-          <Route path="todaytask" element={<TodayTask />} />
-          <Route path="upcomingtask" element={<UpcoimngTask />} />
-          <Route path="finishedtask" element={<FinishedTask />} />
+          <Route
+            path="alltask"
+            element={
+              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+                <AllTask />
+              </Suspense>
+            }
+          />
+          <Route
+            path="todaytask"
+            element={
+              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+                <TodayTask />
+              </Suspense>
+            }
+          />
+          <Route
+            path="upcomingtask"
+            element={
+              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+                <UpcoimngTask />
+              </Suspense>
+            }
+          />
+          <Route
+            path="finishedtask"
+            element={
+              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+                <FinishedTask />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<div>not found :(</div>} />
         </Route>
       </Routes>

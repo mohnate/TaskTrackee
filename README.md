@@ -1,4 +1,4 @@
-# Task Tracker Application
+# Task Tracker Application [![Netlify Status](https://api.netlify.com/api/v1/badges/e8c2b072-4c30-4226-8bbf-9206b3b837b6/deploy-status)](https://app.netlify.com/sites/tasktrackee/deploys)
 
 A task managment application built with **REACT. JS**
 

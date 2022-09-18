@@ -16,6 +16,14 @@
   background-color: var(--primary-color);
 }
 
+.fillSize {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .postition {
   display: flex;
   justify-content: center;

@@ -20,6 +20,7 @@ module.exports = (env) => {
       assetModuleFilename: "assets/[contenthash][ext][query]",
       pathinfo: false,
       clean: true,
+      publicPath: "auto",
     },
     optimization: {
       emitOnErrors: true,
@@ -109,7 +110,9 @@ module.exports = (env) => {
       ],
     },
     plugins: [
-      new MiniCssExtractPlugin({ filename: "styles/[name].[contenthash].css" }),
+      new MiniCssExtractPlugin({
+        filename: "styles/[name].[contenthash].css",
+      }),
       new CompressionPlugin(),
       new HtmlWebpackPlugin({
         template: "./public/index.html",

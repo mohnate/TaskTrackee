@@ -9,3 +9,30 @@
   # [dev.https]
   #  certFile = "cert.pem" # path to the certificate file
   #  keyFile = "key.pem" # path to the private key file
+
+[build]
+  command = "npm run build"
+  publish = "/dist"
+  base ="/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-DNS-Prefetch-Control = "on"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Content-Security-Policy= '''
+    default-src 'self' snrxmggiuferssrzuzwh.supabase.co;
+    font-src 'self' fonts.googleapis.com fonts.gstatic.com;
+    style-src 'self' fonts.googleapis.com fonts.gstatic.com;
+    connect-src 'self' wss: fetch snrxmggiuferssrzuzwh.supabase.co;
+    '''

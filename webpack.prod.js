@@ -10,6 +10,7 @@ const BundleAnalyzerPlugin =
 
 module.exports = (env) => {
   console.log("Enable BundleAnalyzerPlugin:", env.ANALYZE);
+  console.log("Mode:", process.env.NODE_ENV);
 
   return merge(main, {
     mode: "production",

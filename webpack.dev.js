@@ -7,6 +7,8 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = (env) => {
+  console.log("Mode:", process.env.NODE_ENV);
+
   return merge(main, {
     mode: "development",
     // Where files should be sent once they are bundled

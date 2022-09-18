@@ -1,5 +1,6 @@
 module.exports = function (api) {
   const plugins = ["@babel/plugin-transform-runtime"];
+  console.log("Babel Mode", api.env());
 
   if (api.env("development")) {
     plugins.push("react-refresh/babel");

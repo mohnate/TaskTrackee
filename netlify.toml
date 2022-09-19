@@ -28,7 +28,10 @@
     X-Frame-Options = "DENY"
     X-DNS-Prefetch-Control = "on"
     X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
     Content-Security-Policy= '''
     default-src 'self' snrxmggiuferssrzuzwh.supabase.co;

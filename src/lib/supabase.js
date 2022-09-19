@@ -8,8 +8,8 @@ const options = {
   detectSessionInUrl: true,
 };
 
+const projectUrl = process.env.SUPABASE_URL;
+const publicAnonKey = process.env.SUPABASE_PUBLIC_ANON_KEY;
+
 // Create a single supabase client for interacting with your database
-export const supabase = createClient(
-  "https://snrxmggiuferssrzuzwh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucnhtZ2dpdWZlcnNzcnp1endoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTk3ODk3MTQsImV4cCI6MTk3NTM2NTcxNH0.d-TbYaOUZJGqUWZGCj4YYp5JNUi4wCt1C2oUPSTkV7I"
-);
+export const supabase = createClient(projectUrl, publicAnonKey);

@@ -12,6 +12,10 @@ const AllTask = lazy(() => import("../routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("../routes/dashboard/todayTask"));
 const UpcoimngTask = lazy(() => import("../routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("../routes/dashboard/finishedTask"));
+const PageNotFound = lazy(() => import("../components/errorPage/PageNotFound"));
+const ContentNotFound = lazy(() =>
+  import("../components/errorPage/ContentNotFound")
+);
 import Spinner from "../components/PageLoader";
 
 export default function App() {
@@ -34,7 +38,7 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<div>not found :(</div>} />
+          <Route index element={<ContentNotFound />} />
           <Route
             path="alltask"
             element={
@@ -67,8 +71,9 @@ export default function App() {
               </Suspense>
             }
           />
-          <Route path="*" element={<div>not found :(</div>} />
+          <Route path="*" element={<ContentNotFound />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

@@ -2,6 +2,7 @@ import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 import {
   dataIsFuture,
   dataIsLate,
@@ -36,6 +37,8 @@ export default function AllTask() {
     })
   );
 
+  const [setToggleModal] = useOutletContext();
+
   return (
     <>
       <Helmet>
@@ -50,7 +53,12 @@ export default function AllTask() {
             </h2>
             <Divider />
             {taskDataTdy.map((task) => (
-              <TaskBar data={task} key={task.id} date={"micro"} />
+              <TaskBar
+                setTgMd={setToggleModal}
+                data={task}
+                key={task.id}
+                date={"micro"}
+              />
             ))}
           </section>
         ) : null}
@@ -67,7 +75,7 @@ export default function AllTask() {
             </h2>
             <Divider />
             {taskDataTmr.map((task) => (
-              <TaskBar data={task} key={task.id} />
+              <TaskBar setTgMd={setToggleModal} data={task} key={task.id} />
             ))}
           </section>
         ) : null}
@@ -78,7 +86,7 @@ export default function AllTask() {
             <h2 className={styles.sectionHead}>Upcoming</h2>
             <Divider />
             {taskDataUpc.map((task) => (
-              <TaskBar data={task} key={task.id} />
+              <TaskBar setTgMd={setToggleModal} data={task} key={task.id} />
             ))}
           </section>
         ) : null}
@@ -89,7 +97,7 @@ export default function AllTask() {
             <h2 className={styles.sectionHead}>Overdue</h2>
             <Divider />
             {taskDataLate.map((task) => (
-              <TaskBar data={task} key={task.id} />
+              <TaskBar setTgMd={setToggleModal} data={task} key={task.id} />
             ))}
           </section>
         ) : null}

@@ -116,10 +116,7 @@ module.exports = (env) => {
     devtool: "eval-source-map",
     plugins: [
       new HtmlWebpackPlugin({ inject: true, template: "./public/index.html" }),
-      new ReactRefreshWebpackPlugin({
-        include: /\.(js|jsx)$/,
-        // forceEnable: true,
-      }),
+      new ReactRefreshWebpackPlugin({ include: /\.(js|jsx)$/ }),
       new BundleAnalyzerPlugin({ logLevel: "silent", openAnalyzer: false }),
     ].filter(Boolean),
     resolve: {

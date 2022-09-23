@@ -21,7 +21,7 @@ module.exports = (env) => {
       assetModuleFilename: "assets/[contenthash][ext][query]",
       pathinfo: false,
       clean: true,
-      publicPath: "auto",
+      publicPath: "/",
     },
     optimization: {
       emitOnErrors: true,

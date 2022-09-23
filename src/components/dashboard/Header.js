@@ -5,7 +5,7 @@ import home from "../../../public/icon/home.svg";
 import defaultAvatar from "../../../public/icon/default-avatar.png";
 
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ImageRender from "../../lib/ImageRender";
 import { supabase } from "../../lib/supabase";
 
@@ -30,7 +30,9 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
           )}
         </div>
         <div className={styles.iconContainer}>
-          <ImageRender src={home} width={40} height={30} alt="home" />
+          <Link to="/dashboard/alltask">
+            <ImageRender src={home} width={40} height={30} alt="home" />
+          </Link>
         </div>
       </nav>
       <div className={styles.rightComp}>

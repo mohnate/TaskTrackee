@@ -97,13 +97,13 @@ export default function Dashboard() {
               <button
                 className={styles.addTaskBtn}
                 tabIndex="0"
-                onClick={() => setToggleModal("addTask")}
+                onClick={() => setToggleModal(["addTask"])}
               >
                 Add Task
               </button>
             )}
           </header>
-          <Outlet />
+          <Outlet context={[setToggleModal]} />
         </motion.main>
       </div>
       <TaskModal setToggleModal={setToggleModal} toggleModal={toggleModal} />

@@ -7,7 +7,7 @@ module.exports = function (api) {
   }
 
   if (api.env("production")) {
-    plugins.push(["react-remove-properties", { properties: ["data-test-id"] }]);
+    plugins.push(["react-remove-properties", { properties: ["data-testid"] }]);
   }
 
   api.cache(true);

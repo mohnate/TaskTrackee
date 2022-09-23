@@ -2,6 +2,7 @@ import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 import {
   dataIsLate,
   dataIsToday,
@@ -25,6 +26,8 @@ export default function TodayTask() {
     })
   );
 
+  const [setToggleModal] = useOutletContext();
+
   return (
     <>
       <Helmet>
@@ -37,7 +40,12 @@ export default function TodayTask() {
             <h2 className={styles.sectionHead}>Pending Task</h2>
             <Divider />
             {taskDataTdy.map((task) => (
-              <TaskBar data={task} key={task.id} date={"micro"} />
+              <TaskBar
+                setTgMd={setToggleModal}
+                data={task}
+                key={task.id}
+                date={"micro"}
+              />
             ))}
           </section>
         ) : null}
@@ -48,7 +56,12 @@ export default function TodayTask() {
             <h2 className={styles.sectionHead}>Overdue</h2>
             <Divider />
             {taskDataLate.map((task) => (
-              <TaskBar data={task} key={task.id} date={"micro"} />
+              <TaskBar
+                setTgMd={setToggleModal}
+                data={task}
+                key={task.id}
+                date={"micro"}
+              />
             ))}
           </section>
         ) : null}

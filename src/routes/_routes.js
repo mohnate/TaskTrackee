@@ -12,10 +12,9 @@ const AllTask = lazy(() => import("../routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("../routes/dashboard/todayTask"));
 const UpcoimngTask = lazy(() => import("../routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("../routes/dashboard/finishedTask"));
-const PageNotFound = lazy(() => import("../components/errorPage/PageNotFound"));
-const ContentNotFound = lazy(() =>
-  import("../components/errorPage/ContentNotFound")
-);
+
+import PageNotFound from "../components/errorPage/PageNotFound";
+import ContentNotFound from "../components/errorPage/ContentNotFound";
 import Spinner from "../components/PageLoader";
 
 export default function App() {

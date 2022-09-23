@@ -30,9 +30,9 @@ supabase
 
 **Fix :** Remove the **`<React.StrictMode></React.StrictMode>`** tag. The Supabase subscribe has invoked twice under react strict mode which cause problem for supabase.
 
-## 3. \$RefreshSig\$ is not defined
+## 3. `$RefreshSig$` is not defined
 
-**Behaviour :** After running `npm run build`, serve the **dist** output will the page will not be responsive and a console error of \$RefreshSig\$ is not defined will be shown.
+**Behaviour :** After running `npm run build`, serve the **dist** output will the page will not be responsive and a console error of `$RefreshSig$` is not defined will be shown.
 
 **Fix :**
 
@@ -41,3 +41,13 @@ supabase
 2. set **`NODE_ENV=development`** when using the plugin and exclude the plugin during build by setting **`NODE_ENV=production`**.
 
 **GitHub Issue :** <https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/92>
+
+## 4. Invalid MIME file type (on deployment)
+
+**Behaviour :** Application hosted on Netlify cannot load page after having two path deep, as the expected script browser wanted to load isn't found.
+
+**Problem :** `output.publicPath = "auto"` in `webpack.prod.js`
+
+**Fix :** change to `output.publicPath = "/"` in `webpack.prod.js`
+
+**Netlify support :** <https://answers.netlify.com/t/invalid-mime-type-for-js-file/75809>

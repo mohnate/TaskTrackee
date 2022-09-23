@@ -9,13 +9,18 @@
   @include modalBack;
   z-index: 10;
 }
+.posBig {
+  @include modalBack;
+  display: flex;
+  z-index: 10;
+}
 .bgClose {
   @include modalBack;
   left: 0;
   background-color: rgba(0, 0, 0, 0.226);
 }
 
-.content {
+@mixin content {
   margin: 7rem auto 0 auto;
   background-color: var(--pri-sec-color);
   width: 500px;
@@ -23,6 +28,15 @@
   border-radius: 8px;
   padding: 10px 15px;
   box-shadow: 5px 12px 29px -16px rgb(103, 226, 242, 0.5);
+}
+.content {
+  @include content;
+}
+.contentBig {
+  @include content;
+  margin: 0 auto;
+  height: 100%;
+  width: 600px;
 }
 
 .head {

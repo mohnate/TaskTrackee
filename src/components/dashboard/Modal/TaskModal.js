@@ -2,27 +2,34 @@ import styles from "../../../styles/dashboard/modal.module.scss";
 
 import { useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
 import { supabase } from "../../../lib/supabase";
 
 import WarnModal from "./WarnModal";
 import AddTask from "./AddTask";
+import UpdTask from "./UpdTask";
 
 export default function TaskModal({ setToggleModal, toggleModal }) {
-  const addTaskRef = useRef();
+  const taskRef = useRef();
   const [warn, setWarn] = useState();
+  const taskData = useSelector((state) =>
+    state.taskData.value?.filter(
+      (task) => task.user_uid == supabase.auth.user().id
+    )
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const header = addTaskRef.current.headInput();
-    let desc = addTaskRef.current.descInput();
+    const header = taskRef.current.headInput();
+    let desc = taskRef.current.descInput();
     let date;
 
     if (desc === "") desc = null;
-    if (!addTaskRef.current.dateInput()) {
+    if (!taskRef.current.dateInput()) {
       date = null;
     } else {
-      date = new Date(addTaskRef.current.dateInput()).toUTCString();
+      date = new Date(taskRef.current.dateInput()).toISOString();
     }
 
     const { error } = await supabase
@@ -34,14 +41,83 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
     setToggleModal(false);
   };
 
-  const closeModal = (e, btnClose) => {
-    const header = addTaskRef.current.headInput();
-    let desc = addTaskRef.current.descInput();
-    let date = addTaskRef.current.dateInput() || null;
+  const handleUpdate = async (e, id) => {
+    e.preventDefault();
 
-    const headerDidChange = header !== "Task Header";
-    const descDidChange = desc !== "";
-    const dateDidChange = date === null ? false : date !== "";
+    const header = taskRef.current.headInput();
+    let desc = taskRef.current.descInput();
+    let date = new Date(taskRef.current.dateInput()).toISOString();
+
+    const { error } = await supabase
+      .from("Task")
+      .update([{ header, desc, due_date: date }])
+      .eq("user_uid", supabase.auth.user().id)
+      .eq("id", id);
+    if (error) console.error(error);
+    setToggleModal(false);
+  };
+
+  const closeModal = (e, btnClose) => {
+    const header = taskRef.current.headInput();
+    let desc = taskRef.current.descInput();
+    let due_date = taskRef.current.dateInput() || null;
+
+    const headerChanges = () => {
+      for (const task of taskData) {
+        if (task.id === toggleModal[1]) {
+          if (task.header === header) {
+            return false;
+          } else return true;
+        }
+      }
+    };
+
+    const descChanges = () => {
+      for (const task of taskData) {
+        if (task.id === toggleModal[1]) {
+          let descInput = desc;
+          if (desc === "") descInput = null;
+          if (task.desc == descInput) {
+            return false;
+          } else return true;
+        }
+      }
+    };
+
+    const dateChanges = () => {
+      for (const task of taskData) {
+        if (task.id === toggleModal[1]) {
+          if (task.due_date != null) {
+            const adjustedDate = new Date(
+              new Date(task.due_date).setMinutes(
+                new Date(task.due_date).getMinutes() -
+                  new Date(task.due_date).getTimezoneOffset()
+              )
+            )
+              .toISOString()
+              .slice(0, -8);
+
+            if (adjustedDate === due_date) {
+              return false;
+            } else return true;
+          } else {
+            if (task.due_date === due_date) {
+              return false;
+            } else return true;
+          }
+        }
+      }
+    };
+
+    const headerDidChange = toggleModal[1]
+      ? headerChanges()
+      : header !== "Task Header";
+    const descDidChange = toggleModal[1] ? descChanges() : desc !== "";
+    const dateDidChange = toggleModal[1]
+      ? dateChanges()
+      : due_date === null
+      ? false
+      : due_date !== "";
 
     if (e === null && btnClose) {
       if (headerDidChange || descDidChange || dateDidChange) {
@@ -55,21 +131,21 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
     }
   };
 
-  const modalVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -50 },
-  };
-
   return (
     <>
       <AnimatePresence mode="wait">
-        {toggleModal === "addTask" ? (
+        {toggleModal[0] === "addTask" ? (
           <AddTask
-            modalVariants={modalVariants}
             closeModal={closeModal}
             handleSubmit={handleSubmit}
-            ref={addTaskRef}
+            ref={taskRef}
+          />
+        ) : toggleModal[0] === "updTask" ? (
+          <UpdTask
+            dataId={toggleModal[1]}
+            closeModal={closeModal}
+            handleUpdate={handleUpdate}
+            ref={taskRef}
           />
         ) : null}
       </AnimatePresence>

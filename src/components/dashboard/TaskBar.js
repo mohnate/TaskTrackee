@@ -4,7 +4,7 @@ import CheckSvg from "../icons/CheckSvg";
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 
-export default function TaskBar({ data, date = "macro" }) {
+export default function TaskBar({ data, date = "macro", setTgMd }) {
   const [toggleCheck, setToggleCheck] = useState();
 
   const handleMouseOver = (condition) => {
@@ -31,6 +31,12 @@ export default function TaskBar({ data, date = "macro" }) {
         .eq("user_uid", supabase.auth.user().id)
         .eq("id", String(data.id));
       if (error) return console.error(error);
+    }
+  };
+
+  const updTask = (e) => {
+    if (e.target == e.currentTarget || e.target.tagName == "SPAN") {
+      setTgMd(["updTask", data.id]);
     }
   };
 
@@ -72,7 +78,7 @@ export default function TaskBar({ data, date = "macro" }) {
               })}
         </time>
       </span>
-      <div className={styles.taskBarContent}>
+      <div className={styles.taskBarContent} onClick={updTask}>
         <div
           className={styles.taskBarTickBox}
           onMouseEnter={() => handleMouseOver(true)}

@@ -1,6 +1,7 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
+import { useOutletContext } from "react-router-dom";
 import {
   dataIsLate,
   dataIsNextWeek,
@@ -80,6 +81,8 @@ export default function UpcoimngTask() {
     return results;
   };
 
+  const [setToggleModal] = useOutletContext();
+
   return (
     <>
       <Helmet>
@@ -94,7 +97,7 @@ export default function UpcoimngTask() {
             </h2>
             <Divider />
             {taskDataThisWeek.map((task) => (
-              <TaskBar data={task} key={task.id} />
+              <TaskBar setTgMd={setToggleModal} data={task} key={task.id} />
             ))}
           </section>
         ) : null}
@@ -107,7 +110,7 @@ export default function UpcoimngTask() {
             </h2>
             <Divider />
             {taskDataNextWeek.map((task) => (
-              <TaskBar data={task} key={task.id} />
+              <TaskBar setTgMd={setToggleModal} data={task} key={task.id} />
             ))}
           </section>
         ) : null}
@@ -118,7 +121,7 @@ export default function UpcoimngTask() {
             <h2 className={styles.sectionHead}>Later</h2>
             <Divider />
             {taskDataLaterWeek.map((task) => (
-              <TaskBar data={task} key={task.id} />
+              <TaskBar setTgMd={setToggleModal} data={task} key={task.id} />
             ))}
           </section>
         ) : null}

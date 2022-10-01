@@ -30,7 +30,12 @@ export default function Homepage() {
       <section className={styles.rightPanel}>
         <main className={styles.rightPanelMain}>
           <div className={styles.brand}>
-            <ImageRender src={logo} width="512" height="512" />
+            <ImageRender
+              src={logo}
+              alt="TaskTrackee Logo"
+              width="512"
+              height="512"
+            />
           </div>
           <h1 className={styles.brandName}>TaskTrackee</h1>
           <Suspense fallback={<Spinner sz="medium" pad="50px 0" />}>

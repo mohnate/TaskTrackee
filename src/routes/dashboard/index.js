@@ -1,11 +1,12 @@
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from "framer-motion";
 import { supabase } from "../../lib/supabase";
 import { setData, updData } from "../../lib/ReduxSlice/SupabaseTaskSlice";
+import { setLabel, updLabel } from "../../lib/ReduxSlice/SupabaseLabelSlice";
 
 import Header from "../../components/dashboard/Header";
 import SideBar from "../../components/dashboard/SideBar";
@@ -20,22 +21,11 @@ const pages = [
 ];
 
 export default function Dashboard() {
-  const navigate = useNavigate();
+  const location = useLocation();
   const [toggleSideBar, setToggleSideBar] = useState(true);
-  const [activePage, setActivePage] = useState(
-    window.location.pathname.replace("/dashboard/", "")
-  );
   const [toggleModal, setToggleModal] = useState(false);
   const dispatch = useDispatch();
   const controls = useAnimation();
-
-  useEffect(() => {
-    pages.forEach((page) => {
-      if (activePage === page.route) {
-        navigate(page.route);
-      }
-    });
-  }, [activePage]);
 
   useEffect(() => {
     supabase
@@ -55,6 +45,26 @@ export default function Dashboard() {
       .on("*", (payload) => {
         const newTodo = payload.new;
         dispatch(updData(newTodo));
+      })
+      .subscribe();
+
+    supabase
+      .from("Labels")
+      .select()
+      .eq("user_uid", supabase.auth.user().id)
+      .then((payload) => {
+        if (payload.error) {
+          console.error(error);
+        } else {
+          dispatch(setLabel(payload.data));
+        }
+      });
+
+    supabase
+      .from("Labels")
+      .on("*", (payload) => {
+        const newLabel = payload.new;
+        dispatch(updLabel(newLabel));
       })
       .subscribe();
   }, []);
@@ -78,10 +88,9 @@ export default function Dashboard() {
       <Header
         setToggleSideBar={setToggleSideBar}
         toggleSideBar={toggleSideBar}
-        setActivePage={setActivePage}
       />
       <div className={styles.container}>
-        <SideBar setActivePage={setActivePage} toggleSideBar={toggleSideBar} />
+        <SideBar toggleSideBar={toggleSideBar} />
         <motion.main
           className={styles.content}
           animate={controls}
@@ -90,10 +99,12 @@ export default function Dashboard() {
           <header className={styles.contentHeadContainer}>
             <h1 className={styles.contentHeader}>
               {pages.map((page) => {
-                return page.route === activePage ? page.label : "";
+                return `/dashboard/${page.route}` === location.pathname
+                  ? page.label
+                  : "";
               })}
             </h1>
-            {activePage === "finishedtask" ? null : (
+            {location.pathname === "/dashboard/finishedtask" ? null : (
               <button
                 className={styles.addTaskBtn}
                 tabIndex="0"

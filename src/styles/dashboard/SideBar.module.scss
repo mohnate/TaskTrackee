@@ -26,6 +26,8 @@
   margin: 1px 0;
   padding: 0;
   border-radius: 6px 0 0 6px;
+  width: 100%;
+  position: relative;
 
   cursor: pointer;
   transition: color 150ms ease-in-out;
@@ -36,6 +38,11 @@
 
 .selectBtn {
   @include sidebar;
+
+  &:hover .btnLabelPlus {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 .btnIcon {
   vertical-align: middle;
@@ -48,8 +55,43 @@
   }
 }
 
+.btnLabelPlus {
+  position: absolute;
+  right: 30px;
+  top: 7px;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out, background-color 150ms ease-in-out;
+  &:hover {
+    background-color: #727272;
+    border-radius: 3px;
+  }
+}
+
 .btnSelcted {
   @include sidebar;
   background-color: var(--seconadry-color);
   position: relative;
+}
+
+.dropdown {
+  margin: 0 0 0 50px;
+  list-style: none;
+  padding: 0;
+  z-index: 0;
+  display: block;
+}
+.listItem {
+  color: #fff;
+  margin-bottom: 5px;
+}
+.labelColor {
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 9999px;
+  background-color: blueviolet;
+  margin-right: 7px;
 }

@@ -42,6 +42,20 @@ A task managment application built with **REACT. JS**
           | due_date     | timestamptz  | NULL          |            ⬛ |
           | status       | text         | pending       |            ⬛ |
 
+    Create another new table for `Labels` section.
+
+    - Name : Labels
+    - Description : (Optional)
+    - ✅ Enable Row Level Security (RLS)
+    - ✅ Enable Realtime
+    - Columns
+        - | Name         | Type         | Default Value |   Primary Key |
+          |--------------|:------------:|:-------------:|:-------------:|
+          | id           | int8         |               |            ✅ |
+          | user_uid     | uuid         | NULL          |            ⬛ |
+          | label        | text         | NULL          |            ⬛ |
+          | colour       | text         | NULL          |            ⬛ |
+
 5. Add RLS policy for the application to interact with supabase without issues.
 
 6. Do `npm run dev` and open ***[localhost:3000](http://localhost:3000)*** in your browser to view the application.

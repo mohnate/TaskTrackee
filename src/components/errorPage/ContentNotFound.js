@@ -1,4 +1,4 @@
-import styles from "../../styles/errorPage.module.scss";
+import styles from "$Styles/errorPage.module.scss";
 
 import { Link } from "react-router-dom";
 

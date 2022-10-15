@@ -1,4 +1,4 @@
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
@@ -9,10 +9,10 @@ import {
   dataIsToday,
   dataIsTommorow,
   taskNotCompleted,
-} from "../../lib/ReduxSlice/SupabaseTaskSlice";
+} from "$Lib/ReduxSlice/SupabaseTaskSlice";
 
-import Divider from "../../components/Divider";
-import TaskBar from "../../components/dashboard/TaskBar";
+import Divider from "$Components/Divider";
+import TaskBar from "$Components/dashboard/TaskBar";
 
 export default function AllTask() {
   const taskDataTdy = useSelector((state) =>

@@ -1,14 +1,15 @@
-import styles from "../../styles/dashboard/SideBar.module.scss";
-import taskList from "../../../public/icon/taskList.svg";
-import calenderToday from "../../../public/icon/calenderToday.svg";
-import upcoming from "../../../public/icon/upcoming.svg";
-import doubleCheck from "../../../public/icon/doubleCheck.svg";
-import nav from "../../../public/icon/nav/navArrowRight.svg";
-import plus from "../../../public/icon/plus.svg";
+import styles from "$Styles/dashboard/SideBar.module.scss";
+import taskList from "$Icon/taskList.svg";
+import calenderToday from "$Icon/calenderToday.svg";
+import upcoming from "$Icon/upcoming.svg";
+import doubleCheck from "$Icon/doubleCheck.svg";
+import nav from "$Icon/nav/navArrowRight.svg";
+import plus from "$Icon/plus.svg";
 
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // Data below must be synchronized with routes/dashboard/index.js
 const selectionBtn = [
@@ -18,11 +19,12 @@ const selectionBtn = [
   { label: "Finished Task", img: doubleCheck, pathname: "finishedtask" },
 ];
 
-export default function SideBar({ toggleSideBar }) {
+export default function SideBar({ toggleSideBar, setToggleLabelModal }) {
   const location = useLocation();
   const sideBarControls = useAnimation();
   const labelControls = useAnimation();
   const [toggleLabels, setToggleLabels] = useState(false);
+  const labelData = useSelector((state) => state.labelData.value);
 
   useEffect(() => {
     if (toggleSideBar) {
@@ -51,6 +53,11 @@ export default function SideBar({ toggleSideBar }) {
       });
     }
   }, [toggleLabels]);
+
+  const updLabelState = (e) => {
+    e.stopPropagation();
+    setToggleLabelModal(true);
+  };
 
   const labelVariants = {
     hidden: { opacity: 0, x: -50 },
@@ -96,7 +103,9 @@ export default function SideBar({ toggleSideBar }) {
             animate={labelControls}
           />
           <span>Labels</span>
-          <img src={plus} className={styles.btnLabelPlus} />
+          <div className={styles.btnLabelPlus} onClick={updLabelState}>
+            <img src={plus} />
+          </div>
         </button>
         <AnimatePresence mode="wait">
           {toggleLabels && (
@@ -107,14 +116,23 @@ export default function SideBar({ toggleSideBar }) {
               animate="visible"
               exit="exit"
             >
-              <li className={styles.listItem}>
-                <div className={styles.labelColor}></div>
-                <span>hihi</span>
-              </li>
-              <li className={styles.listItem}>
-                <div className={styles.labelColor}></div>
-                <span>asdadadads</span>
-              </li>
+              {labelData?.length > 0 ? (
+                labelData.map((data) => (
+                  <li className={styles.listItem} key={data.id}>
+                    <div
+                      className={styles.labelColor}
+                      style={{ backgroundColor: `${data.colour}` }}
+                    ></div>
+                    <span>{data.label}</span>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <span className={styles.missingLabel}>
+                    You don't have any label created currently
+                  </span>
+                </>
+              )}
             </motion.ul>
           )}
         </AnimatePresence>

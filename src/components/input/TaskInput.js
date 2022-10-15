@@ -1,4 +1,4 @@
-import styles from "../../styles/input.module.scss";
+import styles from "$Styles/input.module.scss";
 
 import React from "react";
 

@@ -1,8 +1,8 @@
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/dashboard.module.scss";
 import CheckSvg from "../icons/CheckSvg";
 
 import { useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "$Lib/supabase";
 
 export default function TaskBar({ data, date = "macro", setTgMd }) {
   const [toggleCheck, setToggleCheck] = useState();

@@ -1,16 +1,17 @@
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/dashboard.module.scss";
 
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from "framer-motion";
-import { supabase } from "../../lib/supabase";
-import { setData, updData } from "../../lib/ReduxSlice/SupabaseTaskSlice";
-import { setLabel, updLabel } from "../../lib/ReduxSlice/SupabaseLabelSlice";
+import { supabase } from "$Lib/supabase";
+import { setData, updData } from "$Lib/ReduxSlice/SupabaseTaskSlice";
+import { setLabel, updLabel } from "$Lib/ReduxSlice/SupabaseLabelSlice";
 
-import Header from "../../components/dashboard/Header";
-import SideBar from "../../components/dashboard/SideBar";
-import TaskModal from "../../components/dashboard/Modal/TaskModal";
+import Header from "$Components/dashboard/Header";
+import SideBar from "$Components/dashboard/SideBar";
+import TaskModal from "$Components/dashboard/Modal/Task/TaskModal";
+import LabelModal from "$Components/dashboard/Modal/Label/LabelModal";
 
 // Data below must be synchronized with components/dashboard/SideBar.js
 const pages = [
@@ -22,8 +23,9 @@ const pages = [
 
 export default function Dashboard() {
   const location = useLocation();
-  const [toggleSideBar, setToggleSideBar] = useState(true);
-  const [toggleModal, setToggleModal] = useState(false);
+  const [toggleSideBar, setToggleSideBar] = useState(true); // open/close sidebar
+  const [toggleTaskModal, setToggleTaskModal] = useState(false); // open/close task modal
+  const [toggleLabelModal, setToggleLabelModal] = useState(false); // open/close label modal
   const dispatch = useDispatch();
   const controls = useAnimation();
 
@@ -90,7 +92,10 @@ export default function Dashboard() {
         toggleSideBar={toggleSideBar}
       />
       <div className={styles.container}>
-        <SideBar toggleSideBar={toggleSideBar} />
+        <SideBar
+          toggleSideBar={toggleSideBar}
+          setToggleLabelModal={setToggleLabelModal}
+        />
         <motion.main
           className={styles.content}
           animate={controls}
@@ -108,16 +113,25 @@ export default function Dashboard() {
               <button
                 className={styles.addTaskBtn}
                 tabIndex="0"
-                onClick={() => setToggleModal(["addTask"])}
+                onClick={() => setToggleTaskModal(["addTask"])}
               >
                 Add Task
               </button>
             )}
           </header>
-          <Outlet context={[setToggleModal]} />
+          <Outlet context={[setToggleTaskModal]} />
         </motion.main>
       </div>
-      <TaskModal setToggleModal={setToggleModal} toggleModal={toggleModal} />
+
+      {/* modal part  */}
+      <TaskModal
+        setToggleTaskModal={setToggleTaskModal}
+        toggleTaskModal={toggleTaskModal}
+      />
+      <LabelModal
+        setToggleLabelModal={setToggleLabelModal}
+        toggleLabelModal={toggleLabelModal}
+      />
     </>
   );
 }

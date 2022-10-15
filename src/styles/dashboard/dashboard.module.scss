@@ -1,12 +1,12 @@
 .container {
   display: flex;
   height: calc(100vh - 50px);
-  background-color: var(--seconadry-color);
+  background-color: var(--secondary-color);
   position: relative;
 }
 
 .content {
-  background-color: var(--seconadry-color);
+  background-color: var(--secondary-color);
   height: 100%;
   width: 100%;
   padding: 20px calc(5% + 40px);

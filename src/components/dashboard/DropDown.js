@@ -1,7 +1,7 @@
-import styles from "../../styles/dashboard/header.module.scss";
+import styles from "$Styles/dashboard/header.module.scss";
 
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "$Lib/supabase";
 
 export default function Dropdown({ dropDownRef }) {
   const navigate = useNavigate();

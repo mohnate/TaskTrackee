@@ -1,7 +1,7 @@
-import spinner from "../../public/spinner.png";
-import styles from "../styles/spinner.module.scss";
+import spinner from "$Public/spinner.png";
+import styles from "$Styles/spinner.module.scss";
 
-import ImageRender from "../lib/ImageRender";
+import ImageRender from "$Lib/ImageRender";
 
 export default function Spinner({ pad, sz, pos }) {
   const large = { width: "100px", height: "100px" };

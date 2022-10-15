@@ -94,3 +94,47 @@
   color: #fff;
   font-size: 1.3rem;
 }
+
+@mixin labelContainer {
+  display: inline-flex;
+  width: 100%;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 6px;
+}
+.labelMain {
+  @include labelContainer;
+}
+.labelBar {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--neutral-gray-color);
+  font-family: var(--body);
+  border-radius: 8px;
+  padding: 3px 10px;
+  cursor: pointer;
+  outline: solid 1px #000;
+}
+.labelMainWhite {
+  @include labelContainer;
+  background-color: var(--tertiary-color);
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.missingLabel {
+  color: var(--secondary-color);
+  font-family: var(--body);
+  text-align: center;
+  margin: 0 auto;
+}
+.labelForm {
+  width: 100%;
+}
+.labelFormDiv {
+  width: 100%;
+}
+.inputFlex {
+  display: flex;
+}

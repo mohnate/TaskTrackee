@@ -1,13 +1,13 @@
-import dashboardStyles from "../../../styles/dashboard/dashboard.module.scss";
-import inputStyles from "../../../styles/input.module.scss";
-import styles from "../../../styles/dashboard/modal.module.scss";
+import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
+import inputStyles from "$Styles/input.module.scss";
+import styles from "$Styles/dashboard/modal.module.scss";
 
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 
-import TaskInput from "../../input/TaskInput";
-import Divider from "../../Divider";
+import TaskInput from "$Components/input/TaskInput";
+import Divider from "$Components/Divider";
 
 const UpdTask = React.forwardRef(
   ({ closeModal, handleUpdate, dataId }, ref) => {

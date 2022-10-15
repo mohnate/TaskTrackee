@@ -1,15 +1,15 @@
-import styles from "../../../styles/dashboard/modal.module.scss";
+import styles from "$Styles/dashboard/modal.module.scss";
 
 import { useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
-import { supabase } from "../../../lib/supabase";
+import { supabase } from "$Lib/supabase";
 
-import WarnModal from "./WarnModal";
+import WarnModal from "../WarnModal";
 import AddTask from "./AddTask";
 import UpdTask from "./UpdTask";
 
-export default function TaskModal({ setToggleModal, toggleModal }) {
+export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
   const taskRef = useRef();
   const [warn, setWarn] = useState();
   const taskData = useSelector((state) =>
@@ -38,7 +38,7 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
         { user_uid: supabase.auth.user().id, header, desc, due_date: date },
       ]);
     if (error) console.error(error);
-    setToggleModal(false);
+    setToggleTaskModal(false);
   };
 
   const handleUpdate = async (e, id) => {
@@ -54,7 +54,7 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
       .eq("user_uid", supabase.auth.user().id)
       .eq("id", id);
     if (error) console.error(error);
-    setToggleModal(false);
+    setToggleTaskModal(false);
   };
 
   const closeModal = (e, btnClose) => {
@@ -64,7 +64,7 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
 
     const headerChanges = () => {
       for (const task of taskData) {
-        if (task.id === toggleModal[1]) {
+        if (task.id === toggleTaskModal[1]) {
           if (task.header === header) {
             return false;
           } else return true;
@@ -74,7 +74,7 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
 
     const descChanges = () => {
       for (const task of taskData) {
-        if (task.id === toggleModal[1]) {
+        if (task.id === toggleTaskModal[1]) {
           let descInput = desc;
           if (desc === "") descInput = null;
           if (task.desc == descInput) {
@@ -86,7 +86,7 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
 
     const dateChanges = () => {
       for (const task of taskData) {
-        if (task.id === toggleModal[1]) {
+        if (task.id === toggleTaskModal[1]) {
           if (task.due_date != null) {
             const adjustedDate = new Date(
               new Date(task.due_date).setMinutes(
@@ -109,11 +109,11 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
       }
     };
 
-    const headerDidChange = toggleModal[1]
+    const headerDidChange = toggleTaskModal[1]
       ? headerChanges()
       : header !== "Task Header";
-    const descDidChange = toggleModal[1] ? descChanges() : desc !== "";
-    const dateDidChange = toggleModal[1]
+    const descDidChange = toggleTaskModal[1] ? descChanges() : desc !== "";
+    const dateDidChange = toggleTaskModal[1]
       ? dateChanges()
       : due_date === null
       ? false
@@ -122,27 +122,27 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
     if (e === null && btnClose) {
       if (headerDidChange || descDidChange || dateDidChange) {
         return setWarn("You have unsaved changes");
-      } else return setToggleModal(false);
+      } else return setToggleTaskModal(false);
     }
     if (e.currentTarget == e.target) {
       if (headerDidChange || descDidChange || dateDidChange) {
         return setWarn("You have unsaved changes");
-      } else return setToggleModal(false);
+      } else return setToggleTaskModal(false);
     }
   };
 
   return (
     <>
       <AnimatePresence mode="wait">
-        {toggleModal[0] === "addTask" ? (
+        {toggleTaskModal[0] === "addTask" ? (
           <AddTask
             closeModal={closeModal}
             handleSubmit={handleSubmit}
             ref={taskRef}
           />
-        ) : toggleModal[0] === "updTask" ? (
+        ) : toggleTaskModal[0] === "updTask" ? (
           <UpdTask
-            dataId={toggleModal[1]}
+            dataId={toggleTaskModal[1]}
             closeModal={closeModal}
             handleUpdate={handleUpdate}
             ref={taskRef}
@@ -150,14 +150,14 @@ export default function TaskModal({ setToggleModal, toggleModal }) {
         ) : null}
       </AnimatePresence>
 
-      {toggleModal ? (
+      {toggleTaskModal ? (
         <div className={styles.bgClose} onClick={closeModal}></div>
       ) : null}
 
       {warn ? (
         <WarnModal
           msg={warn}
-          setToggleModal={setToggleModal}
+          setToggleModal={setToggleTaskModal}
           setWarn={setWarn}
         />
       ) : null}

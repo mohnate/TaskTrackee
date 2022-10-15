@@ -1,9 +1,9 @@
-import styles from "../../styles/errorPage.module.scss";
-import homepageStyles from "../../styles/homepage/homepage.module.scss";
-import logo from "../../../public/logo/logo.png";
+import styles from "$Styles/errorPage.module.scss";
+import homepageStyles from "$Styles/homepage/homepage.module.scss";
+import logo from "$Public/logo/logo.png";
 
 import { Link } from "react-router-dom";
-import ImageRender from "../../lib/ImageRender";
+import ImageRender from "$Lib/ImageRender";
 
 export default function PageNotFound() {
   return (

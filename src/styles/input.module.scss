@@ -76,7 +76,7 @@
   @include inputStyle();
 }
 
-// Password Input
+// verification code Input
 .codeInput {
   @include inputStyle();
   padding: 15px;
@@ -104,6 +104,31 @@
   color: #fff;
   border-radius: 0;
   font-size: 1rem;
+}
+
+// LabelForm
+.labelInput {
+  @include inputStyle();
+
+  margin-top: 3px;
+  background-color: var(--pri-sec-color);
+  height: 35px;
+  padding: 3px 10px;
+  color: #fff;
+  font-size: 1rem;
+}
+.colourInput {
+  @include inputStyle();
+
+  margin-top: 3px;
+  width: 40px;
+  background-color: var(--pri-sec-color);
+  height: 35px;
+  padding: 0;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 0;
+  border: 2px dashed #000;
 }
 
 // Input when Warn

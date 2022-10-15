@@ -1,11 +1,11 @@
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 import { taskNotCompleted } from "../../lib/ReduxSlice/SupabaseTaskSlice";
 
-import TaskBar from "../../components/dashboard/TaskBar";
+import TaskBar from "$Components/dashboard/TaskBar";
 
 export default function FinishedTask() {
   const taskDataCompleted = useSelector((state) =>

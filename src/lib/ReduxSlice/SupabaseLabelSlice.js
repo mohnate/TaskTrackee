@@ -9,9 +9,11 @@ export const supabaseLabelSlice = createSlice({
       state.value.sort((a, b) => a.id - b.id);
     },
     updLabel: (state, action) => {
-      const labels = state.value.filter((task) => task.id != action.payload.id);
+      const labels = state.value.filter(
+        (label) => label.id != action.payload.id
+      );
       const newLabels = [...labels, action.payload];
-      newTodos.sort((a, b) => a.id - b.id);
+      newLabels.sort((a, b) => a.id - b.id);
       state.value = newLabels;
     },
   },

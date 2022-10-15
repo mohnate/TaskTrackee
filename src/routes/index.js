@@ -1,14 +1,14 @@
-import styles from "../styles/homepage/homepage.module.scss";
-import logo from "../../public/logo/logo.png";
+import styles from "$Styles/homepage/homepage.module.scss";
+import logo from "$Public/logo/logo.png";
 
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/supabase";
-import ImageRender from "../lib/ImageRender";
+import { supabase } from "$Lib/supabase";
+import ImageRender from "$Lib/ImageRender";
 
-const SignUpPage = lazy(() => import("../components/homepage/SignUp"));
-const LoginPage = lazy(() => import("../components/homepage/Login"));
-import Spinner from "../components/PageLoader";
+const SignUpPage = lazy(() => import("$Components/homepage/SignUp"));
+const LoginPage = lazy(() => import("$Components/homepage/Login"));
+import Spinner from "$Components/PageLoader";
 
 export default function Homepage() {
   const [loginComp, setLoginComp] = useState(true);

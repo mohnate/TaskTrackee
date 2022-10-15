@@ -1,13 +1,13 @@
-import styles from "../../styles/dashboard/header.module.scss";
-import menu from "../../../public/icon/menu.svg";
-import menuScale from "../../../public/icon/menuScale.svg";
-import home from "../../../public/icon/home.svg";
-import defaultAvatar from "../../../public/icon/default-avatar.png";
+import styles from "$Styles/dashboard/header.module.scss";
+import menu from "$Icon/menu.svg";
+import menuScale from "$Icon/menuScale.svg";
+import home from "$Icon/home.svg";
+import defaultAvatar from "$Icon/default-avatar.png";
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import ImageRender from "../../lib/ImageRender";
-import { supabase } from "../../lib/supabase";
+import ImageRender from "$Lib/ImageRender";
+import { supabase } from "$Lib/supabase";
 
 import Dropdown from "./DropDown";
 

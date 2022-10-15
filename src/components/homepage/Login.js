@@ -1,9 +1,9 @@
-import styles from "../../styles/homepage/homepage.module.scss";
-import stylesInput from "../../styles/input.module.scss";
+import styles from "$Styles/homepage/homepage.module.scss";
+import stylesInput from "$Styles/input.module.scss";
 
 import { useReducer, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "$Lib/supabase";
 
 import EmailInput from "../input/EmailInput";
 import PasswordInput from "../input/PasswordInput";

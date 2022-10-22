@@ -30,45 +30,59 @@ export default function Dashboard() {
   const controls = useAnimation();
 
   useEffect(() => {
-    supabase
-      .from("Task")
-      .select()
-      .eq("user_uid", supabase.auth.user().id)
-      .then((payload) => {
-        if (payload.error) {
-          console.error(error);
-        } else {
-          dispatch(setData(payload.data));
-        }
-      });
+    (async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const { user } = session;
+      supabase
+        .from("Task")
+        .select()
+        .eq("user_uid", user.id)
+        .then((payload) => {
+          if (payload.error) {
+            console.error(error);
+          } else {
+            dispatch(setData(payload.data));
+          }
+        });
 
-    supabase
-      .from("Task")
-      .on("*", (payload) => {
-        const newTodo = payload.new;
-        dispatch(updData(newTodo));
-      })
-      .subscribe();
+      supabase
+        .channel("public:Task")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "Task" },
+          (payload) => {
+            const newTodo = payload.new;
+            dispatch(updData(newTodo));
+          }
+        )
+        .subscribe();
 
-    supabase
-      .from("Labels")
-      .select()
-      .eq("user_uid", supabase.auth.user().id)
-      .then((payload) => {
-        if (payload.error) {
-          console.error(error);
-        } else {
-          dispatch(setLabel(payload.data));
-        }
-      });
+      supabase
+        .from("Labels")
+        .select()
+        .eq("user_uid", user.id)
+        .then((payload) => {
+          if (payload.error) {
+            console.error(error);
+          } else {
+            dispatch(setLabel(payload.data));
+          }
+        });
 
-    supabase
-      .from("Labels")
-      .on("*", (payload) => {
-        const newLabel = payload.new;
-        dispatch(updLabel(newLabel));
-      })
-      .subscribe();
+      supabase
+        .channel("public:Labels")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "Labels" },
+          (payload) => {
+            const newLabel = payload.new;
+            dispatch(updLabel(newLabel));
+          }
+        )
+        .subscribe();
+    })();
   }, []);
 
   useEffect(() => {

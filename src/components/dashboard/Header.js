@@ -13,6 +13,7 @@ import Dropdown from "./DropDown";
 
 export default function Header({ toggleSideBar, setToggleSideBar }) {
   const [dropDown, setDropDown] = useState(false);
+  const [user, setUser] = useState(null);
   const dropDownRef = useRef();
   const paraRef = useRef();
   const imgRef = useRef();
@@ -41,6 +42,12 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
     };
   }, [dropDown]);
 
+  useEffect(() => {
+    supabase.auth
+      .getSession()
+      .then((result) => setUser(result.data.session.user));
+  }, []);
+
   return (
     <>
       <header className={styles.header}>
@@ -65,9 +72,7 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
               onClick={toggleDropDown}
               ref={paraRef}
             >
-              {supabase.auth.user()
-                ? supabase.auth.user().user_metadata.username
-                : null}
+              {user ? user.user_metadata.username : null}
             </p>
             <div className={styles.imgContainer} onClick={toggleDropDown}>
               <ImageRender

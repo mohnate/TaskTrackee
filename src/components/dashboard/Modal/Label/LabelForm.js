@@ -21,9 +21,13 @@ const LabelForm = React.forwardRef(({ closeModal }, ref) => {
     const title = titleRef.current.value;
     const colour = colourRef.current.value;
 
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const { user } = session;
     const { error } = await supabase.from("Labels").insert([
       {
-        user_uid: supabase.auth.user().id,
+        user_uid: user.id,
         label: title,
         colour,
       },

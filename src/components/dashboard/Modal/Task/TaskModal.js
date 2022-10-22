@@ -13,9 +13,13 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
   const taskRef = useRef();
   const [warn, setWarn] = useState();
   const taskData = useSelector((state) =>
-    state.taskData.value?.filter(
-      (task) => task.user_uid == supabase.auth.user().id
-    )
+    state.taskData.value?.filter(async (task) => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const { user } = session;
+      return task.user_uid == user.id;
+    })
   );
 
   const handleSubmit = async (e) => {
@@ -32,11 +36,13 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
       date = new Date(taskRef.current.dateInput()).toISOString();
     }
 
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const { user } = session;
     const { error } = await supabase
       .from("Task")
-      .insert([
-        { user_uid: supabase.auth.user().id, header, desc, due_date: date },
-      ]);
+      .insert([{ user_uid: user.id, header, desc, due_date: date }]);
     if (error) console.error(error);
     setToggleTaskModal(false);
   };
@@ -46,12 +52,19 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
 
     const header = taskRef.current.headInput();
     let desc = taskRef.current.descInput();
-    let date = new Date(taskRef.current.dateInput()).toISOString();
+    let date;
+    if (new Date(taskRef.current.dateInput()) == "Invalid Date") {
+      date = null;
+    } else date = new Date(taskRef.current.dateInput()).toISOString();
 
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const { user } = session;
     const { error } = await supabase
       .from("Task")
       .update([{ header, desc, due_date: date }])
-      .eq("user_uid", supabase.auth.user().id)
+      .eq("user_uid", user.id)
       .eq("id", id);
     if (error) console.error(error);
     setToggleTaskModal(false);

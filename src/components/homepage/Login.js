@@ -47,7 +47,10 @@ export default function Login() {
       return;
     } else dispatch({ type: "password", txt: null });
 
-    const { user, session, error } = await supabase.auth.signIn({
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.signInWithPassword({
       email,
       password,
     });

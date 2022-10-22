@@ -15,9 +15,11 @@ export default function Homepage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (supabase.auth.session()) {
-      navigate("/dashboard");
-    }
+    supabase.auth.getSession().then((result) => {
+      if (result.data.session) {
+        navigate("/dashboard");
+      }
+    });
   }, []);
 
   return (

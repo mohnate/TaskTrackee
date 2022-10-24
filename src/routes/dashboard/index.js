@@ -6,7 +6,11 @@ import { useDispatch } from "react-redux";
 import { motion, useAnimation } from "framer-motion";
 import { supabase } from "$Lib/supabase";
 import { setData, updData } from "$Lib/ReduxSlice/SupabaseTaskSlice";
-import { setLabel, updLabel } from "$Lib/ReduxSlice/SupabaseLabelSlice";
+import {
+  setLabel,
+  updLabel,
+  deleteLabel,
+} from "$Lib/ReduxSlice/SupabaseLabelSlice";
 
 import Header from "$Components/dashboard/Header";
 import SideBar from "$Components/dashboard/SideBar";
@@ -78,7 +82,12 @@ export default function Dashboard() {
           { event: "*", schema: "public", table: "Labels" },
           (payload) => {
             const newLabel = payload.new;
-            dispatch(updLabel(newLabel));
+            const oldLabel = payload.old;
+            if (payload.eventType === "DELETE") {
+              dispatch(deleteLabel(oldLabel));
+            } else {
+              dispatch(updLabel(newLabel));
+            }
           }
         )
         .subscribe();

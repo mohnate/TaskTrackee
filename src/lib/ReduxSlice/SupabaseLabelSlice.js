@@ -16,6 +16,12 @@ export const supabaseLabelSlice = createSlice({
       newLabels.sort((a, b) => a.id - b.id);
       state.value = newLabels;
     },
+    deleteLabel: (state, action) => {
+      const labels = state.value.filter(
+        (label) => label.id != action.payload.id
+      );
+      state.value = labels;
+    },
   },
 });
-export const { setLabel, updLabel } = supabaseLabelSlice.actions;
+export const { setLabel, updLabel, deleteLabel } = supabaseLabelSlice.actions;

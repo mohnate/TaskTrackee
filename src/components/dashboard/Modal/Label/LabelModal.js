@@ -10,15 +10,25 @@ import WarnModal from "../WarnModal";
 export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
   const labelData = useSelector((state) => state.labelData.value);
   const [warn, setWarn] = useState();
+  const [labelTitle, setLabelTitle] = useState({
+    title: "new label",
+    state: "add",
+  });
   const labelFormRef = useRef();
 
   const closeModal = (e, btnClose) => {
-    const title = labelFormRef.current.titleInput();
     const colour = labelFormRef.current.colourInput();
 
     const titleDidChange = () => {
-      if (title !== "new label") return true;
-      return false;
+      if (labelTitle.state === "add") {
+        if (labelTitle.title !== "new label") return true;
+        return false;
+      }
+
+      if (labelTitle.state === "edit") {
+        if (labelTitle.title !== labelTitle.oriTitle) return true;
+        return false;
+      }
     };
 
     const colourDidChange = () => {
@@ -29,12 +39,24 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
     if (e === null && btnClose) {
       if (titleDidChange() || colourDidChange()) {
         return setWarn("You have unsaved changes");
-      } else return setToggleLabelModal(false);
+      } else {
+        setLabelTitle({
+          title: "new label",
+          state: "add",
+        });
+        return setToggleLabelModal(false);
+      }
     }
     if (e.currentTarget == e.target) {
       if (titleDidChange() || colourDidChange()) {
         return setWarn("You have unsaved changes");
-      } else return setToggleLabelModal(false);
+      } else {
+        setLabelTitle({
+          title: "new label",
+          state: "add",
+        });
+        return setToggleLabelModal(false);
+      }
     }
   };
 
@@ -61,7 +83,11 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
               <div className={styles.labelMainWhite}>
                 {labelData?.length > 0 ? (
                   labelData.map((label) => (
-                    <LabelBar data={label} key={label.id} />
+                    <LabelBar
+                      data={label}
+                      key={label.id}
+                      setLabelTitle={setLabelTitle}
+                    />
                   ))
                 ) : (
                   <>
@@ -72,7 +98,12 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
                 )}
               </div>
               <div className={styles.labelMain}>
-                <LabelForm closeModal={closeModal} ref={labelFormRef} />
+                <LabelForm
+                  closeModal={closeModal}
+                  ref={labelFormRef}
+                  labelTitle={labelTitle}
+                  setLabelTitle={setLabelTitle}
+                />
               </div>
             </main>
           </motion.div>
@@ -94,13 +125,29 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
   );
 }
 
-export function LabelBar({ data }) {
+export function LabelBar({ data, setLabelTitle }) {
+  const editLabel = () => {
+    setLabelTitle({
+      title: data.label,
+      state: "edit",
+      oriTitle: data.label,
+      id: data.id,
+    });
+  };
+
   return (
     <span
       className={styles.labelBar}
       style={{ backgroundColor: `${data.colour}` }}
+      onClick={editLabel}
     >
-      <span>{data.label}</span>
+      <span
+        style={
+          parseInt(data.colour.slice(1, 3), 16) <= 130 ? { color: "#fff" } : {}
+        }
+      >
+        {data.label}
+      </span>
     </span>
   );
 }

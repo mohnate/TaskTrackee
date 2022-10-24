@@ -74,6 +74,11 @@
   @include btnStyle(--neutral-gray-color, --neutral-gray-hover-color);
   color: #000;
 }
+.deleteBtn {
+  @include btnStyle(--caution-color, --caution-hover-color);
+  margin: 0 0 0 auto;
+  height: auto;
+}
 
 .btnOptionGroup {
   display: flex;
@@ -106,6 +111,12 @@
 .labelMain {
   @include labelContainer;
 }
+.labelFormHeader {
+  margin: 0;
+  font-family: var(--heading);
+  font-size: 1.2rem;
+  display: flex;
+}
 .labelBar {
   display: inline-flex;
   align-items: center;
@@ -137,4 +148,22 @@
 }
 .inputFlex {
   display: flex;
+}
+
+.boldHyp {
+  font-family: var(--body);
+  font-weight: bold;
+}
+.infoLabelPop {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+.infoLabelMsg {
+  margin: 0;
+  font-family: var(--body);
 }

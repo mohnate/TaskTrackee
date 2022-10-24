@@ -1,21 +1,21 @@
-import "../styles/global.scss";
+import "$Styles/global.scss";
 
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 import Homepage from "./index";
-import ProtectedRoute from "../lib/ProtectedRoute";
-import NoAuthenticateUser from "../lib/NoAuthenticateUser";
+import ProtectedRoute from "$Lib/ProtectedRoute";
+import NoAuthenticateUser from "$Lib/NoAuthenticateUser";
 
-const Dashboard = lazy(() => import("../routes/dashboard/index"));
-const AllTask = lazy(() => import("../routes/dashboard/allTask"));
-const TodayTask = lazy(() => import("../routes/dashboard/todayTask"));
-const UpcoimngTask = lazy(() => import("../routes/dashboard/upcomingTask"));
-const FinishedTask = lazy(() => import("../routes/dashboard/finishedTask"));
+const Dashboard = lazy(() => import("$Routes/dashboard/index"));
+const AllTask = lazy(() => import("$Routes/dashboard/allTask"));
+const TodayTask = lazy(() => import("$Routes/dashboard/todayTask"));
+const UpcoimngTask = lazy(() => import("$Routes/dashboard/upcomingTask"));
+const FinishedTask = lazy(() => import("$Routes/dashboard/finishedTask"));
 
-import PageNotFound from "../components/errorPage/PageNotFound";
-import ContentNotFound from "../components/errorPage/ContentNotFound";
-import Spinner from "../components/PageLoader";
+import PageNotFound from "$Components/errorPage/PageNotFound";
+import ContentNotFound from "$Components/errorPage/ContentNotFound";
+import Spinner from "$Components/PageLoader";
 
 export default function App() {
   return (

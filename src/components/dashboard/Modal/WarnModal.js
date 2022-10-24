@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import modalStyles from "../../../styles/dashboard/modal.module.scss";
-import dashboardStyles from "../../../styles/dashboard/dashboard.module.scss";
+import modalStyles from "$Styles/dashboard/modal.module.scss";
+import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
 
 export default function WarnModal({ msg, setToggleModal, setWarn }) {
   const closeModal = (e, btnClose) => {

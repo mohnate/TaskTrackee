@@ -9,17 +9,21 @@ export default function NoAuthenticateuser({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    if (supabase.auth.session()) {
-      setCurrentUser(false);
-    } else {
-      setCurrentUser(true);
-    }
+    supabase.auth.getSession().then((result) => {
+      if (result.data.session) {
+        setCurrentUser(false);
+      } else {
+        setCurrentUser(true);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    if (supabase.auth.session()) {
-      navigate("/dashboard/alltask");
-    }
+    supabase.auth.getSession().then((result) => {
+      if (result.data.session) {
+        navigate("/dashboard/alltask");
+      }
+    });
   }, [currentUser]);
 
   return currentUser ? children : <Spinner sz="full" />;

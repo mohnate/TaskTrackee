@@ -1,4 +1,4 @@
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/dashboard.module.scss";
 
 import { Helmet } from "react-helmet-async";
 import { useOutletContext } from "react-router-dom";
@@ -7,11 +7,11 @@ import {
   dataIsNextWeek,
   dataIsThisWeek,
   taskNotCompleted,
-} from "../../lib/ReduxSlice/SupabaseTaskSlice";
+} from "$Lib/ReduxSlice/SupabaseTaskSlice";
 import { useSelector } from "react-redux";
 
-import Divider from "../../components/Divider";
-import TaskBar from "../../components/dashboard/TaskBar";
+import Divider from "$Components/Divider";
+import TaskBar from "$Components/dashboard/TaskBar";
 
 export default function UpcoimngTask() {
   const taskDataThisWeek = useSelector((state) =>

@@ -1,23 +1,25 @@
-import styles from "../styles/homepage/homepage.module.scss";
-import logo from "../../public/logo/logo.png";
+import styles from "$Styles/homepage/homepage.module.scss";
+import logo from "$Public/logo/logo.png";
 
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/supabase";
-import ImageRender from "../lib/ImageRender";
+import { supabase } from "$Lib/supabase";
+import ImageRender from "$Lib/ImageRender";
 
-const SignUpPage = lazy(() => import("../components/homepage/SignUp"));
-const LoginPage = lazy(() => import("../components/homepage/Login"));
-import Spinner from "../components/PageLoader";
+const SignUpPage = lazy(() => import("$Components/homepage/SignUp"));
+const LoginPage = lazy(() => import("$Components/homepage/Login"));
+import Spinner from "$Components/PageLoader";
 
 export default function Homepage() {
   const [loginComp, setLoginComp] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (supabase.auth.session()) {
-      navigate("/dashboard");
-    }
+    supabase.auth.getSession().then((result) => {
+      if (result.data.session) {
+        navigate("/dashboard");
+      }
+    });
   }, []);
 
   return (
@@ -30,7 +32,12 @@ export default function Homepage() {
       <section className={styles.rightPanel}>
         <main className={styles.rightPanelMain}>
           <div className={styles.brand}>
-            <ImageRender src={logo} width="512" height="512" />
+            <ImageRender
+              src={logo}
+              alt="TaskTrackee Logo"
+              width="512"
+              height="512"
+            />
           </div>
           <h1 className={styles.brandName}>TaskTrackee</h1>
           <Suspense fallback={<Spinner sz="medium" pad="50px 0" />}>

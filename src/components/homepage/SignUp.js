@@ -1,8 +1,8 @@
-import styles from "../../styles/homepage/homepage.module.scss";
-import stylesInput from "../../styles/input.module.scss";
+import styles from "$Styles/homepage/homepage.module.scss";
+import stylesInput from "$Styles/input.module.scss";
 
 import { useReducer, useRef } from "react";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "$Lib/supabase";
 
 import UsernameInput from "../input/UsernameInput";
 import EmailInput from "../input/EmailInput";

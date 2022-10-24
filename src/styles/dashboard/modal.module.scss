@@ -74,6 +74,11 @@
   @include btnStyle(--neutral-gray-color, --neutral-gray-hover-color);
   color: #000;
 }
+.deleteBtn {
+  @include btnStyle(--caution-color, --caution-hover-color);
+  margin: 0 0 0 auto;
+  height: auto;
+}
 
 .btnOptionGroup {
   display: flex;
@@ -93,4 +98,72 @@
   font-family: var(--heading);
   color: #fff;
   font-size: 1.3rem;
+}
+
+@mixin labelContainer {
+  display: inline-flex;
+  width: 100%;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 6px;
+}
+.labelMain {
+  @include labelContainer;
+}
+.labelFormHeader {
+  margin: 0;
+  font-family: var(--heading);
+  font-size: 1.2rem;
+  display: flex;
+}
+.labelBar {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--neutral-gray-color);
+  font-family: var(--body);
+  border-radius: 8px;
+  padding: 3px 10px;
+  cursor: pointer;
+  outline: solid 1px #000;
+}
+.labelMainWhite {
+  @include labelContainer;
+  background-color: var(--tertiary-color);
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.missingLabel {
+  color: var(--secondary-color);
+  font-family: var(--body);
+  text-align: center;
+  margin: 0 auto;
+}
+.labelForm {
+  width: 100%;
+}
+.labelFormDiv {
+  width: 100%;
+}
+.inputFlex {
+  display: flex;
+}
+
+.boldHyp {
+  font-family: var(--body);
+  font-weight: bold;
+}
+.infoLabelPop {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+.infoLabelMsg {
+  margin: 0;
+  font-family: var(--body);
 }

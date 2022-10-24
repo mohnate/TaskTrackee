@@ -1,4 +1,5 @@
-var webpack = require("webpack");
+const webpack = require("webpack");
+const path = require("path");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
@@ -40,5 +41,15 @@ module.exports = {
     }),
     new Dotenv(),
   ],
+  resolve: {
+    alias: {
+      $Public: path.resolve(__dirname, "public/"),
+      $Icon: path.resolve(__dirname, "public/icon/"),
+      $Lib: path.resolve(__dirname, "src/lib/"),
+      $Routes: path.resolve(__dirname, "src/routes/"),
+      $Styles: path.resolve(__dirname, "src/styles/"),
+      $Components: path.resolve(__dirname, "src/components/"),
+    },
+  },
   target: "web",
 };

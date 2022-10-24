@@ -1,8 +1,8 @@
-import dashboardStyles from "../../../styles/dashboard/dashboard.module.scss";
-import inputStyles from "../../../styles/input.module.scss";
-import styles from "../../../styles/dashboard/modal.module.scss";
-import CalenderSvg from "../../icons/CalenderSvg";
-import LabelOutlineSvg from "../../icons/LabelOutlineSvg";
+import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
+import inputStyles from "$Styles/input.module.scss";
+import styles from "$Styles/dashboard/modal.module.scss";
+import CalenderSvg from "$Components/icons/CalenderSvg";
+import LabelOutlineSvg from "$Components/icons/LabelOutlineSvg";
 
 import { useState } from "react";
 

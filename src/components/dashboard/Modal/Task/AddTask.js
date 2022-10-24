@@ -1,10 +1,10 @@
-import dashboardStyles from "../../../styles/dashboard/dashboard.module.scss";
-import styles from "../../../styles/dashboard/modal.module.scss";
+import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/modal.module.scss";
 
 import React, { useImperativeHandle, useRef } from "react";
 import { motion } from "framer-motion";
 
-import TaskInput from "../../input/TaskInput";
+import TaskInput from "$Components/input/TaskInput";
 import ModalOption from "./ModalOption";
 
 const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {

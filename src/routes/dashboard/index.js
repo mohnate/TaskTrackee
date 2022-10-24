@@ -1,15 +1,21 @@
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "$Styles/dashboard/dashboard.module.scss";
 
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from "framer-motion";
-import { supabase } from "../../lib/supabase";
-import { setData, updData } from "../../lib/ReduxSlice/SupabaseTaskSlice";
+import { supabase } from "$Lib/supabase";
+import { setData, updData } from "$Lib/ReduxSlice/SupabaseTaskSlice";
+import {
+  setLabel,
+  updLabel,
+  deleteLabel,
+} from "$Lib/ReduxSlice/SupabaseLabelSlice";
 
-import Header from "../../components/dashboard/Header";
-import SideBar from "../../components/dashboard/SideBar";
-import TaskModal from "../../components/dashboard/Modal/TaskModal";
+import Header from "$Components/dashboard/Header";
+import SideBar from "$Components/dashboard/SideBar";
+import TaskModal from "$Components/dashboard/Modal/Task/TaskModal";
+import LabelModal from "$Components/dashboard/Modal/Label/LabelModal";
 
 // Data below must be synchronized with components/dashboard/SideBar.js
 const pages = [
@@ -20,43 +26,72 @@ const pages = [
 ];
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const [toggleSideBar, setToggleSideBar] = useState(true);
-  const [activePage, setActivePage] = useState(
-    window.location.pathname.replace("/dashboard/", "")
-  );
-  const [toggleModal, setToggleModal] = useState(false);
+  const location = useLocation();
+  const [toggleSideBar, setToggleSideBar] = useState(true); // open/close sidebar
+  const [toggleTaskModal, setToggleTaskModal] = useState(false); // open/close task modal
+  const [toggleLabelModal, setToggleLabelModal] = useState(false); // open/close label modal
   const dispatch = useDispatch();
   const controls = useAnimation();
 
   useEffect(() => {
-    pages.forEach((page) => {
-      if (activePage === page.route) {
-        navigate(page.route);
-      }
-    });
-  }, [activePage]);
+    (async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const { user } = session;
+      supabase
+        .from("Task")
+        .select()
+        .eq("user_uid", user.id)
+        .then((payload) => {
+          if (payload.error) {
+            console.error(error);
+          } else {
+            dispatch(setData(payload.data));
+          }
+        });
 
-  useEffect(() => {
-    supabase
-      .from("Task")
-      .select()
-      .eq("user_uid", supabase.auth.user().id)
-      .then((payload) => {
-        if (payload.error) {
-          console.error(error);
-        } else {
-          dispatch(setData(payload.data));
-        }
-      });
+      supabase
+        .channel("public:Task")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "Task" },
+          (payload) => {
+            const newTodo = payload.new;
+            dispatch(updData(newTodo));
+          }
+        )
+        .subscribe();
 
-    supabase
-      .from("Task")
-      .on("*", (payload) => {
-        const newTodo = payload.new;
-        dispatch(updData(newTodo));
-      })
-      .subscribe();
+      supabase
+        .from("Labels")
+        .select()
+        .eq("user_uid", user.id)
+        .then((payload) => {
+          if (payload.error) {
+            console.error(error);
+          } else {
+            dispatch(setLabel(payload.data));
+          }
+        });
+
+      supabase
+        .channel("public:Labels")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "Labels" },
+          (payload) => {
+            const newLabel = payload.new;
+            const oldLabel = payload.old;
+            if (payload.eventType === "DELETE") {
+              dispatch(deleteLabel(oldLabel));
+            } else {
+              dispatch(updLabel(newLabel));
+            }
+          }
+        )
+        .subscribe();
+    })();
   }, []);
 
   useEffect(() => {
@@ -78,10 +113,12 @@ export default function Dashboard() {
       <Header
         setToggleSideBar={setToggleSideBar}
         toggleSideBar={toggleSideBar}
-        setActivePage={setActivePage}
       />
       <div className={styles.container}>
-        <SideBar setActivePage={setActivePage} toggleSideBar={toggleSideBar} />
+        <SideBar
+          toggleSideBar={toggleSideBar}
+          setToggleLabelModal={setToggleLabelModal}
+        />
         <motion.main
           className={styles.content}
           animate={controls}
@@ -90,23 +127,34 @@ export default function Dashboard() {
           <header className={styles.contentHeadContainer}>
             <h1 className={styles.contentHeader}>
               {pages.map((page) => {
-                return page.route === activePage ? page.label : "";
+                return `/dashboard/${page.route}` === location.pathname
+                  ? page.label
+                  : "";
               })}
             </h1>
-            {activePage === "finishedtask" ? null : (
+            {location.pathname === "/dashboard/finishedtask" ? null : (
               <button
                 className={styles.addTaskBtn}
                 tabIndex="0"
-                onClick={() => setToggleModal(["addTask"])}
+                onClick={() => setToggleTaskModal(["addTask"])}
               >
                 Add Task
               </button>
             )}
           </header>
-          <Outlet context={[setToggleModal]} />
+          <Outlet context={[setToggleTaskModal]} />
         </motion.main>
       </div>
-      <TaskModal setToggleModal={setToggleModal} toggleModal={toggleModal} />
+
+      {/* modal part  */}
+      <TaskModal
+        setToggleTaskModal={setToggleTaskModal}
+        toggleTaskModal={toggleTaskModal}
+      />
+      <LabelModal
+        setToggleLabelModal={setToggleLabelModal}
+        toggleLabelModal={toggleLabelModal}
+      />
     </>
   );
 }

@@ -9,17 +9,21 @@ export default function ProtectedRoute({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    if (!supabase.auth.session()) {
-      setCurrentUser(false);
-    } else {
-      setCurrentUser(supabase.auth.user());
-    }
+    supabase.auth.getSession().then((result) => {
+      if (!result.data.session) {
+        setCurrentUser(false);
+      } else {
+        setCurrentUser(result.data.session.user);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    if (!supabase.auth.session()) {
-      navigate("/");
-    }
+    supabase.auth.getSession().then((result) => {
+      if (!result.data.session) {
+        navigate("/");
+      }
+    });
   }, [currentUser]);
 
   return currentUser != null && currentUser ? (

@@ -3,7 +3,7 @@ import homepageStyles from "$Styles/homepage/homepage.module.scss";
 import logo from "$Public/logo/logo.png";
 
 import { Link } from "react-router-dom";
-import ImageRender from "$Lib/ImageRender";
+import Image from "@chan_alston/image";
 
 export default function PageNotFound() {
   return (
@@ -11,7 +11,7 @@ export default function PageNotFound() {
       <div className={styles.container}>
         <div className={homepageStyles.brand}>
           <div style={{ width: "200px" }}>
-            <ImageRender src={logo} width="512" height="512" />
+            <Image src={logo} alt="TaskTrackee Logo" width="512" height="512" />
           </div>
         </div>
         <h1 className={homepageStyles.brandName} style={{ color: "#e4f0ff" }}>

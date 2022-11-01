@@ -4,7 +4,7 @@ import logo from "$Public/logo/logo.png";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "$Lib/supabase";
-import ImageRender from "$Lib/ImageRender";
+import Image from "@chan_alston/image";
 
 const SignUpPage = lazy(() => import("$Components/homepage/SignUp"));
 const LoginPage = lazy(() => import("$Components/homepage/Login"));
@@ -32,12 +32,7 @@ export default function Homepage() {
       <section className={styles.rightPanel}>
         <main className={styles.rightPanelMain}>
           <div className={styles.brand}>
-            <ImageRender
-              src={logo}
-              alt="TaskTrackee Logo"
-              width="512"
-              height="512"
-            />
+            <Image src={logo} alt="TaskTrackee Logo" w="512px" h="512px" />
           </div>
           <h1 className={styles.brandName}>TaskTrackee</h1>
           <Suspense fallback={<Spinner sz="medium" pad="50px 0" />}>

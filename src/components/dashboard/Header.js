@@ -6,7 +6,7 @@ import defaultAvatar from "$Icon/default-avatar.png";
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import ImageRender from "$Lib/ImageRender";
+import Image from "@chan_alston/image";
 import { supabase } from "$Lib/supabase";
 
 import Dropdown from "./DropDown";
@@ -54,14 +54,14 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
         <nav className={styles.leftComp}>
           <div className={styles.iconContainer} onClick={toggleSideBarFunc}>
             {toggleSideBar ? (
-              <ImageRender src={menuScale} width={40} height={30} alt="menu" />
+              <Image src={menuScale} w={30} h={30} alt="menu" />
             ) : (
-              <ImageRender src={menu} width={40} height={30} alt="menu" />
+              <Image src={menu} w={30} h={30} alt="menu" />
             )}
           </div>
           <div className={styles.iconContainer}>
             <Link to="/dashboard/alltask">
-              <ImageRender src={home} width={40} height={30} alt="home" />
+              <Image src={home} w={40} h={30} alt="home" />
             </Link>
           </div>
         </nav>
@@ -75,12 +75,7 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
               {user ? user.user_metadata.username : null}
             </p>
             <div className={styles.imgContainer} onClick={toggleDropDown}>
-              <ImageRender
-                src={defaultAvatar}
-                width={40}
-                height={40}
-                ref={imgRef}
-              />
+              <Image src={defaultAvatar} w={40} h={40} ref={imgRef} />
             </div>
             {dropDown ? (
               <div className={styles.dropDownContainer}>

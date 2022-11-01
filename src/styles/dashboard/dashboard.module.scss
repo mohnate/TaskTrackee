@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  height: calc(100vh - 50px);
+  min-height: calc(100vh - 50px);
   background-color: var(--secondary-color);
   position: relative;
 }

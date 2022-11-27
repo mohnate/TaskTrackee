@@ -75,7 +75,7 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
               {user ? user.user_metadata.username : null}
             </p>
             <div className={styles.imgContainer} onClick={toggleDropDown}>
-              <Image src={defaultAvatar} w={40} h={40} ref={imgRef} />
+              <Image src={defaultAvatar} w={40} h={40} imgRef={imgRef} />
             </div>
             {dropDown ? (
               <div className={styles.dropDownContainer}>

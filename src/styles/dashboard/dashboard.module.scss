@@ -10,6 +10,7 @@
   height: 100%;
   width: 100%;
   padding: 20px calc(5% + 40px);
+  transition: padding 400ms ease-out;
 }
 
 @mixin contentWidth {
@@ -85,13 +86,35 @@
   border-radius: 7px;
   padding: 9px 17px;
   font-size: 1.3rem;
+
+  @media screen and (max-width: 650px) {
+    padding: 7px 15px;
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 550px) {
+    padding: 5px 13px;
+    font-size: 1rem;
+  }
 }
 .taskDate {
   @include taskbastyle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 15px;
   white-space: nowrap;
   min-width: 131px;
-  text-align: center;
+
+  @media screen and (max-width: 650px) {
+    min-width: 121px;
+    margin-right: 10px;
+  }
+
+  @media screen and (max-width: 550px) {
+    min-width: 100px;
+    margin-right: 8px;
+  }
 }
 .taskBarContent {
   @include taskbastyle;
@@ -99,6 +122,11 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
 }
 
 .taskBarTickBox {
@@ -107,7 +135,66 @@
   height: fit-content;
   width: fit-content;
   padding: 2px;
-  width: 28px;
-  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
   margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (max-width: 650px) {
+    min-width: 24px;
+    min-height: 24px;
+    margin-right: 13px;
+  }
+
+  @media screen and (max-width: 550px) {
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 10px;
+  }
+}
+
+.taskBarHeader {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 1300px) {
+  .content {
+    padding: 20px calc(3% + 30px);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content {
+    padding: 20px calc(2% + 15px);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .taskBarContainer {
+    margin: 5px 0;
+  }
+  .mainTask {
+    padding-top: 30px;
+  }
+  .taskSection {
+    margin-bottom: 30px;
+  }
+  .sectionHead {
+    font-size: 1.4rem;
+  }
+}
+@media screen and (max-width: 550px) {
+  .mainTask {
+    padding-top: 25px;
+  }
+  .taskSection {
+    margin-bottom: 25px;
+  }
+  .sectionHead {
+    font-size: 1.3rem;
+  }
 }

@@ -1,4 +1,5 @@
 import styles from "$Styles/dashboard/dashboard.module.scss";
+import modalStyles from "$Styles/dashboard/modal.module.scss";
 
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -30,6 +31,7 @@ export default function Dashboard() {
   const [toggleSideBar, setToggleSideBar] = useState(true); // open/close sidebar
   const [toggleTaskModal, setToggleTaskModal] = useState(false); // open/close task modal
   const [toggleLabelModal, setToggleLabelModal] = useState(false); // open/close label modal
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const dispatch = useDispatch();
   const controls = useAnimation();
 
@@ -108,6 +110,32 @@ export default function Dashboard() {
     }
   }, [toggleSideBar]);
 
+  useEffect(() => {
+    handleWindowResize(window);
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
+  // handle window resize and sets items in row
+  const handleWindowResize = () => {
+    if (window.innerWidth > 900 && toggleSideBar) {
+      setIsSmallScreen(false);
+      controls.start({
+        marginLeft: 260,
+        transition: { type: "tween" },
+      });
+    } else {
+      setIsSmallScreen(true);
+      controls.start({
+        marginLeft: 0,
+        transition: { type: "tween" },
+      });
+    }
+  };
+
   return (
     <>
       <Header
@@ -115,8 +143,15 @@ export default function Dashboard() {
         toggleSideBar={toggleSideBar}
       />
       <div className={styles.container}>
+        {toggleSideBar && isSmallScreen ? (
+          <div
+            className={modalStyles.bgClose}
+            onClick={() => setToggleSideBar((prev) => !prev)}
+          ></div>
+        ) : null}
         <SideBar
           toggleSideBar={toggleSideBar}
+          setToggleSideBar={setToggleSideBar}
           setToggleLabelModal={setToggleLabelModal}
         />
         <motion.main

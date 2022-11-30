@@ -121,18 +121,20 @@ export default function Dashboard() {
 
   // handle window resize and sets items in row
   const handleWindowResize = () => {
-    if (window.innerWidth > 900 && toggleSideBar) {
-      setIsSmallScreen(false);
-      controls.start({
-        marginLeft: 260,
-        transition: { type: "tween" },
-      });
-    } else {
-      setIsSmallScreen(true);
-      controls.start({
-        marginLeft: 0,
-        transition: { type: "tween" },
-      });
+    if (toggleSideBar) {
+      if (window.innerWidth > 900) {
+        setIsSmallScreen(false);
+        controls.start({
+          marginLeft: 260,
+          transition: { type: "tween" },
+        });
+      } else {
+        setIsSmallScreen(true);
+        controls.start({
+          marginLeft: 0,
+          transition: { type: "tween" },
+        });
+      }
     }
   };
 

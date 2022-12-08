@@ -7,11 +7,11 @@
   envFiles = [".env"] # The env files to use, ordered by priority (left - highest, right - lowest)
   # to start an https server instead of an http one, configure a certificate and key files
   # [dev.https]
-  #  certFile = "cert.pem" # path to the certificate file
-  #  keyFile = "key.pem" # path to the private key file
+  # certFile = "cert.pem" # path to the certificate file
+  # keyFile = "key.pem" # path to the private key file
 
 [build]
-  command = "npm run build"
+  command = "npm install --include=dev && npm run build"
   publish = "/dist"
   base ="/"
 

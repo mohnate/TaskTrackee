@@ -1,7 +1,7 @@
 import spinner from "$Public/spinner.png";
 import styles from "$Styles/spinner.module.scss";
 
-import ImageRender from "$Lib/ImageRender";
+import Image from "@chan_alston/image";
 
 export default function Spinner({ pad, sz, pos }) {
   const large = { width: "100px", height: "100px" };
@@ -10,7 +10,11 @@ export default function Spinner({ pad, sz, pos }) {
   return (
     <div
       className={
-        pos === "full" ? styles.fullSize : pos === "fill" ? styles.fillSize : {}
+        pos === "full"
+          ? styles.fullSize
+          : pos === "fill"
+          ? styles.fillSize
+          : null
       }
     >
       <div className={styles.postition} style={pad ? { padding: pad } : {}}>
@@ -30,7 +34,7 @@ export default function Spinner({ pad, sz, pos }) {
               : small
           }
         >
-          <ImageRender src={spinner} alt="" />
+          <Image src={spinner} alt="" />
         </div>
       </div>
     </div>

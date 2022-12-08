@@ -18,12 +18,13 @@
   @include modalBack;
   left: 0;
   background-color: rgba(0, 0, 0, 0.226);
+  z-index: 1;
 }
 
 @mixin content {
   margin: 7rem auto 0 auto;
   background-color: var(--pri-sec-color);
-  width: 500px;
+  max-width: 500px;
 
   border-radius: 8px;
   padding: 10px 15px;
@@ -45,6 +46,10 @@
   font-family: var(--heading);
   font-size: 1.5rem !important;
   padding: 1px 3px;
+  @media screen and (max-width: 450px) {
+    font-size: 1.2rem !important;
+    height: 25px !important;
+  }
 }
 
 .btnGroup {
@@ -166,4 +171,16 @@
 .infoLabelMsg {
   margin: 0;
   font-family: var(--body);
+}
+
+.labelBarTickBox {
+  display: inline-flex;
+  width: 21px;
+  height: 21px;
+
+  background-color: #fff;
+  border-radius: 6px;
+  margin-left: 5px;
+  vertical-align: middle;
+  outline: 1px solid #000;
 }

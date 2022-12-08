@@ -10,6 +10,7 @@
 .leftPanel {
   display: block;
   width: 85%;
+  transition: width 600ms ease-out;
 }
 
 .background {
@@ -57,6 +58,8 @@
 
 .brand {
   padding: 0 3rem;
+  max-width: 300px;
+  margin: 0 auto;
 }
 .brandName {
   margin: 0.3rem 0 0 0;
@@ -107,4 +110,24 @@
   display: flex;
   width: 100%;
   justify-content: center;
+}
+
+@media screen and (max-width: "600px") {
+  .leftPanel {
+    width: 0;
+  }
+  .rightPanel {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+@media screen and (max-width: "400px") {
+  .rightPanel {
+    min-width: 300px;
+    width: 100%;
+    padding: 1rem;
+  }
+  .brandName {
+    font-size: 2rem;
+  }
 }

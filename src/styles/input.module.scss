@@ -104,6 +104,11 @@
   color: #fff;
   border-radius: 0;
   font-size: 1rem;
+
+  @media screen and (max-width: 450px) {
+    font-size: 0.9rem;
+    height: 20px !important;
+  }
 }
 
 // LabelForm
@@ -145,10 +150,15 @@
 // TaskdateTimeInput
 .optionContainer {
   @include inputStyle();
+  height: auto;
+  min-height: 3rem;
+  display: inline-flex;
   background-color: #fff;
-  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
   align-items: center;
   margin-top: 0;
+  padding: 10px;
 }
 
 .dateTimeLabel {

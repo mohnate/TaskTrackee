@@ -26,5 +26,5 @@ export default function NoAuthenticateuser({ children }) {
     });
   }, [currentUser]);
 
-  return currentUser ? children : <Spinner sz="full" />;
+  return currentUser ? children : <Spinner sz="full" pos="full" />;
 }

@@ -41,7 +41,9 @@ export default function App() {
           <Route
             path="alltask"
             element={
-              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+              <Suspense
+                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+              >
                 <AllTask />
               </Suspense>
             }
@@ -49,7 +51,9 @@ export default function App() {
           <Route
             path="todaytask"
             element={
-              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+              <Suspense
+                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+              >
                 <TodayTask />
               </Suspense>
             }
@@ -57,7 +61,9 @@ export default function App() {
           <Route
             path="upcomingtask"
             element={
-              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+              <Suspense
+                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+              >
                 <UpcoimngTask />
               </Suspense>
             }
@@ -65,7 +71,9 @@ export default function App() {
           <Route
             path="finishedtask"
             element={
-              <Suspense fallback={<Spinner pos="fill" sz="large" />}>
+              <Suspense
+                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+              >
                 <FinishedTask />
               </Suspense>
             }

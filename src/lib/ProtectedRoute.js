@@ -29,8 +29,8 @@ export default function ProtectedRoute({ children }) {
   return currentUser != null && currentUser ? (
     children
   ) : currentUser != null ? (
-    <Spinner sz="full" />
+    <Spinner sz="full" pos="full" />
   ) : (
-    <Spinner sz="full" />
+    <Spinner sz="full" pos="full" />
   );
 }

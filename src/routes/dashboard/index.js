@@ -111,7 +111,7 @@ export default function Dashboard() {
   }, [toggleSideBar]);
 
   useEffect(() => {
-    handleWindowResize(window);
+    handleWindowResize();
     window.addEventListener("resize", handleWindowResize);
 
     return () => {

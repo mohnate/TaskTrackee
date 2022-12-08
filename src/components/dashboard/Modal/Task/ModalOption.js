@@ -5,9 +5,13 @@ import CalenderSvg from "$Components/icons/CalenderSvg";
 import LabelOutlineSvg from "$Components/icons/LabelOutlineSvg";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
+import LabelBarSelect from "../Label/LabelBarSelect";
 
 export default function ModalOption({ dateRef }) {
   const [activeOption, setActiveOption] = useState(null);
+  const labelData = useSelector((state) => state.labelData.value);
 
   const toggleBtn = (type) => {
     if (type === "calender") {
@@ -60,7 +64,19 @@ export default function ModalOption({ dateRef }) {
           />
         </div>
       ) : activeOption === "label" ? (
-        <div className={inputStyles.optionContainer}>Label</div>
+        <div className={inputStyles.optionContainer}>
+          {labelData?.length > 0 ? (
+            labelData.map((label) => (
+              <LabelBarSelect data={label} key={label.id} />
+            ))
+          ) : (
+            <>
+              <span className={styles.missingLabel}>
+                You don't have any label created currently
+              </span>
+            </>
+          )}
+        </div>
       ) : null}
     </>
   );

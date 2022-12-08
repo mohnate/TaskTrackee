@@ -1,24 +1,24 @@
 import styles from "$Styles/dashboard/modal.module.scss";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import LabelForm from "./LabelForm";
 import WarnModal from "../WarnModal";
+import LabelBar from "./LabelBar";
 
 export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
   const labelData = useSelector((state) => state.labelData.value);
   const [warn, setWarn] = useState();
-  const [labelTitle, setLabelTitle] = useState({
+  const newLabel = {
     title: "new label",
-    state: "add",
-  });
-  const labelFormRef = useRef();
+    state: "add", // state of current label, there are "edit" and "add" two state available
+    colour: "#336b2c",
+  };
+  const [labelTitle, setLabelTitle] = useState(newLabel);
 
   const closeModal = (e, btnClose) => {
-    const colour = labelFormRef.current.colourInput();
-
     const titleDidChange = () => {
       if (labelTitle.state === "add") {
         if (labelTitle.title !== "new label") return true;
@@ -32,29 +32,19 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
     };
 
     const colourDidChange = () => {
-      if (colour !== "#336b2c") return true;
+      if (labelTitle?.oriColour) {
+        if (labelTitle.oriColour !== labelTitle.colour) return true;
+      } else if (labelTitle.colour !== "#336b2c") return true;
       return false;
     };
 
-    if (e === null && btnClose) {
+    // user close modal through cancel btn (e === null)
+    // or close modal throguh clicking/touching background (e !== null)
+    if ((e === null && btnClose) || e.currentTarget == e.target) {
       if (titleDidChange() || colourDidChange()) {
         return setWarn("You have unsaved changes");
       } else {
-        setLabelTitle({
-          title: "new label",
-          state: "add",
-        });
-        return setToggleLabelModal(false);
-      }
-    }
-    if (e.currentTarget == e.target) {
-      if (titleDidChange() || colourDidChange()) {
-        return setWarn("You have unsaved changes");
-      } else {
-        setLabelTitle({
-          title: "new label",
-          state: "add",
-        });
+        setLabelTitle(newLabel);
         return setToggleLabelModal(false);
       }
     }
@@ -100,9 +90,9 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
               <div className={styles.labelMain}>
                 <LabelForm
                   closeModal={closeModal}
-                  ref={labelFormRef}
                   labelTitle={labelTitle}
                   setLabelTitle={setLabelTitle}
+                  newLabel={newLabel}
                 />
               </div>
             </main>
@@ -122,32 +112,5 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
         />
       ) : null}
     </>
-  );
-}
-
-export function LabelBar({ data, setLabelTitle }) {
-  const editLabel = () => {
-    setLabelTitle({
-      title: data.label,
-      state: "edit",
-      oriTitle: data.label,
-      id: data.id,
-    });
-  };
-
-  return (
-    <span
-      className={styles.labelBar}
-      style={{ backgroundColor: `${data.colour}` }}
-      onClick={editLabel}
-    >
-      <span
-        style={
-          parseInt(data.colour.slice(1, 3), 16) <= 130 ? { color: "#fff" } : {}
-        }
-      >
-        {data.label}
-      </span>
-    </span>
   );
 }

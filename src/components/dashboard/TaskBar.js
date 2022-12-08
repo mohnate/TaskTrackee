@@ -18,6 +18,7 @@ export default function TaskBar({ data, date = "macro", setTgMd }) {
 
   const checkTask = async () => {
     if (data.status === "completed") {
+      // set task status to "pending"
       const { error } = await supabase
         .from("Task")
         .update({ status: "pending" })
@@ -25,6 +26,7 @@ export default function TaskBar({ data, date = "macro", setTgMd }) {
         .eq("id", String(data.id));
       if (error) return console.error(error);
     } else {
+      // set task status to "completed"
       const { error } = await supabase
         .from("Task")
         .update({ status: "completed" })

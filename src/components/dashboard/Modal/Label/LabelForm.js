@@ -64,6 +64,8 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
 
   // Supabase Delete Label Function
   const deleteHandler = async () => {
+    e.preventDefault();
+
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -100,9 +102,12 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
             style={{ display: "flex", alignItems: "center", height: "27px" }}
           >
             Editing <span className={styles.boldHyp}>-</span>
-            {labelTitle.title}
+            {labelTitle.state === "edit"
+              ? labelTitle.oriTitle
+              : labelTitle.title}
           </span>
           {labelTitle.state === "edit" ? (
+            // Delete Button
             <button
               type="button"
               onClick={deleteHandler}
@@ -181,7 +186,9 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
         ) : null}
       </div>
 
+      {/* Button Section */}
       <div className={styles.btnGroup}>
+        {/* Cancel Button  */}
         <button
           type="button"
           onClick={() => closeModal(null, true)}
@@ -189,6 +196,7 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
         >
           Cancel
         </button>
+        {/* Reset Button  */}
         <button
           type="button"
           onClick={resetInput}

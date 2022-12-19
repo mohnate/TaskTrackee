@@ -29,7 +29,9 @@ const pages = [
 export default function Dashboard() {
   const location = useLocation();
   const [toggleSideBar, setToggleSideBar] = useState(true); // open/close sidebar
-  const [toggleTaskModal, setToggleTaskModal] = useState(false); // open/close task modal
+  // For open and close task modal, possible value:
+  // ["addTask", data.id], ["updTask", data.id], false, true
+  const [toggleTaskModal, setToggleTaskModal] = useState(false);
   const [toggleLabelModal, setToggleLabelModal] = useState(false); // open/close label modal
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const dispatch = useDispatch();
@@ -59,8 +61,11 @@ export default function Dashboard() {
           "postgres_changes",
           { event: "*", schema: "public", table: "Task" },
           (payload) => {
-            const newTodo = payload.new;
-            dispatch(updData(newTodo));
+            if (payload.eventType === "DELETE") {
+              dispatch(updData(payload.old));
+            } else {
+              dispatch(updData(payload.new));
+            }
           }
         )
         .subscribe();

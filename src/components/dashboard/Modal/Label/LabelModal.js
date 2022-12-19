@@ -109,6 +109,7 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
           msg={warn}
           setToggleModal={setToggleLabelModal}
           setWarn={setWarn}
+          reset={() => setLabelTitle(newLabel)}
         />
       ) : null}
     </>

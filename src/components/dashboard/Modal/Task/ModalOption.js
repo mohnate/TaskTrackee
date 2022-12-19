@@ -52,6 +52,8 @@ export default function ModalOption({ dateRef, dateState, setDateState }) {
           <LabelOutlineSvg color={activeOption === "label" ? "#000" : "#fff"} />
         </button>
       </div>
+
+      {/* Calender or Label Section */}
       {activeOption === "calender" ? (
         <Calender
           ref={dateRef}

@@ -123,7 +123,7 @@ export default function SideBar({ toggleSideBar, setToggleLabelModal }) {
                       className={styles.labelColor}
                       style={{ backgroundColor: `${data.colour}` }}
                     ></div>
-                    <span>{data.label}</span>
+                    <span className={styles.listItemTxt}>{data.label}</span>
                   </li>
                 ))
               ) : (

@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "set NODE_ENV=development&& webpack serve --config webpack.dev.js",
-    "build-local": "set NODE_ENV=production&& webpack --config webpack.prod.js --env ANALYZE=true",
+    "build:local": "set NODE_ENV=production&& webpack --config webpack.prod.js --env ANALYZE=true",
     "build": "set NODE_ENV=production&& webpack --config webpack.prod.js --env ANALYZE=false",
     "test": "set NODE_ENV=test&& jest --watchAll"
   },

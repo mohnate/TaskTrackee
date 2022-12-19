@@ -12,7 +12,10 @@ const Calender = React.forwardRef(({ dateState, setDateState }, ref) => {
   return (
     <div className={inputStyles.optionContainer}>
       <label className={inputStyles.dateTimeLabel} htmlFor="due-time">
-        Due Date:
+        Due Date:{" "}
+        <span style={{ opacity: 0.5 }}>
+          {ref?.current?.value ? null : "Not Set"}
+        </span>
       </label>
       <input
         className={inputStyles.dateTimeInput}

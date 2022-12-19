@@ -65,9 +65,21 @@
   border: 2px solid var(--pri-sec-color);
   color: #fff;
   border-radius: 5px;
-  width: 150px;
+  width: 160px;
 }
-.dropDownSec {
-  margin: 8px 10px;
+.dropDownBar {
+  display: flex;
+  margin: 5px 10px 5px 5px;
+  padding: 2px 0;
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--pri-sec-hover-color);
+  }
+}
+.dorpDownHeader {
+  margin: 0;
+  align-self: center;
+  color: #fff;
+  text-decoration: none;
 }

@@ -4,7 +4,10 @@ import DoubleCheckSvg from "../icons/DoubleCheckSvg";
 import React, { useState } from "react";
 
 const EmailInput = React.forwardRef(({ id, label, footer, state }, ref) => {
+  // Check if user inputed email address match
+  // the emailPattern
   const [tally, setTally] = useState(false);
+
   const inputOnChange = () => {
     const emailPattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -39,10 +42,12 @@ const EmailInput = React.forwardRef(({ id, label, footer, state }, ref) => {
           onChange={inputOnChange}
           data-testid="emailInput"
         />
+
         {tally ? (
           <DoubleCheckSvg color="#19a663" className={styles.tallyIcon} />
         ) : null}
       </div>
+
       {footer || state ? (
         <label
           htmlFor={id}
@@ -58,4 +63,5 @@ const EmailInput = React.forwardRef(({ id, label, footer, state }, ref) => {
   );
 });
 
+EmailInput.displayName = "EmailInput";
 export default EmailInput;

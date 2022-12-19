@@ -90,10 +90,17 @@
   padding: 0;
   z-index: 0;
   display: block;
+  overflow: hidden;
 }
 .listItem {
   color: #fff;
   margin-bottom: 5px;
+  margin-right: 7px;
+  max-width: 170px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .labelColor {
   width: 17px;

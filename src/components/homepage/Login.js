@@ -17,6 +17,7 @@ export default function Login() {
     password: null,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();

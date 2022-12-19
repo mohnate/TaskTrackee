@@ -41,6 +41,7 @@ A task managment application built with **REACT. JS**
           | desc         | text         | NULL          |            ⬛ |
           | due_date     | timestamptz  | NULL          |            ⬛ |
           | status       | text         | pending       |            ⬛ |
+          | labels_id    | int8[]       | NULL          |            ⬛ |
 
     Create another new table for `Labels` section.
 
@@ -87,3 +88,17 @@ I have use a [Dotenv Vault](https://www.dotenv.org/) services to store the my `.
 ### netlify.toml
 
 I deployed my application on [Netlify](https://www.netlify.com/) and use `netlify dev` to test the application. You may removed this file if you do not plan on using `netlify CLI`.
+
+## Running **`dist`** folder file locally
+
+To run the built version locally, install the following package (globally on your machine).
+
+```bash
+npm install -g http-server
+```
+
+Use the following command in the `dist` folder to start the server locally.
+
+```bash
+http-server
+```

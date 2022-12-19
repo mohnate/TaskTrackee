@@ -7,12 +7,12 @@ import Homepage from "./index";
 import ProtectedRoute from "$Lib/ProtectedRoute";
 import NoAuthenticateUser from "$Lib/NoAuthenticateUser";
 
-const Dashboard = lazy(() => import("$Routes/dashboard/index"));
 const AllTask = lazy(() => import("$Routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("$Routes/dashboard/todayTask"));
 const UpcoimngTask = lazy(() => import("$Routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("$Routes/dashboard/finishedTask"));
 
+import Dashboard from "$Routes/dashboard/index";
 import PageNotFound from "$Components/errorPage/PageNotFound";
 import ContentNotFound from "$Components/errorPage/ContentNotFound";
 import Spinner from "$Components/PageLoader";
@@ -25,7 +25,11 @@ export default function App() {
           path="/"
           element={
             <NoAuthenticateUser>
-              <Homepage />
+              <Suspense
+                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+              >
+                <Homepage />
+              </Suspense>
             </NoAuthenticateUser>
           }
         />

@@ -14,13 +14,11 @@ import Dropdown from "./DropDown";
 export default function Header({ toggleSideBar, setToggleSideBar }) {
   const [dropDown, setDropDown] = useState(false);
   const [user, setUser] = useState(null);
+
   const dropDownRef = useRef();
   const paraRef = useRef();
   const imgRef = useRef();
 
-  const toggleSideBarFunc = () => {
-    setToggleSideBar((prev) => !prev);
-  };
   const toggleDropDown = () => {
     setDropDown((prev) => !prev);
   };
@@ -52,16 +50,19 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
     <>
       <header className={styles.header}>
         <nav className={styles.leftComp}>
-          <div className={styles.iconContainer} onClick={toggleSideBarFunc}>
+          <div
+            className={styles.iconContainer}
+            onClick={() => setToggleSideBar((prev) => !prev)}
+          >
             {toggleSideBar ? (
-              <Image src={menuScale} w={30} h={30} alt="menu" />
+              <Image src={menuScale} w="30px" h="30px" alt="menu" />
             ) : (
-              <Image src={menu} w={30} h={30} alt="menu" />
+              <Image src={menu} w="30px" h="30px" alt="menu" />
             )}
           </div>
           <div className={styles.iconContainer}>
             <Link to="/dashboard/alltask">
-              <Image src={home} w={40} h={30} alt="home" />
+              <Image src={home} w="40px" h="30px" alt="home" />
             </Link>
           </div>
         </nav>

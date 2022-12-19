@@ -13,6 +13,9 @@
   @include modalBack;
   display: flex;
   z-index: 10;
+  @media screen and (max-width: 450px) {
+    padding: 1rem;
+  }
 }
 .bgClose {
   @include modalBack;
@@ -32,6 +35,11 @@
 }
 .content {
   @include content;
+}
+.contentWarn {
+  @include content;
+  background-color: var(--primary-hover-color);
+  width: 400px;
 }
 .contentBig {
   @include content;
@@ -183,4 +191,35 @@
   margin-left: 5px;
   vertical-align: middle;
   outline: 1px solid #000;
+}
+
+@media screen and (max-width: 450px) {
+  .contentWarn {
+    width: 350px;
+  }
+  .warnModalHeader {
+    font-size: 1.1rem;
+    margin-top: 8px;
+  }
+  .labelBar {
+    border-radius: 6px;
+  }
+  .labelText {
+    font-size: 0.9rem;
+  }
+  .labelBarTickBox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .contentWarn {
+    width: 100%;
+  }
+  .warnModalHeader {
+    font-size: 1rem;
+    margin-top: 6px;
+  }
 }

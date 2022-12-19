@@ -11,7 +11,7 @@ export default function PageNotFound() {
       <div className={styles.container}>
         <div className={homepageStyles.brand}>
           <div style={{ width: "200px" }}>
-            <Image src={logo} alt="TaskTrackee Logo" width="512" height="512" />
+            <Image src={logo} alt="TaskTrackee Logo" w="512px" h="512px" />
           </div>
         </div>
         <h1 className={homepageStyles.brandName} style={{ color: "#e4f0ff" }}>

@@ -168,4 +168,15 @@
 .dateTimeInput {
   @include inputStyle();
   margin: 0;
+
+  @media screen and (max-width: 450px) {
+    height: 2rem;
+    font-size: 1rem;
+    padding: 0.15rem 0.7rem;
+  }
+  @media screen and (max-width: 380px) {
+    height: 1.7rem;
+    font-size: 0.9rem;
+    padding: 0;
+  }
 }

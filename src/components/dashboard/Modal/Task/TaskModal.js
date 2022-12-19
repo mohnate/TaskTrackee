@@ -8,6 +8,7 @@ import { supabase } from "$Lib/supabase";
 import WarnModal from "../WarnModal";
 import AddTask from "./AddTask";
 import UpdTask from "./UpdTask";
+import arrayAreEqual from "$Lib/arrayEquality";
 
 // React context for label useReducer hook to pass
 // down to LabelBarSelect without prop drilling
@@ -36,6 +37,7 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
   // useReducer hook for label selection
   function reducer(state, action) {
     if (action.selected === "clear") return [];
+    if (Array.isArray(action) && action.length > 0) return action;
     if (action.selected) {
       return [action.id, ...state];
     } else {
@@ -74,7 +76,9 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
     const { user } = session;
     const { error } = await supabase
       .from("Task")
-      .insert([{ user_uid: user.id, header, desc, due_date: date }]);
+      .insert([
+        { user_uid: user.id, header, desc, due_date: date, labels_id: state },
+      ]);
     if (error) console.error(error);
     resetToDefault(); // reset modal data to default after adding
   };
@@ -97,7 +101,24 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
     const { user } = session;
     const { error } = await supabase
       .from("Task")
-      .update([{ header, desc, due_date: date }])
+      .update([{ header, desc, due_date: date, labels_id: state }])
+      .eq("user_uid", user.id)
+      .eq("id", id);
+    if (error) console.error(error);
+    resetToDefault(); // reset modal data to default after updating
+  };
+
+  // Supabase Delete Task Function
+  const deleteHandler = async (e, id) => {
+    e.preventDefault();
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const { user } = session;
+    const { error } = await supabase
+      .from("Task")
+      .delete()
       .eq("user_uid", user.id)
       .eq("id", id);
     if (error) console.error(error);
@@ -157,6 +178,22 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
       }
     };
 
+    const labelsChanges = () => {
+      for (const task of taskData) {
+        if (task.id === toggleTaskModal[1]) {
+          if (task.labels_id === null) {
+            if (state.length === 0) return false;
+            if (state.length !== 0) return true;
+          } else {
+            const result = arrayAreEqual(state, task.labels_id);
+
+            if (result) return false;
+            return true;
+          }
+        }
+      }
+    };
+
     const headerDidChange = toggleTaskModal[1]
       ? headerChanges()
       : header !== "Task Header";
@@ -166,11 +203,21 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
       : due_date === null
       ? false
       : due_date !== "";
+    const labelsDidChange = toggleTaskModal[1]
+      ? labelsChanges()
+      : state.length === 0
+      ? false
+      : true;
 
     // user close modal through cancel btn (e === null)
     // or close modal throguh clicking/touching background (e !== null)
     if ((e === null && btnClose) || e.currentTarget == e.target) {
-      if (headerDidChange || descDidChange || dateDidChange) {
+      if (
+        headerDidChange ||
+        descDidChange ||
+        dateDidChange ||
+        labelsDidChange
+      ) {
         return setWarn("You have unsaved changes");
       } else return resetToDefault();
     }
@@ -191,6 +238,7 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
               dataId={toggleTaskModal[1]}
               closeModal={closeModal}
               handleUpdate={handleUpdate}
+              deleteHandler={deleteHandler}
               ref={taskRef}
             />
           ) : null}
@@ -205,6 +253,7 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
         <WarnModal
           msg={warn}
           setToggleModal={setToggleTaskModal}
+          reset={resetToDefault}
           setWarn={setWarn}
         />
       ) : null}

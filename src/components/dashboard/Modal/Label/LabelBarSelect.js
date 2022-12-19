@@ -4,7 +4,7 @@ import CheckSvg from "../../../icons/CheckSvg";
 import { useContext, useEffect, useState } from "react";
 import { LabelContext } from "../Task/TaskModal";
 
-export default function LabelBarSelect({ data }) {
+export default function LabelBarSelect({ data, taskId }) {
   // to show tick in label onHover and set label
   // as selected onClick
   const [toggleCheck, setToggleCheck] = useState({
@@ -16,6 +16,16 @@ export default function LabelBarSelect({ data }) {
 
   // set label-check for the selected id at the first render
   useEffect(() => {
+    setSelectedLabel();
+  }, []);
+
+  // set label-check for the selected id at the first render,
+  // different is that this is for exisiting
+  useEffect(() => {
+    if (taskId && !toggleCheck.selected) setSelectedLabel();
+  }, [state]);
+
+  const setSelectedLabel = () => {
     state.forEach((labelId) => {
       if (labelId === data.id) {
         setToggleCheck((prev) => {
@@ -24,7 +34,7 @@ export default function LabelBarSelect({ data }) {
         });
       }
     });
-  }, []);
+  };
 
   const handleMouseOver = (condition) => {
     if (condition) {
@@ -49,6 +59,7 @@ export default function LabelBarSelect({ data }) {
         style={
           parseInt(data.colour.slice(1, 3), 16) <= 130 ? { color: "#fff" } : {}
         }
+        className={styles.labelText}
       >
         {data.label}
       </span>

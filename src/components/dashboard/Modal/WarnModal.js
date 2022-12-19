@@ -2,15 +2,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import modalStyles from "$Styles/dashboard/modal.module.scss";
 import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
 
-export default function WarnModal({ msg, setToggleModal, setWarn }) {
+export default function WarnModal({ msg, setToggleModal, setWarn, reset }) {
   const closeModal = (e, btnClose) => {
+    // user close modal through cancel btn (e === null)
+    // or close modal throguh clicking/touching background (e !== null)
     if (e === null && btnClose) {
       setWarn(false);
       setToggleModal(false);
+      if (reset) reset();
       return;
     }
     if (e.currentTarget == e.target) {
       setWarn(false);
+      if (reset) reset();
       return;
     }
   };
@@ -32,10 +36,7 @@ export default function WarnModal({ msg, setToggleModal, setWarn }) {
           animate="visible"
           exit="exit"
         >
-          <section
-            className={modalStyles.content}
-            style={{ backgroundColor: "#2c313f", width: "400px" }}
-          >
+          <section className={modalStyles.contentWarn}>
             <h1 className={modalStyles.warnModalHeader}>{msg}</h1>
 
             <div className={modalStyles.btnGroup}>

@@ -2,21 +2,33 @@ import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
 import inputStyles from "$Styles/input.module.scss";
 import styles from "$Styles/dashboard/modal.module.scss";
 
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { LabelContext } from "./TaskModal";
 
 import TaskInput from "$Components/input/TaskInput";
 import Divider from "$Components/Divider";
+import Calender from "../Calender";
+import LabelBarSelect from "../Label/LabelBarSelect";
 
 const UpdTask = React.forwardRef(
-  ({ closeModal, handleUpdate, dataId }, ref) => {
+  ({ closeModal, handleUpdate, deleteHandler, dataId }, ref) => {
     const headRef = useRef();
     const taskDescRef = useRef();
     const dateRef = useRef();
     const taskData = useSelector((state) =>
       state.taskData.value?.filter((task) => task.id == dataId)
     );
+    const labelData = useSelector((state) => state.labelData.value);
+
+    // useContext from TaskModal.js
+    const { state, dispatch } = useContext(LabelContext);
 
     useImperativeHandle(ref, () => {
       return {
@@ -26,6 +38,7 @@ const UpdTask = React.forwardRef(
       };
     });
 
+    // Set due_date and the selected label
     useEffect(() => {
       if (taskData[0].due_date != null) {
         const timeZoneOffset = new Date(
@@ -39,6 +52,9 @@ const UpdTask = React.forwardRef(
         )
           .toISOString()
           .slice(0, -5);
+      }
+      if (taskData[0].labels_id !== null) {
+        dispatch(taskData[0].labels_id);
       }
     }, []);
 
@@ -60,6 +76,7 @@ const UpdTask = React.forwardRef(
         <main className={styles.contentBig}>
           <Divider />
           <form onSubmit={(e) => handleUpdate(e, taskData[0].id)}>
+            {/* Header and Description Section */}
             <TaskInput
               ref={headRef}
               id="taskHead"
@@ -74,24 +91,43 @@ const UpdTask = React.forwardRef(
               val={taskData[0].desc}
             />
             <Divider mgtp="12px" />
+
+            {/* Calender Section */}
+            <Calender ref={dateRef} />
+
+            {/* Label Section */}
             <div className={inputStyles.optionContainer}>
-              <label className={inputStyles.dateTimeLabel} htmlFor="due-time">
-                Due Date:
-              </label>
-              <input
-                className={inputStyles.dateTimeInput}
-                type="datetime-local"
-                id="due-time"
-                ref={dateRef}
-              />
+              {labelData?.length > 0 ? (
+                labelData.map((label) => (
+                  <LabelBarSelect
+                    data={label}
+                    key={label.id}
+                    taskId={taskData[0].id}
+                  />
+                ))
+              ) : (
+                <span className={styles.missingLabel}>
+                  You don't have any label created currently
+                </span>
+              )}
             </div>
-            Label
             <Divider mgbt="5px" />
+
+            {/* Button Section */}
             <div className={styles.btnGroup}>
+              {/* Delete Button  */}
+              <button
+                type="button"
+                onClick={(e) => deleteHandler(e, taskData[0].id)}
+                className={`${dashboardStyles.addTaskBtn} ${styles.cancelTaskBtn}`}
+              >
+                Delete
+              </button>
+              {/* Cancel Button  */}
               <button
                 type="button"
                 onClick={() => closeModal(null, true)}
-                className={`${dashboardStyles.addTaskBtn} ${styles.cancelTaskBtn}`}
+                className={`${dashboardStyles.addTaskBtn} ${styles.backTaskBtn}`}
               >
                 Cancel
               </button>
@@ -110,4 +146,5 @@ const UpdTask = React.forwardRef(
   }
 );
 
+UpdTask.displayName = "UpdTask";
 export default UpdTask;

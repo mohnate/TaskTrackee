@@ -1,7 +1,7 @@
 import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
 import styles from "$Styles/dashboard/modal.module.scss";
 
-import React, { useImperativeHandle, useRef } from "react";
+import React, { useImperativeHandle, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import TaskInput from "$Components/input/TaskInput";
@@ -11,6 +11,8 @@ const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {
   const headRef = useRef();
   const taskDescRef = useRef();
   const dateRef = useRef();
+
+  const [dateState, setDateState] = useState(null);
 
   useImperativeHandle(ref, () => {
     return {
@@ -49,7 +51,11 @@ const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {
             id="taskDesc"
             placeholder="Description here"
           />
-          <ModalOption dateRef={dateRef} />
+          <ModalOption
+            dateRef={dateRef}
+            dateState={dateState}
+            setDateState={setDateState}
+          />
 
           <div className={styles.btnGroup}>
             <button

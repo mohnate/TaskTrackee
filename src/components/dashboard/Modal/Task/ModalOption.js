@@ -8,8 +8,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import LabelBarSelect from "../Label/LabelBarSelect";
+import Calender from "../Calender";
 
-export default function ModalOption({ dateRef }) {
+export default function ModalOption({ dateRef, dateState, setDateState }) {
   const [activeOption, setActiveOption] = useState(null);
   const labelData = useSelector((state) => state.labelData.value);
 
@@ -51,18 +52,14 @@ export default function ModalOption({ dateRef }) {
           <LabelOutlineSvg color={activeOption === "label" ? "#000" : "#fff"} />
         </button>
       </div>
+
+      {/* Calender or Label Section */}
       {activeOption === "calender" ? (
-        <div className={inputStyles.optionContainer}>
-          <label className={inputStyles.dateTimeLabel} htmlFor="due-time">
-            Due Date:
-          </label>
-          <input
-            className={inputStyles.dateTimeInput}
-            type="datetime-local"
-            id="due-time"
-            ref={dateRef}
-          />
-        </div>
+        <Calender
+          ref={dateRef}
+          dateState={dateState}
+          setDateState={setDateState}
+        />
       ) : activeOption === "label" ? (
         <div className={inputStyles.optionContainer}>
           {labelData?.length > 0 ? (
@@ -70,11 +67,9 @@ export default function ModalOption({ dateRef }) {
               <LabelBarSelect data={label} key={label.id} />
             ))
           ) : (
-            <>
-              <span className={styles.missingLabel}>
-                You don't have any label created currently
-              </span>
-            </>
+            <span className={styles.missingLabel}>
+              You don't have any label created currently
+            </span>
           )}
         </div>
       ) : null}

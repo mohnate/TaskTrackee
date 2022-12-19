@@ -2,7 +2,7 @@ import styles from "$Styles/dashboard/dashboard.module.scss";
 import modalStyles from "$Styles/dashboard/modal.module.scss";
 
 import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from "framer-motion";
 import { supabase } from "$Lib/supabase";
@@ -13,10 +13,16 @@ import {
   deleteLabel,
 } from "$Lib/ReduxSlice/SupabaseLabelSlice";
 
+const TaskModal = lazy(() =>
+  import("$Components/dashboard/Modal/Task/TaskModal")
+);
+const LabelModal = lazy(() =>
+  import("$Components/dashboard/Modal/Label/LabelModal")
+);
+
 import Header from "$Components/dashboard/Header";
 import SideBar from "$Components/dashboard/SideBar";
-import TaskModal from "$Components/dashboard/Modal/Task/TaskModal";
-import LabelModal from "$Components/dashboard/Modal/Label/LabelModal";
+import Spinner from "$Components/PageLoader";
 
 // Data below must be synchronized with components/dashboard/SideBar.js
 const pages = [
@@ -28,21 +34,28 @@ const pages = [
 
 export default function Dashboard() {
   const location = useLocation();
-  const [toggleSideBar, setToggleSideBar] = useState(true); // open/close sidebar
+  // Open or Close SideBar
+  const [toggleSideBar, setToggleSideBar] = useState(true);
   // For open and close task modal, possible value:
   // ["addTask", data.id], ["updTask", data.id], false, true
   const [toggleTaskModal, setToggleTaskModal] = useState(false);
-  const [toggleLabelModal, setToggleLabelModal] = useState(false); // open/close label modal
+  // Open or Close Label Modal located at SideBar
+  const [toggleLabelModal, setToggleLabelModal] = useState(false);
+  // Show if user is using small screen
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const dispatch = useDispatch();
   const controls = useAnimation();
 
+  // Side Effect for supabase to fetch data and subscribe to
+  // the backend for realtime database update
   useEffect(() => {
     (async () => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
       const { user } = session;
+
+      // Task Section
       supabase
         .from("Task")
         .select()
@@ -54,7 +67,6 @@ export default function Dashboard() {
             dispatch(setData(payload.data));
           }
         });
-
       supabase
         .channel("public:Task")
         .on(
@@ -70,6 +82,7 @@ export default function Dashboard() {
         )
         .subscribe();
 
+      // Label Section
       supabase
         .from("Labels")
         .select()
@@ -81,7 +94,6 @@ export default function Dashboard() {
             dispatch(setLabel(payload.data));
           }
         });
-
       supabase
         .channel("public:Labels")
         .on(
@@ -124,7 +136,10 @@ export default function Dashboard() {
     };
   });
 
-  // handle window resize and sets items in row
+  // handle window resize and set isSmallScreen as
+  // true if user screen is smaller than 900, this
+  // pop the SideBar and make it not aligned with
+  // the content and instead become a side modal
   const handleWindowResize = () => {
     if (toggleSideBar) {
       if (window.innerWidth > 900) {
@@ -156,11 +171,13 @@ export default function Dashboard() {
             onClick={() => setToggleSideBar((prev) => !prev)}
           ></div>
         ) : null}
+
         <SideBar
           toggleSideBar={toggleSideBar}
           setToggleSideBar={setToggleSideBar}
           setToggleLabelModal={setToggleLabelModal}
         />
+
         <motion.main
           className={styles.content}
           animate={controls}
@@ -171,7 +188,7 @@ export default function Dashboard() {
               {pages.map((page) => {
                 return `/dashboard/${page.route}` === location.pathname
                   ? page.label
-                  : "";
+                  : null;
               })}
             </h1>
             {location.pathname === "/dashboard/finishedtask" ? null : (
@@ -184,19 +201,22 @@ export default function Dashboard() {
               </button>
             )}
           </header>
+          {/* Content loads here */}
           <Outlet context={[setToggleTaskModal]} />
         </motion.main>
       </div>
 
       {/* modal part  */}
-      <TaskModal
-        setToggleTaskModal={setToggleTaskModal}
-        toggleTaskModal={toggleTaskModal}
-      />
-      <LabelModal
-        setToggleLabelModal={setToggleLabelModal}
-        toggleLabelModal={toggleLabelModal}
-      />
+      <Suspense fallback={<Spinner sz="medium" pad="50px 0" />}>
+        <TaskModal
+          setToggleTaskModal={setToggleTaskModal}
+          toggleTaskModal={toggleTaskModal}
+        />
+        <LabelModal
+          setToggleLabelModal={setToggleLabelModal}
+          toggleLabelModal={toggleLabelModal}
+        />
+      </Suspense>
     </>
   );
 }

@@ -6,7 +6,13 @@ import { useState } from "react";
 import { supabase } from "$Lib/supabase";
 
 const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
-  const [showInfo, setShowInfo] = useState({ msg: null, status: false });
+  // Show Status about label after certain supabase action.
+  // State will be updated based on label insert, update and delete.
+  const [showInfo, setShowInfo] = useState({
+    msg: null,
+    status: false,
+    style: {},
+  });
 
   // Supabase Insert and Update Label Function
   const sumbitHandler = async (e) => {

@@ -11,6 +11,7 @@ const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {
   const headRef = useRef();
   const taskDescRef = useRef();
   const dateRef = useRef();
+
   const [dateState, setDateState] = useState(null);
 
   useImperativeHandle(ref, () => {

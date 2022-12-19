@@ -7,6 +7,7 @@ export default function Spinner({ pad, sz, pos }) {
   const large = { width: "100px", height: "100px" };
   const medium = { width: "75px", height: "75px" };
   const small = { width: "50px", height: "50px" };
+
   return (
     <div
       className={

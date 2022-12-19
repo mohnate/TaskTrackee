@@ -23,6 +23,7 @@ export default function SideBar({ toggleSideBar, setToggleLabelModal }) {
   const location = useLocation();
   const sideBarControls = useAnimation();
   const labelControls = useAnimation();
+  // Open or close labels dropdown option
   const [toggleLabels, setToggleLabels] = useState(false);
   const labelData = useSelector((state) => state.labelData.value);
 

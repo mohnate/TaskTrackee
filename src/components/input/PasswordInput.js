@@ -5,19 +5,27 @@ import React, { useState } from "react";
 
 const PasswordInput = React.forwardRef(
   ({ id, label, placeholder, footer, confirmPass = false, state }, ref) => {
+    // Check if user inputed email address match
+    // the emailPattern
     const [tally, setTally] = useState(false);
+
     const inputOnChange = () => {
       const passwordLength =
         ref.current.value.length > 7 && ref.current.value.length < 30;
 
+      // Check if password length match the requirement
       if (passwordLength) {
+        // If confirm password is required
         if (confirmPass) {
+          // Check if the password input match the
+          // confirm password input
           if (confirmPass.current.value === ref.current.value)
             if (!tally) {
               setTally(true);
             }
           return;
         }
+
         if (!tally) {
           setTally(true);
         }
@@ -71,4 +79,5 @@ const PasswordInput = React.forwardRef(
   }
 );
 
+PasswordInput.displayName = "PasswordInput";
 export default PasswordInput;

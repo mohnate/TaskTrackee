@@ -23,4 +23,5 @@ const TaskInput = React.forwardRef(({ id, placeholder, c, val }, ref) => {
   );
 });
 
+TaskInput.displayName = "TaskInput";
 export default TaskInput;

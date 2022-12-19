@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function CheckSvg({ color, className }) {
+  // Show if user is using small screen
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
@@ -12,7 +13,8 @@ export default function CheckSvg({ color, className }) {
     };
   });
 
-  // handle window resize and sets items in row
+  // handle window resize and setIsSmallScreen to true
+  // if user window screen is smaller than 650
   const handleWindowResize = () => {
     if (window.innerWidth > 650) {
       setIsSmallScreen(false);

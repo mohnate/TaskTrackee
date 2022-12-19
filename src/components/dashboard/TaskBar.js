@@ -5,6 +5,8 @@ import { useState } from "react";
 import { supabase } from "$Lib/supabase";
 
 export default function TaskBar({ data, date = "macro", setTgMd }) {
+  // For checkBox use, set CheckSvg when mouseon on the
+  // circle checkbox
   const [toggleCheck, setToggleCheck] = useState();
 
   const handleMouseOver = (condition) => {
@@ -16,6 +18,7 @@ export default function TaskBar({ data, date = "macro", setTgMd }) {
     }
   };
 
+  // Supabase working, set task status
   const checkTask = async () => {
     if (data.status === "completed") {
       // set task status to "pending"

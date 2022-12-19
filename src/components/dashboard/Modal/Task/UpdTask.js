@@ -38,6 +38,7 @@ const UpdTask = React.forwardRef(
       };
     });
 
+    // Set due_date and the selected label
     useEffect(() => {
       if (taskData[0].due_date != null) {
         const timeZoneOffset = new Date(
@@ -145,4 +146,5 @@ const UpdTask = React.forwardRef(
   }
 );
 
+UpdTask.displayName = "UpdTask";
 export default UpdTask;

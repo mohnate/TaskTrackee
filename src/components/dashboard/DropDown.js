@@ -8,6 +8,7 @@ import Image from "@chan_alston/image";
 
 export default function Dropdown({ dropDownRef }) {
   const navigate = useNavigate();
+
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
     navigate("/");

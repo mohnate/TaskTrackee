@@ -4,7 +4,10 @@ import DoubleCheckSvg from "../icons/DoubleCheckSvg";
 import React, { useState } from "react";
 
 const UsernameInput = React.forwardRef(({ id, label, footer, state }, ref) => {
+  // Check if user inputed email address match
+  // the emailPattern
   const [tally, setTally] = useState(false);
+
   const inputOnChange = () => {
     if (ref.current.value.length >= 3) {
       if (!tally) {
@@ -39,10 +42,12 @@ const UsernameInput = React.forwardRef(({ id, label, footer, state }, ref) => {
           onChange={inputOnChange}
           data-testid="usernameInput"
         />
+
         {tally ? (
           <DoubleCheckSvg color="#19a663" className={styles.tallyIcon} />
         ) : null}
       </div>
+
       {state || footer ? (
         <label
           htmlFor={id}

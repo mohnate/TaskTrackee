@@ -1,5 +1,4 @@
 import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
-import inputStyles from "$Styles/input.module.scss";
 import styles from "$Styles/dashboard/modal.module.scss";
 
 import React, { useEffect, useImperativeHandle, useRef } from "react";
@@ -8,6 +7,7 @@ import { useSelector } from "react-redux";
 
 import TaskInput from "$Components/input/TaskInput";
 import Divider from "$Components/Divider";
+import Calender from "../Calender";
 
 const UpdTask = React.forwardRef(
   ({ closeModal, handleUpdate, dataId }, ref) => {
@@ -74,17 +74,7 @@ const UpdTask = React.forwardRef(
               val={taskData[0].desc}
             />
             <Divider mgtp="12px" />
-            <div className={inputStyles.optionContainer}>
-              <label className={inputStyles.dateTimeLabel} htmlFor="due-time">
-                Due Date:
-              </label>
-              <input
-                className={inputStyles.dateTimeInput}
-                type="datetime-local"
-                id="due-time"
-                ref={dateRef}
-              />
-            </div>
+            <Calender ref={dateRef} />
             Label
             <Divider mgbt="5px" />
             <div className={styles.btnGroup}>

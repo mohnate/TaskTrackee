@@ -32,10 +32,7 @@ export default function WarnModal({ msg, setToggleModal, setWarn }) {
           animate="visible"
           exit="exit"
         >
-          <section
-            className={modalStyles.content}
-            style={{ backgroundColor: "#2c313f", width: "400px" }}
-          >
+          <section className={modalStyles.contentWarn}>
             <h1 className={modalStyles.warnModalHeader}>{msg}</h1>
 
             <div className={modalStyles.btnGroup}>

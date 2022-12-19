@@ -208,4 +208,5 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
   );
 };
 
+LabelForm.displayName = "LabelForm";
 export default LabelForm;

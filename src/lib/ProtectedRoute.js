@@ -4,6 +4,12 @@ import { supabase } from "./supabase";
 
 import Spinner from "../components/PageLoader";
 
+import PropTypes from "prop-types";
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);

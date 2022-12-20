@@ -1,3 +1,10 @@
+import PropTypes from "prop-types";
+
+CalenderSvg.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string,
+};
+
 export default function CalenderSvg({ color, className }) {
   return (
     <svg

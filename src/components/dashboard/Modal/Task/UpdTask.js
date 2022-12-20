@@ -17,6 +17,8 @@ import Divider from "$Components/Divider";
 import Calender from "../Calender";
 import LabelBarSelect from "../Label/LabelBarSelect";
 
+import PropTypes from "prop-types";
+
 const UpdTask = React.forwardRef(
   ({ closeModal, handleUpdate, deleteHandler, dataId }, ref) => {
     const headRef = useRef();
@@ -28,7 +30,7 @@ const UpdTask = React.forwardRef(
     const labelData = useSelector((state) => state.labelData.value);
 
     // useContext from TaskModal.js
-    const { state, dispatch } = useContext(LabelContext);
+    const { state, dispatch } = useContext(LabelContext); // eslint-disable-line no-unused-vars
 
     useImperativeHandle(ref, () => {
       return {
@@ -107,7 +109,7 @@ const UpdTask = React.forwardRef(
                 ))
               ) : (
                 <span className={styles.missingLabel}>
-                  You don't have any label created currently
+                  You don&apos;t have any label created currently
                 </span>
               )}
             </div>
@@ -145,6 +147,13 @@ const UpdTask = React.forwardRef(
     );
   }
 );
+
+UpdTask.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  handleUpdate: PropTypes.func.isRequired,
+  deleteHandler: PropTypes.func.isRequired,
+  dataId: PropTypes.number.isRequired,
+};
 
 UpdTask.displayName = "UpdTask";
 export default UpdTask;

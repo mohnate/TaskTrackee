@@ -1,3 +1,10 @@
+import PropTypes from "prop-types";
+
+Divider.propTypes = {
+  mgbt: PropTypes.string,
+  mgtp: PropTypes.string,
+};
+
 export default function Divider({ mgbt, mgtp }) {
   return (
     <hr

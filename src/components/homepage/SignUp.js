@@ -8,6 +8,12 @@ import UsernameInput from "../input/UsernameInput";
 import EmailInput from "../input/EmailInput";
 import PasswordInput from "../input/PasswordInput";
 
+import PropTypes from "prop-types";
+
+SignUp.propTypes = {
+  setLoginComp: PropTypes.func.isRequired,
+};
+
 export default function SignUp({ setLoginComp }) {
   const reducer = (state, action) => {
     return { ...state, [action.type]: action.txt };
@@ -68,6 +74,7 @@ export default function SignUp({ setLoginComp }) {
       return;
     } else dispatch({ type: "confPassword", txt: null });
 
+    // eslint-disable no-unused-vars
     const { user, session, error } = await supabase.auth.signUp(
       {
         email,

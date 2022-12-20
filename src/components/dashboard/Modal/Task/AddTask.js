@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import TaskInput from "$Components/input/TaskInput";
 import ModalOption from "./ModalOption";
 
+import PropTypes from "prop-types";
+
 const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {
   const headRef = useRef();
   const taskDescRef = useRef();
@@ -79,4 +81,10 @@ const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {
   );
 });
 
+AddTask.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
+
+AddTask.displayName = "AddTask";
 export default AddTask;

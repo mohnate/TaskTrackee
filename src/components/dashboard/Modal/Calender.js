@@ -1,6 +1,8 @@
 import inputStyles from "$Styles/input.module.scss";
 import React, { useCallback } from "react";
 
+import PropTypes from "prop-types";
+
 const Calender = React.forwardRef(({ dateState, setDateState }, ref) => {
   const refCallback = useCallback((node) => {
     if (node) {
@@ -29,6 +31,11 @@ const Calender = React.forwardRef(({ dateState, setDateState }, ref) => {
     </div>
   );
 });
+
+Calender.propTypes = {
+  dateState: PropTypes.string,
+  setDateState: PropTypes.func,
+};
 
 Calender.displayName = "Calender";
 export default Calender;

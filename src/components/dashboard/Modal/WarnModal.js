@@ -2,6 +2,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import modalStyles from "$Styles/dashboard/modal.module.scss";
 import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
 
+import PropTypes from "prop-types";
+
+WarnModal.propTypes = {
+  msg: PropTypes.string.isRequired,
+  setToggleModal: PropTypes.func.isRequired,
+  setWarn: PropTypes.func.isRequired,
+  reset: PropTypes.func,
+};
+
 export default function WarnModal({ msg, setToggleModal, setWarn, reset }) {
   const closeModal = (e, btnClose) => {
     // user close modal through cancel btn (e === null)

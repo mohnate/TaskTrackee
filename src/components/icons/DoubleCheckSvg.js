@@ -1,3 +1,10 @@
+import PropTypes from "prop-types";
+
+DoubleCheckSvg.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string,
+};
+
 export default function DoubleCheckSvg({ color, className }) {
   return (
     <svg

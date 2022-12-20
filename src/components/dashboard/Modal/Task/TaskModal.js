@@ -10,6 +10,14 @@ import AddTask from "./AddTask";
 import UpdTask from "./UpdTask";
 import arrayAreEqual from "$Lib/arrayEquality";
 
+import PropTypes from "prop-types";
+
+TaskModal.propTypes = {
+  setToggleTaskModal: PropTypes.func.isRequired,
+  toggleTaskModal: PropTypes.oneOfType([PropTypes.bool, PropTypes.array])
+    .isRequired,
+};
+
 // React context for label useReducer hook to pass
 // down to LabelBarSelect without prop drilling
 export const LabelContext = createContext();
@@ -201,13 +209,13 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
     const dateDidChange = toggleTaskModal[1]
       ? dateChanges()
       : due_date === null
-      ? false
-      : due_date !== "";
+        ? false
+        : due_date !== "";
     const labelsDidChange = toggleTaskModal[1]
       ? labelsChanges()
       : state.length === 0
-      ? false
-      : true;
+        ? false
+        : true;
 
     // user close modal through cancel btn (e === null)
     // or close modal throguh clicking/touching background (e !== null)

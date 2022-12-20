@@ -11,6 +11,13 @@ import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
+
+SideBar.propTypes = {
+  toggleSideBar: PropTypes.bool.isRequired,
+  setToggleLabelModal: PropTypes.func.isRequired,
+};
+
 // Data below must be synchronized with routes/dashboard/index.js
 const selectionBtn = [
   { label: "All Task", img: taskList, pathname: "alltask" },
@@ -130,7 +137,7 @@ export default function SideBar({ toggleSideBar, setToggleLabelModal }) {
               ) : (
                 <>
                   <span className={styles.missingLabel}>
-                    You don't have any label created currently
+                    You don&apos;t have any label created currently
                   </span>
                 </>
               )}

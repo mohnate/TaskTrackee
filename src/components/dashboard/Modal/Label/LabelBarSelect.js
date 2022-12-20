@@ -4,6 +4,13 @@ import CheckSvg from "../../../icons/CheckSvg";
 import { useContext, useEffect, useState } from "react";
 import { LabelContext } from "../Task/TaskModal";
 
+import PropTypes from "prop-types";
+
+LabelBarSelect.propTypes = {
+  data: PropTypes.object.isRequired,
+  taskId: PropTypes.number.isRequired,
+};
+
 export default function LabelBarSelect({ data, taskId }) {
   // to show tick in label onHover and set label
   // as selected onClick
@@ -80,10 +87,10 @@ export default function LabelBarSelect({ data, taskId }) {
           toggleCheck.selected ? (
             <CheckSvg color={"#10952d"} />
           ) : // if toggleCheck is NOT selected, check if toggleCheck is hover
-          toggleCheck.hover ? (
+            toggleCheck.hover ? (
             // if toggleCheck is NOT on hover, nothing is shown :)
-            <CheckSvg />
-          ) : null
+              <CheckSvg />
+            ) : null
         }
       </div>
     </span>

@@ -2,6 +2,8 @@ import styles from "$Styles/input.module.scss";
 
 import React from "react";
 
+import PropTypes from "prop-types";
+
 const TaskInput = React.forwardRef(({ id, placeholder, c, val }, ref) => {
   return (
     <>
@@ -22,6 +24,13 @@ const TaskInput = React.forwardRef(({ id, placeholder, c, val }, ref) => {
     </>
   );
 });
+
+TaskInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  c: PropTypes.string,
+  val: PropTypes.string,
+};
 
 TaskInput.displayName = "TaskInput";
 export default TaskInput;

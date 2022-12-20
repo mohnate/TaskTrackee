@@ -4,12 +4,19 @@ import menuScale from "$Icon/menuScale.svg";
 import home from "$Icon/home.svg";
 import defaultAvatar from "$Icon/default-avatar.png";
 
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "@chan_alston/image";
 import { supabase } from "$Lib/supabase";
 
-import Dropdown from "./DropDown";
+const Dropdown = lazy(() => import("./DropDown"));
+
+import PropTypes from "prop-types";
+
+Header.propTypes = {
+  toggleSideBar: PropTypes.bool.isRequired,
+  setToggleSideBar: PropTypes.func.isRequired,
+};
 
 export default function Header({ toggleSideBar, setToggleSideBar }) {
   const [dropDown, setDropDown] = useState(false);
@@ -79,9 +86,11 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
               <Image src={defaultAvatar} w={40} h={40} imgRef={imgRef} />
             </div>
             {dropDown ? (
-              <div className={styles.dropDownContainer}>
-                <Dropdown dropDownRef={dropDownRef} />
-              </div>
+              <Suspense fallback={""}>
+                <div className={styles.dropDownContainer}>
+                  <Dropdown dropDownRef={dropDownRef} />
+                </div>
+              </Suspense>
             ) : null}
           </div>
         </div>

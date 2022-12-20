@@ -4,6 +4,12 @@ import { supabase } from "./supabase";
 
 import Spinner from "../components/PageLoader";
 
+import PropTypes from "prop-types";
+
+NoAuthenticateuser.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
 export default function NoAuthenticateuser({ children }) {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);

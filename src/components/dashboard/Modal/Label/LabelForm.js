@@ -5,6 +5,8 @@ import dashboardStyles from "$Styles/dashboard/dashboard.module.scss";
 import { useState } from "react";
 import { supabase } from "$Lib/supabase";
 
+import PropTypes from "prop-types";
+
 const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
   // Show Status about label after certain supabase action.
   // State will be updated based on label insert, update and delete.
@@ -69,7 +71,7 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
   };
 
   // Supabase Delete Label Function
-  const deleteHandler = async () => {
+  const deleteHandler = async (e) => {
     e.preventDefault();
 
     const {
@@ -220,6 +222,13 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
       </div>
     </form>
   );
+};
+
+LabelForm.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  labelTitle: PropTypes.object.isRequired,
+  setLabelTitle: PropTypes.func.isRequired,
+  newLabel: PropTypes.object.isRequired,
 };
 
 LabelForm.displayName = "LabelForm";

@@ -1,10 +1,10 @@
 @font-face {
   font-family: "Grobold";
-  src: url("../../public/font/Grobold.ttf") format("truetype");
+  src: resolve("Grobold.ttf") format("truetype");
 }
 @font-face {
   font-family: "PoetsenOne";
-  src: url("../../public/font/PoetsenOne.ttf") format("truetype");
+  src: resolve("PoetsenOne.ttf") format("truetype");
 }
 
 html,

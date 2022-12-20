@@ -3,6 +3,8 @@ import DoubleCheckSvg from "../icons/DoubleCheckSvg";
 
 import React, { useState } from "react";
 
+import PropTypes from "prop-types";
+
 const PasswordInput = React.forwardRef(
   ({ id, label, placeholder, footer, confirmPass = false, state }, ref) => {
     // Check if user inputed email address match
@@ -78,6 +80,15 @@ const PasswordInput = React.forwardRef(
     );
   }
 );
+
+PasswordInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  footer: PropTypes.string,
+  confirmPass: PropTypes.object,
+  state: PropTypes.string,
+};
 
 PasswordInput.displayName = "PasswordInput";
 export default PasswordInput;

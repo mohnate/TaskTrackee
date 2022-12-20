@@ -1,5 +1,12 @@
 import styles from "$Styles/dashboard/modal.module.scss";
 
+import PropTypes from "prop-types";
+
+LabelBar.propTypes = {
+  data: PropTypes.object.isRequired,
+  setLabelTitle: PropTypes.func.isRequired,
+};
+
 export default function LabelBar({ data, setLabelTitle }) {
   const editLabel = () => {
     setLabelTitle({

@@ -107,8 +107,8 @@ export default function AllTask() {
         taskDataTmr?.length === 0 &&
         taskDataUpc?.length === 0 &&
         taskDataLate?.length === 0 ? (
-          <h2 className={styles.sectionHead}>No Task</h2>
-        ) : null}
+            <h2 className={styles.sectionHead}>No Task</h2>
+          ) : null}
       </article>
     </>
   );

@@ -8,6 +8,13 @@ import LabelForm from "./LabelForm";
 import WarnModal from "../WarnModal";
 import LabelBar from "./LabelBar";
 
+import PropTypes from "prop-types";
+
+LabelModal.propTypes = {
+  setToggleLabelModal: PropTypes.func.isRequired,
+  toggleLabelModal: PropTypes.bool.isRequired,
+};
+
 export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
   const labelData = useSelector((state) => state.labelData.value);
   const [warn, setWarn] = useState();

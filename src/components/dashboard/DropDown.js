@@ -2,11 +2,13 @@ import styles from "$Styles/dashboard/header.module.scss";
 import LogOut from "$Public/icon/log-out.svg";
 import GitHub from "$Public/icon/github.svg";
 
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "$Lib/supabase";
 import Image from "@chan_alston/image";
 
-export default function Dropdown({ dropDownRef }) {
+// eslint-disable no-undef
+const Dropdown = React.forwardRef((props, ref) => {
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -16,7 +18,7 @@ export default function Dropdown({ dropDownRef }) {
   };
 
   return (
-    <section className={styles.dropDownMain} ref={dropDownRef}>
+    <section className={styles.dropDownMain} ref={ref}>
       <a
         href="https://github.com/AlstonChan/TaskTrackee"
         target="_blank"
@@ -45,4 +47,7 @@ export default function Dropdown({ dropDownRef }) {
       </div>
     </section>
   );
-}
+});
+
+Dropdown.displayName = "Dropdown";
+export default Dropdown;

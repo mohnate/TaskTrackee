@@ -10,6 +10,14 @@ import { useSelector } from "react-redux";
 import LabelBarSelect from "../Label/LabelBarSelect";
 import Calender from "../Calender";
 
+import PropTypes from "prop-types";
+
+ModalOption.propTypes = {
+  dateRef: PropTypes.any,
+  dateState: PropTypes.string,
+  setDateState: PropTypes.func.isRequired,
+};
+
 export default function ModalOption({ dateRef, dateState, setDateState }) {
   const [activeOption, setActiveOption] = useState(null);
   const labelData = useSelector((state) => state.labelData.value);

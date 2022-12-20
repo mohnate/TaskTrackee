@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 
+import PropTypes from "prop-types";
+
+CheckSvg.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string,
+};
+
 export default function CheckSvg({ color, className }) {
   // Show if user is using small screen
   const [isSmallScreen, setIsSmallScreen] = useState(false);

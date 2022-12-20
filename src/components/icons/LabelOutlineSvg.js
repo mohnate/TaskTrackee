@@ -1,3 +1,10 @@
+import PropTypes from "prop-types";
+
+LabelOutlineSvg.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string,
+};
+
 export default function LabelOutlineSvg({ color, className }) {
   return (
     <svg

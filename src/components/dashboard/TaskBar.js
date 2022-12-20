@@ -4,6 +4,14 @@ import CheckSvg from "../icons/CheckSvg";
 import { useState } from "react";
 import { supabase } from "$Lib/supabase";
 
+import PropTypes from "prop-types";
+
+TaskBar.propTypes = {
+  data: PropTypes.object.isRequired,
+  date: PropTypes.string,
+  setTgMd: PropTypes.func.isRequired,
+};
+
 export default function TaskBar({ data, date = "macro", setTgMd }) {
   // For checkBox use, set CheckSvg when mouseon on the
   // circle checkbox
@@ -62,21 +70,21 @@ export default function TaskBar({ data, date = "macro", setTgMd }) {
             data.due_date == null
               ? null
               : data.status === "completed"
-              ? null
-              : Date.now() > new Date(data.due_date).valueOf()
-              ? { color: "#ad1111" }
-              : null
+                ? null
+                : Date.now() > new Date(data.due_date).valueOf()
+                  ? { color: "#ad1111" }
+                  : null
           }
         >
           {data.due_date == null
             ? "No Due"
             : date === "micro"
-            ? new Date(data.due_date).toLocaleTimeString("en-UK", {
+              ? new Date(data.due_date).toLocaleTimeString("en-UK", {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: false,
               })
-            : new Date(data.due_date).toLocaleString("en-UK", {
+              : new Date(data.due_date).toLocaleString("en-UK", {
                 year: "2-digit",
                 month: "2-digit",
                 day: "2-digit",

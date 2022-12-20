@@ -11,7 +11,12 @@ import { supabase } from "$Lib/supabase";
 
 const Dropdown = lazy(() => import("./DropDown"));
 
-import Spinner from "$Components/PageLoader";
+import PropTypes from "prop-types";
+
+Header.propTypes = {
+  toggleSideBar: PropTypes.bool.isRequired,
+  setToggleSideBar: PropTypes.func.isRequired,
+};
 
 export default function Header({ toggleSideBar, setToggleSideBar }) {
   const [dropDown, setDropDown] = useState(false);
@@ -81,7 +86,7 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
               <Image src={defaultAvatar} w={40} h={40} imgRef={imgRef} />
             </div>
             {dropDown ? (
-              <Suspense fallback={<Spinner sz="medium" pad="50px 0" />}>
+              <Suspense fallback={""}>
                 <div className={styles.dropDownContainer}>
                   <Dropdown dropDownRef={dropDownRef} />
                 </div>

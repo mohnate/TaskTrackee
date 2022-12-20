@@ -83,7 +83,11 @@ module.exports = (env) => {
               loader: "postcss-loader",
               options: {
                 postcssOptions: {
-                  plugins: ["autoprefixer", "postcss-preset-env"],
+                  plugins: [
+                    "autoprefixer",
+                    "postcss-preset-env",
+                    "postcss-assets",
+                  ],
                 },
               },
             }, // second

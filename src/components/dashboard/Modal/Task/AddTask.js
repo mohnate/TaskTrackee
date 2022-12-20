@@ -79,4 +79,5 @@ const AddTask = React.forwardRef(({ closeModal, handleSubmit }, ref) => {
   );
 });
 
+AddTask.displayName = "AddTask";
 export default AddTask;

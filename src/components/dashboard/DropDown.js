@@ -20,6 +20,7 @@ export default function Dropdown({ dropDownRef }) {
       <a
         href="https://github.com/AlstonChan/TaskTrackee"
         target="_blank"
+        rel="noreferrer"
         className={styles.dropDownBar}
       >
         <div className={styles.iconContainer}>

@@ -130,7 +130,7 @@ export default function SideBar({ toggleSideBar, setToggleLabelModal }) {
               ) : (
                 <>
                   <span className={styles.missingLabel}>
-                    You don't have any label created currently
+                    You don&apos;t have any label created currently
                   </span>
                 </>
               )}

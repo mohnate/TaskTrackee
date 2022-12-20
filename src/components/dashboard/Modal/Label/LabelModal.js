@@ -82,7 +82,7 @@ export default function LabelModal({ setToggleLabelModal, toggleLabelModal }) {
                 ) : (
                   <>
                     <span className={styles.missingLabel}>
-                      You don't have any label created currently
+                      You don&apos;t have any label created currently
                     </span>
                   </>
                 )}

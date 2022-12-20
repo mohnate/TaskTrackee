@@ -62,7 +62,7 @@ export default function Dashboard() {
         .eq("user_uid", user.id)
         .then((payload) => {
           if (payload.error) {
-            console.error(error);
+            console.error(payload.error);
           } else {
             dispatch(setData(payload.data));
           }
@@ -89,7 +89,7 @@ export default function Dashboard() {
         .eq("user_uid", user.id)
         .then((payload) => {
           if (payload.error) {
-            console.error(error);
+            console.error(payload.error);
           } else {
             dispatch(setLabel(payload.data));
           }

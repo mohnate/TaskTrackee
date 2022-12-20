@@ -69,7 +69,7 @@ const LabelForm = ({ closeModal, labelTitle, setLabelTitle, newLabel }) => {
   };
 
   // Supabase Delete Label Function
-  const deleteHandler = async () => {
+  const deleteHandler = async (e) => {
     e.preventDefault();
 
     const {

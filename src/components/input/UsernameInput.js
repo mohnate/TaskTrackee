@@ -63,4 +63,5 @@ const UsernameInput = React.forwardRef(({ id, label, footer, state }, ref) => {
   );
 });
 
+UsernameInput.displayName = "UsernameInput";
 export default UsernameInput;

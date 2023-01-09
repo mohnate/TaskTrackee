@@ -1,3 +1,12 @@
+<div align="center" style='display:flex; justify-content:center'>
+  <img src='https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E' />
+  <img src='https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB' />
+  <img src="https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black" />
+  <img src="https://img.shields.io/badge/webpack-5299c7.svg?style=for-the-badge&logo=webpack&logoColor=white" />
+  <img src="https://img.shields.io/badge/dotenv-000000?style=for-the-badge&logo=dotenv" />
+  <img src='https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white' />
+</div>
+
 # Task Tracker Application [![Netlify Status](https://api.netlify.com/api/v1/badges/e8c2b072-4c30-4226-8bbf-9206b3b837b6/deploy-status)](https://app.netlify.com/sites/tasktrackee/deploys)
 
 A task managment application built with **REACT. JS**

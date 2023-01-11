@@ -9,13 +9,14 @@ import { Link } from "react-router-dom";
 import Image from "@chan_alston/image";
 import { supabase } from "$Lib/supabase";
 
-const Dropdown = lazy(() => import("./DropDown"));
+const Dropdown = lazy(() => import("./dashboard/DropDown"));
 
 import PropTypes from "prop-types";
 
 Header.propTypes = {
   toggleSideBar: PropTypes.bool.isRequired,
-  setToggleSideBar: PropTypes.func.isRequired,
+  setToggleSideBar: PropTypes.oneOfType([PropTypes.func, PropTypes.bool])
+    .isRequired,
 };
 
 export default function Header({ toggleSideBar, setToggleSideBar }) {
@@ -57,16 +58,19 @@ export default function Header({ toggleSideBar, setToggleSideBar }) {
     <>
       <header className={styles.header}>
         <nav className={styles.leftComp}>
-          <div
-            className={styles.iconContainer}
-            onClick={() => setToggleSideBar((prev) => !prev)}
-          >
-            {toggleSideBar ? (
-              <Image src={menuScale} w="30px" h="30px" alt="menu" />
-            ) : (
-              <Image src={menu} w="30px" h="30px" alt="menu" />
-            )}
-          </div>
+          {setToggleSideBar ? (
+            <div
+              className={styles.iconContainer}
+              onClick={() => setToggleSideBar((prev) => !prev)}
+            >
+              {toggleSideBar ? (
+                <Image src={menuScale} w="30px" h="30px" alt="menu" />
+              ) : (
+                <Image src={menu} w="30px" h="30px" alt="menu" />
+              )}
+            </div>
+          ) : null}
+
           <div className={styles.iconContainer}>
             <Link to="/dashboard/alltask">
               <Image src={home} w="40px" h="30px" alt="home" />

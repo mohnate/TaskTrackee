@@ -11,6 +11,7 @@ const AllTask = lazy(() => import("$Routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("$Routes/dashboard/todayTask"));
 const UpcoimngTask = lazy(() => import("$Routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("$Routes/dashboard/finishedTask"));
+const Account = lazy(() => import("$Routes/account"));
 
 import Dashboard from "$Routes/dashboard/index";
 import PageNotFound from "$Components/errorPage/PageNotFound";
@@ -26,11 +27,23 @@ export default function App() {
           element={
             <NoAuthenticateUser>
               <Suspense
-                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+                fallback={<Spinner pos="full" sz="large" pad="50px 0 0 0" />}
               >
                 <Homepage />
               </Suspense>
             </NoAuthenticateUser>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <Suspense
+                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+              >
+                <Account />
+              </Suspense>
+            </ProtectedRoute>
           }
         />
         <Route

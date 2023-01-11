@@ -24,7 +24,7 @@ const LabelModal = lazy(() =>
   import("$Components/dashboard/Modal/Label/LabelModal")
 );
 
-import Header from "$Components/dashboard/Header";
+import Header from "$Components/Header";
 import SideBar from "$Components/dashboard/SideBar";
 import Spinner from "$Components/PageLoader";
 

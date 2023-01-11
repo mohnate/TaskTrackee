@@ -1,0 +1,128 @@
+.head {
+  font-family: var(--body2);
+  margin-left: 30px;
+  color: var(--tertiary-color);
+}
+
+.boxSec {
+  border: 1px solid #fff;
+  border-radius: 12px;
+  font-family: var(--body);
+  margin: 30px;
+  padding: 0 40px 20px 40px;
+  color: var(--tertiary-color);
+}
+
+// Profile
+.profileBox {
+  font-size: 1.1rem;
+  display: flex;
+}
+.avatarContainer {
+  width: 150px;
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.row {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+.title {
+  opacity: 0.8;
+}
+.edit {
+  appearance: none;
+  border: none;
+  font-family: var(--body);
+  background-color: var(--pri-sec-color);
+  color: var(--tertiary-color);
+  font-size: 1rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  margin-left: 10px;
+  height: 29px;
+  cursor: pointer;
+
+  transition: background-color 160ms ease-in-out;
+}
+.edit:hover {
+  background-color: var(--pri-sec-hover-color);
+}
+.edit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.edit:disabled:hover {
+  background-color: var(--pri-sec-color);
+}
+.dataContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.data {
+  margin-left: 20px;
+}
+
+// Security
+.fgtPass {
+  margin-top: 0;
+}
+.fgtPassLink {
+  color: var(--hightlight-color);
+  cursor: pointer;
+}
+.fgtPassLink:hover {
+  text-decoration: underline;
+}
+.formControl {
+  max-width: 400px;
+}
+.successMsg {
+  font-weight: bold;
+  color: var(--okay-color);
+}
+
+@media screen and (max-width: 800px) {
+  .boxSec {
+    margin: 25px;
+    padding: 0 35px 20px 35px;
+  }
+  .row {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .title {
+    margin: 0;
+  }
+  .data {
+    margin: 0;
+  }
+}
+@media screen and (max-width: 650px) {
+  .boxSec {
+    margin: 15px;
+    padding: 0 25px 20px 25px;
+  }
+  .profileBox {
+    font-size: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  .detailsContainer {
+    margin: 0 auto 0 0;
+  }
+}
+@media screen and (max-width: 400px) {
+  .boxSec {
+    margin: 8px;
+    padding: 0 15px 10px 15px;
+  }
+}

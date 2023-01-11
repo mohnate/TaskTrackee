@@ -18,16 +18,22 @@
   height: 100%;
 }
 
-.iconContainer {
+@mixin iconContainer {
   width: 30px;
   margin: 0 7.5px;
   height: 100%;
   cursor: pointer;
   border-radius: 3px;
+}
+.iconContainer {
+  @include iconContainer;
 
   &:hover {
     background-color: var(--primary-hover-color);
   }
+}
+.iconContainerDropdown {
+  @include iconContainer;
 }
 
 .userComp {

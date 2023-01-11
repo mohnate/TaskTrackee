@@ -25,7 +25,7 @@ const Dropdown = React.forwardRef((props, ref) => {
         rel="noreferrer"
         className={styles.dropDownBar}
       >
-        <div className={styles.iconContainer}>
+        <div className={styles.iconContainerDropdown}>
           <Image
             src={GitHub}
             style={{ width: "25px", height: "25px", verticalAlign: "middle" }}
@@ -35,7 +35,7 @@ const Dropdown = React.forwardRef((props, ref) => {
         <p className={styles.dorpDownHeader}>GitHub Repo</p>
       </a>
       <div className={styles.dropDownBar}>
-        <div className={styles.iconContainer}>
+        <div className={styles.iconContainerDropdown}>
           <Image
             src={LogOut}
             style={{ width: "25px", height: "25px", verticalAlign: "middle" }}

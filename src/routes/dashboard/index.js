@@ -6,7 +6,11 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from "framer-motion";
 import { supabase } from "$Lib/supabase";
-import { setData, updData } from "$Lib/ReduxSlice/SupabaseTaskSlice";
+import {
+  setData,
+  updData,
+  deleteTask,
+} from "$Lib/ReduxSlice/SupabaseTaskSlice";
 import {
   setLabel,
   updLabel,
@@ -73,10 +77,12 @@ export default function Dashboard() {
           "postgres_changes",
           { event: "*", schema: "public", table: "Task" },
           (payload) => {
+            const newLabel = payload.new;
+            const oldLabel = payload.old;
             if (payload.eventType === "DELETE") {
-              dispatch(updData(payload.old));
+              dispatch(deleteTask(oldLabel));
             } else {
-              dispatch(updData(payload.new));
+              dispatch(updData(newLabel));
             }
           }
         )

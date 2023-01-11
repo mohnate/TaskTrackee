@@ -14,9 +14,13 @@ export const supabaseTaskSlice = createSlice({
       newTodos.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
       state.value = newTodos;
     },
+    deleteTask: (state, action) => {
+      const todos = state.value.filter((task) => task.id != action.payload.id);
+      state.value = todos;
+    },
   },
 });
-export const { setData, updData } = supabaseTaskSlice.actions;
+export const { setData, updData, deleteTask } = supabaseTaskSlice.actions;
 
 export const taskNotCompleted = (task) => {
   if (task.status === "pending") {

@@ -39,7 +39,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Suspense
-                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
+                fallback={
+                  <Spinner
+                    pos="full
+                "
+                    sz="large"
+                    pad="50px 0 0 0"
+                  />
+                }
               >
                 <Account />
               </Suspense>

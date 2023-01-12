@@ -2,10 +2,11 @@ import styles from "$Styles/account.module.scss";
 import stylesInput from "$Styles/input.module.scss";
 import defaultAvatar from "$Icon/default-avatar.png";
 
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import Image from "@chan_alston/image";
 import { supabase } from "$Lib/supabase";
 
+import UsernameInput from "$Components/input/UsernameInput";
 import PasswordInput from "$Components/input/PasswordInput";
 import AccountBox from "$Components/AccountBox";
 import Header from "$Components/Header";
@@ -13,10 +14,12 @@ import Header from "$Components/Header";
 export default function Account() {
   const [user, setUser] = useState({});
   const [sucessMsg, setSucessMsg] = useState(false);
+  const [editUsername, setEditUsername] = useState(false);
   const reducer = (state, action) => {
     return { ...state, [action.type]: action.txt };
   };
   const initialState = {
+    username: null,
     oldPassword: null,
     newPassword: null,
     confPassword: null,
@@ -25,6 +28,16 @@ export default function Account() {
   const oldPasswordRef = useRef();
   const newPasswordRef = useRef();
   const confPasswordRef = useRef();
+
+  const usernameRef = useRef();
+  const refCallback = useCallback((node) => {
+    if (node) {
+      // set the input element to ref.current
+      // so ref.current can be access normally
+      usernameRef.current = node;
+      usernameRef.current.value = user.username;
+    }
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -94,6 +107,36 @@ export default function Account() {
     }
   };
 
+  const handleProfileUpd = async (e) => {
+    e.preventDefault();
+
+    const username = usernameRef.current.value;
+
+    if (editUsername) {
+      if (username.length < 3) {
+        dispatch({
+          type: "username",
+          txt: "Username have to contain at least 3 character",
+        });
+        return;
+      } else dispatch({ type: "username", txt: null });
+    }
+
+    const { data, error } = await supabase.auth.updateUser({
+      data: { username },
+    });
+
+    if (error) {
+      console.error(error);
+    } else {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser({ username: user.user_metadata.username, email: user.email });
+      setEditUsername(false);
+    }
+  };
+
   return (
     <>
       <Header toggleSideBar={false} setToggleSideBar={false} />
@@ -108,9 +151,25 @@ export default function Account() {
             <div className={styles.row}>
               <p className={styles.title}>Username</p>
               <div className={styles.dataContainer}>
-                <p className={styles.data}>{user.username}</p>
-                <button disabled className={styles.edit}>
-                  Edit
+                {editUsername ? (
+                  <div className={styles.usernameContainer}>
+                    <UsernameInput
+                      id="signUpUsername"
+                      label="none"
+                      ref={refCallback}
+                      state={state.username}
+                      isCallBackRef={usernameRef}
+                    />
+                  </div>
+                ) : (
+                  <p className={styles.data}>{user.username}</p>
+                )}
+
+                <button
+                  className={styles.edit}
+                  onClick={() => setEditUsername((prev) => !prev)}
+                >
+                  {editUsername ? "Cancel" : "Edit"}
                 </button>
               </div>
             </div>
@@ -125,6 +184,13 @@ export default function Account() {
             </div>
           </div>
         </div>
+        <button
+          className={stylesInput.changesBtn}
+          disabled={!editUsername}
+          onClick={handleProfileUpd}
+        >
+          Save Changes
+        </button>
       </AccountBox>
       <AccountBox h="Security">
         <h3 className={styles.title}>Password Reset</h3>

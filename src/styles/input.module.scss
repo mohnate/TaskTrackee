@@ -22,9 +22,9 @@
   background-color: #fff;
 }
 
-.submitBtn {
-  width: 5rem;
+@mixin btn {
   height: 2.4rem;
+  padding: 6px 19px;
 
   appearance: none;
   border-radius: 0.375rem;
@@ -41,6 +41,19 @@
     background-color: var(--btn-hover-color);
     transition: background-color 165ms ease-in-out;
   }
+}
+
+.submitBtn {
+  @include btn;
+}
+.changesBtn {
+  @include btn;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+.changesBtn:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
 }
 
 @mixin inputStyle() {

@@ -11,7 +11,8 @@ const AllTask = lazy(() => import("$Routes/dashboard/allTask"));
 const TodayTask = lazy(() => import("$Routes/dashboard/todayTask"));
 const UpcoimngTask = lazy(() => import("$Routes/dashboard/upcomingTask"));
 const FinishedTask = lazy(() => import("$Routes/dashboard/finishedTask"));
-const Account = lazy(() => import("$Routes/account"));
+const Account = lazy(() => import("$Routes/account/index"));
+const ForgetPass = lazy(() => import("$Routes/account/forgetPass"));
 
 import Dashboard from "$Routes/dashboard/index";
 import PageNotFound from "$Components/errorPage/PageNotFound";
@@ -19,6 +20,7 @@ import ContentNotFound from "$Components/errorPage/ContentNotFound";
 import Spinner from "$Components/PageLoader";
 
 export default function App() {
+  const fallbackFill = <Spinner pos="fill" sz="large" pad="50px 0 0 0" />;
   return (
     <>
       <Routes>
@@ -26,33 +28,34 @@ export default function App() {
           path="/"
           element={
             <NoAuthenticateUser>
-              <Suspense
-                fallback={<Spinner pos="full" sz="large" pad="50px 0 0 0" />}
-              >
+              <Suspense fallback={<Spinner pos="full" sz="large" />}>
                 <Homepage />
               </Suspense>
             </NoAuthenticateUser>
           }
         />
-        <Route
-          path="/account"
-          element={
-            <ProtectedRoute>
-              <Suspense
-                fallback={
-                  <Spinner
-                    pos="full
-                "
-                    sz="large"
-                    pad="50px 0 0 0"
-                  />
-                }
-              >
-                <Account />
-              </Suspense>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/account">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<Spinner pos="full" sz="large" />}>
+                  <Account />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="forget-password"
+            element={
+              <ProtectedRoute forgetPass>
+                <Suspense fallback={<Spinner pos="full" sz="large" />}>
+                  <ForgetPass />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="dashboard"
           element={
@@ -65,9 +68,7 @@ export default function App() {
           <Route
             path="alltask"
             element={
-              <Suspense
-                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
-              >
+              <Suspense fallback={fallbackFill}>
                 <AllTask />
               </Suspense>
             }
@@ -75,9 +76,7 @@ export default function App() {
           <Route
             path="todaytask"
             element={
-              <Suspense
-                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
-              >
+              <Suspense fallback={fallbackFill}>
                 <TodayTask />
               </Suspense>
             }
@@ -85,9 +84,7 @@ export default function App() {
           <Route
             path="upcomingtask"
             element={
-              <Suspense
-                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
-              >
+              <Suspense fallback={fallbackFill}>
                 <UpcoimngTask />
               </Suspense>
             }
@@ -95,9 +92,7 @@ export default function App() {
           <Route
             path="finishedtask"
             element={
-              <Suspense
-                fallback={<Spinner pos="fill" sz="large" pad="50px 0 0 0" />}
-              >
+              <Suspense fallback={fallbackFill}>
                 <FinishedTask />
               </Suspense>
             }

@@ -1,14 +1,20 @@
 import styles from "$Styles/homepage/homepage.module.scss";
+import stylesAccount from "$Styles/account.module.scss";
 import stylesInput from "$Styles/input.module.scss";
 
-import { useReducer, useRef } from "react";
+import { useReducer, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "$Lib/supabase";
 
 import EmailInput from "../input/EmailInput";
 import PasswordInput from "../input/PasswordInput";
 
+const emailPattern =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 export default function Login() {
+  // fgtPass tells if supabase resetPassword api successfully invoked, boolean value
+  const [fgtPass, setFgtPass] = useState(false);
   const reducer = (state, action) => {
     return { ...state, [action.type]: action.txt };
   };
@@ -24,10 +30,9 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const emailPattern =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!email.match(emailPattern)) {
       dispatch({ type: "email", txt: "This is not a valid email!" });
@@ -63,6 +68,31 @@ export default function Login() {
     }
   };
 
+  // Forget Password Func
+  const forgertPass = async (e) => {
+    e.preventDefault();
+
+    const email = emailRef.current.value;
+
+    if (!email) {
+      dispatch({ type: "email", txt: "Please fill in your email address" });
+      return;
+    } else if (!email.match(emailPattern)) {
+      dispatch({ type: "email", txt: "This is not a valid email!" });
+      return;
+    } else dispatch({ type: "email", txt: null });
+
+    let { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://tasktrackee.netlify.app/account/forget-password",
+    });
+
+    if (error) {
+      console.error(error);
+    } else if (data) {
+      setFgtPass(true);
+    }
+  };
+
   return (
     <>
       <form
@@ -76,6 +106,19 @@ export default function Login() {
           ref={passwordRef}
           state={state.password}
         />
+        <p
+          className={stylesAccount.fgtPassLink}
+          style={{ marginTop: "0" }}
+          onClick={forgertPass}
+        >
+          Forget Password?
+        </p>
+        {fgtPass ? (
+          <p className={stylesAccount.notice}>
+            An recovery link has sent to your inbox. Please check your spam
+            folder if you can't find it.
+          </p>
+        ) : null}
         <button type="submit" className={stylesInput.submitBtn}>
           Log In
         </button>

@@ -12,9 +12,15 @@ import AccountBox from "$Components/AccountBox";
 import Header from "$Components/Header";
 
 export default function Account() {
+  // Set user username and email address
   const [user, setUser] = useState({});
-  const [sucessMsg, setSucessMsg] = useState(false);
+  // successMsg for successful password reset, boolean value
+  const [successMsg, setSuccessMsg] = useState(false);
+  // editUsername indicating if in username edit mode, boolean value
   const [editUsername, setEditUsername] = useState(false);
+  // fgtPass tells if supabase resetPassword api successfully invoked, boolean value
+  const [fgtPass, setFgtPass] = useState(false);
+  // reducer for form stating input error for user
   const reducer = (state, action) => {
     return { ...state, [action.type]: action.txt };
   };
@@ -25,11 +31,14 @@ export default function Account() {
     confPassword: null,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const oldPasswordRef = useRef();
   const newPasswordRef = useRef();
   const confPasswordRef = useRef();
 
   const usernameRef = useRef();
+  // Get node information on finish load and assign
+  // it to the ref
   const refCallback = useCallback((node) => {
     if (node) {
       // set the input element to ref.current
@@ -39,15 +48,18 @@ export default function Account() {
     }
   }, []);
 
+  // Get username and email onLoad
   useEffect(() => {
     (async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+      console.log(user);
       setUser({ username: user.user_metadata.username, email: user.email });
     })();
   }, []);
 
+  // Update password Func
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -103,10 +115,11 @@ export default function Account() {
     if (error) {
       console.error(error);
     } else if (data) {
-      setSucessMsg(true);
+      setSuccessMsg(true);
     }
   };
 
+  // Update username Func
   const handleProfileUpd = async (e) => {
     e.preventDefault();
 
@@ -122,7 +135,7 @@ export default function Account() {
       } else dispatch({ type: "username", txt: null });
     }
 
-    const { data, error } = await supabase.auth.updateUser({
+    const { error } = await supabase.auth.updateUser({
       data: { username },
     });
 
@@ -134,6 +147,24 @@ export default function Account() {
       } = await supabase.auth.getUser();
       setUser({ username: user.user_metadata.username, email: user.email });
       setEditUsername(false);
+    }
+  };
+
+  // Forget Password Func
+  const forgertPass = async (e) => {
+    e.preventDefault();
+
+    let { data, error } = await supabase.auth.resetPasswordForEmail(
+      user.email,
+      {
+        redirectTo: "https://tasktrackee.netlify.app/account/forget-password",
+      }
+    );
+
+    if (error) {
+      console.error(error);
+    } else if (data) {
+      setFgtPass(true);
     }
   };
 
@@ -196,8 +227,17 @@ export default function Account() {
         <h3 className={styles.title}>Password Reset</h3>
         <p className={styles.fgtPass}>
           Don't remember your password?{" "}
-          <strong className={styles.fgtPassLink}>Forget password</strong>
+          <strong className={styles.fgtPassLink} onClick={forgertPass}>
+            Forget password
+          </strong>
         </p>
+        {fgtPass ? (
+          <p className={styles.notice}>
+            An recovery link has sent to your inbox. Please check your spam
+            folder if you can't find it.
+          </p>
+        ) : null}
+
         <form
           autoComplete="on"
           onSubmit={handleSubmit}
@@ -230,7 +270,7 @@ export default function Account() {
             Reset
           </button>
         </form>
-        {sucessMsg ? (
+        {successMsg ? (
           <p className={styles.successMsg}>
             You have successfully reset your password!
           </p>

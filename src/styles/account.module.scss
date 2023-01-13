@@ -53,16 +53,17 @@
   cursor: pointer;
 
   transition: background-color 160ms ease-in-out;
-}
-.edit:hover {
-  background-color: var(--pri-sec-hover-color);
-}
-.edit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.edit:disabled:hover {
-  background-color: var(--pri-sec-color);
+  &:hover {
+    background-color: var(--pri-sec-hover-color);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:disabled:hover {
+    background-color: var(--pri-sec-color);
+  }
 }
 .dataContainer {
   display: flex;
@@ -80,16 +81,36 @@
 .fgtPassLink {
   color: var(--hightlight-color);
   cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  &:active {
+    color: var(--hightlight-hover-color);
+  }
 }
-.fgtPassLink:hover {
-  text-decoration: underline;
+.notice {
+  background-color: var(--okay-hover-color);
+  padding: 4px 12px;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 400px;
+  font-weight: bold;
 }
+
 .formControl {
   max-width: 400px;
 }
 .successMsg {
   font-weight: bold;
   color: var(--okay-color);
+}
+
+// forgetPass
+.forgetPassContainer {
+  font-family: var(--body);
+  color: var(--tertiary-color);
+  margin: 0 30px;
 }
 
 @media screen and (max-width: 800px) {

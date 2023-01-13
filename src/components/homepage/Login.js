@@ -63,6 +63,10 @@ export default function Login() {
 
     if (error) {
       console.error(error);
+      return dispatch({
+        type: "password",
+        txt: error.message,
+      });
     } else if (user) {
       navigate("/dashboard/alltask");
     }

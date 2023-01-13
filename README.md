@@ -88,6 +88,14 @@ Set the `NODE_ENV` environment variable to *production* and output the bundled a
 
 Set the `NODE_ENV` environment variable to *test* and test all the file with the extension of `.test.js`.
 
+### 5. `npm run lint`
+
+Lint all the code in the `src` directory (except .test) file.
+
+### 6. `npm run lint:fix`
+
+Lint all the code in the `src` directory (except .test) file and fix all the auto fixable warning/error.
+
 ## Additional Configuration File
 
 ### .env.vault

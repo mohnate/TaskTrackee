@@ -135,11 +135,9 @@ export default function SideBar({ toggleSideBar, setToggleLabelModal }) {
                   </li>
                 ))
               ) : (
-                <>
-                  <span className={styles.missingLabel}>
-                    You don&apos;t have any label created currently
-                  </span>
-                </>
+                <span className={styles.missingLabel}>
+                  You don&apos;t have any label created currently
+                </span>
               )}
             </motion.ul>
           )}

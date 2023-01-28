@@ -111,3 +111,10 @@
   background-color: blueviolet;
   margin-right: 7px;
 }
+.missingLabel {
+  display: inline-block;
+  color: var(--tertiary-color);
+  font-family: var(--body);
+  padding-right: 10px;
+  max-width: 177px;
+}

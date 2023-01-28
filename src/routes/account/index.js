@@ -226,7 +226,7 @@ export default function Account() {
       <AccountBox h="Security">
         <h3 className={styles.title}>Password Reset</h3>
         <p className={styles.fgtPass}>
-          Don't remember your password?{" "}
+          Don&apos;t remember your password?{" "}
           <strong className={styles.fgtPassLink} onClick={forgertPass}>
             Forget password
           </strong>
@@ -234,7 +234,7 @@ export default function Account() {
         {fgtPass ? (
           <p className={styles.notice}>
             An recovery link has sent to your inbox. Please check your spam
-            folder if you can't find it.
+            folder if you can&apos;t find it.
           </p>
         ) : null}
 

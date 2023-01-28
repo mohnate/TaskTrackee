@@ -76,6 +76,7 @@ UsernameInput.propTypes = {
   label: PropTypes.string,
   footer: PropTypes.string,
   state: PropTypes.string,
+  isCallBackRef: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
 };
 
 UsernameInput.displayName = "UsernameInput";

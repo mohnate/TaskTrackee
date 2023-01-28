@@ -120,7 +120,7 @@ export default function Login() {
         {fgtPass ? (
           <p className={stylesAccount.notice}>
             An recovery link has sent to your inbox. Please check your spam
-            folder if you can't find it.
+            folder if you can&apos;t find it.
           </p>
         ) : null}
         <button type="submit" className={stylesInput.submitBtn}>

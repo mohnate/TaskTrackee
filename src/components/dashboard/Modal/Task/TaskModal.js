@@ -209,13 +209,13 @@ export default function TaskModal({ setToggleTaskModal, toggleTaskModal }) {
     const dateDidChange = toggleTaskModal[1]
       ? dateChanges()
       : due_date === null
-      ? false
-      : due_date !== "";
+        ? false
+        : due_date !== "";
     const labelsDidChange = toggleTaskModal[1]
       ? labelsChanges()
       : state.length === 0
-      ? false
-      : true;
+        ? false
+        : true;
 
     // user close modal through cancel btn (e === null)
     // or close modal throguh clicking/touching background (e !== null)

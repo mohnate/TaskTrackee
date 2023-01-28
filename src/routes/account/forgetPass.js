@@ -1,13 +1,15 @@
 import styles from "$Styles/account.module.scss";
 import stylesInput from "$Styles/input.module.scss";
 
+import { useReducer, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "$Lib/supabase";
 
 import Header from "$Components/Header";
 import PasswordInput from "$Components/input/PasswordInput";
-import { useReducer, useRef, useState } from "react";
 
 export default function ForgetPass() {
+  const navigate = useNavigate();
   // successMsg for successful password reset, boolean value
   const [successMsg, setSuccessMsg] = useState(false);
   // reducer for form stating input error for user

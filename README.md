@@ -16,7 +16,7 @@ A task managment application built with **REACT. JS**
 1. Clone this respository into your local machine with the following command:
 
    ```bash
-   git clone https://github.com/AlstonChan/TaskTrackee.git
+   git clone https://github.com/mohnate/TaskTrackee.git
    ```
 
    then do `cd TaskTrackee`
